@@ -1,0 +1,26 @@
+﻿<Window x:Class="GraphTheoryInWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GraphTheoryInWPF"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <DockPanel>
+            <Menu DockPanel.Dock="Top" Width="Auto" Height="20">
+                <MenuItem Header="_New" Click="MenuItem_Click_New" InputGestureText="Ctrl+N"/>
+                <MenuItem Header="_Open" Click="MenuItem_Click_Open" InputGestureText="Ctrl+O"/>
+                <Separator/>
+                <MenuItem Header="_Edit" Click="MenuItem_Edit" Name="EditMenuItem" InputGestureText="Ctrl+E"
+                          IsEnabled="False" ToolTip="Edit the graph"/>
+                <MenuItem Header="_Routes" Click="MenuItem_Routes" Name="RoutesMenuItem" InputGestureText="Ctrl+R"
+                          IsEnabled="True" ToolTip="Select routes"/>
+                <Separator/>
+                <MenuItem Header="_Save" Click="MenuItem_Click_Save" InputGestureText="Ctrl+S"/>
+                <MenuItem Header="Save _As" Click="MenuItem_Click_SaveAs"/>
+            </Menu>
+        <ContentControl Content="{Binding ShownView}"/>
+        </DockPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29911.84
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphTheoryInWPF", "GraphTheoryInWPF.csproj", "{C249FEBC-3A7E-4136-A239-D81733C8049C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphTheory.Core", "GraphTheory.Core\GraphTheory.Core.csproj", "{F42B5F25-F06C-45F2-9124-34E10474507D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C249FEBC-3A7E-4136-A239-D81733C8049C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C249FEBC-3A7E-4136-A239-D81733C8049C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C249FEBC-3A7E-4136-A239-D81733C8049C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C249FEBC-3A7E-4136-A239-D81733C8049C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F42B5F25-F06C-45F2-9124-34E10474507D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F42B5F25-F06C-45F2-9124-34E10474507D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F42B5F25-F06C-45F2-9124-34E10474507D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F42B5F25-F06C-45F2-9124-34E10474507D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A491B256-535D-4C9B-83FE-15A79B1183BE}
+	EndGlobalSection
+EndGlobal
