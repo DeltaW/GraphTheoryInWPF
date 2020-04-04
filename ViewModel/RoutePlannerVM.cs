@@ -152,8 +152,8 @@ namespace GraphTheoryInWPF.ViewModel {
                 return "ALL NODES NEED VALID VALUES";
             }
         }
-        public void ButtonPlus()
-               => NodeSelectors.Add(new NodeSelector(GoalCounter++, new ObservableCollection<string>(_graph.GetAllNodeNames()), this));
+
+        public void ButtonPlus() => NodeSelectors.Add(new NodeSelector(GoalCounter++, new ObservableCollection<string>(_graph.GetAllNodeNames()), this));
 
         public void UpdateOrders() {
             for (int i = 0; i < this.NodeSelectors.Count; i++) {
