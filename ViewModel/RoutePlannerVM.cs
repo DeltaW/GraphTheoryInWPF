@@ -46,39 +46,13 @@ namespace GraphTheoryInWPF.ViewModel {
             // Gett All Names and Sizes
             List<string> allNodeNames =  this._graph.GetAllNodeNames().ToList();
             List<Point> sizes = new List<Point>();
-            foreach (string name in allNodeNames) {
-                sizes.Add(NodeEllipse.GetEllipseWidthAndHeightBasedOnText(name));
-            }
-            //allNodeNames.ForEach(x => Sizes.Add(NodeEllipse.GetEllipseWidthAndHeightBasedOnText(x)));
+            allNodeNames.ForEach(x => sizes.Add(NodeEllipse.GetEllipseWidthAndHeightBasedOnText(x)));
 
             // Actually Fill the Canvas
             for (int i = 0; i < allNodeNames.Count; i++) {
                 Node n = this._graph.GetNode(allNodeNames[i]);
-                // STORCH
                 this.AddNodeEllipse(n, new Point(n.Position.X, n.Position.Y));
             }
-            #region old
-            //int i = 0;
-            //int y = minDistance;
-            //int wurzel = (int) Math.Ceiling(Math.Sqrt(allNodeNames.Count));
-
-            //while (i < allNodeNames.Count) {
-            //    int x = minDistance;
-            //    int biggestHeight = 0;
-            //    for (int n = 0; n < wurzel; n++) {
-            //        if (i >= allNodeNames.Count)
-            //            break;
-
-            //        biggestHeight = Math.Max(biggestHeight, (int) Math.Ceiling(sizes[i].Y));
-
-            //        this.AddNodeEllipse(this._graph.GetNode(allNodeNames[i]), new Point(x, y));
-
-            //        x += minDistance + (int) Math.Ceiling(sizes[i].X);
-            //        i++;
-            //    }
-            //    y += biggestHeight + minDistance;
-            //}
-            #endregion
 
             for (int j = 0; j < this._shortestRouteCanvas.Children.Count; j++) {
                 if (this._shortestRouteCanvas.Children[j] is NodeEllipse nodeEllipse) {
@@ -88,10 +62,8 @@ namespace GraphTheoryInWPF.ViewModel {
         }
 
         private void AddNodeEllipse(Node n, Point p) {
-
             NodeEllipse nodeEllipse = new NodeEllipse(this._shortestRouteCanvas, this._graph, n, p, Brushes.Magenta, Brushes.White);
             this._shortestRouteCanvas.Children.Add(nodeEllipse);
-
         }
 
         public void OnNodeSelectorChanged() {
@@ -103,12 +75,10 @@ namespace GraphTheoryInWPF.ViewModel {
             }
             for (int i = 0; i < this._shortestRouteCanvas.Children.Count; i++) {
                 if (this._shortestRouteCanvas.Children[i] is NodeEllipse nodeEllipse) {
-                    if (this._rbShortestRoute.IsChecked == true) {
+                    if (this._rbShortestRoute.IsChecked == true)
                         nodeEllipse.UpdateConnectionColours(this.GetShortestRoute());
-                    } else {
+                    else
                         nodeEllipse.SetConnectionIsNotPath();
-                    }
-
                 }
             }
         }
@@ -184,17 +154,6 @@ namespace GraphTheoryInWPF.ViewModel {
         }
         public void ButtonPlus()
                => NodeSelectors.Add(new NodeSelector(GoalCounter++, new ObservableCollection<string>(_graph.GetAllNodeNames()), this));
-
-        //public void ButtonMinus(Object sender, RoutedEventArgs e) {
-        //     // CHANGE THIS ENTIRE THING AND LET EACH NODESELECTOR HAVE A BUTTON TO REMOVE IT
-        //     if (NodeSelectors.Count > 2) {
-        //            var lastNodeSelector = NodeSelectors.SingleOrDefault(x => x.OrderNumber == GoalCounter);
-        //            if (lastNodeSelector != null) {
-        //                  NodeSelectors.Remove(lastNodeSelector);
-        //                  --GoalCounter;
-        //            }
-        //     }
-        //}
 
         public void UpdateOrders() {
             for (int i = 0; i < this.NodeSelectors.Count; i++) {
