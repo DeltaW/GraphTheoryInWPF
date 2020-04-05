@@ -73,101 +73,74 @@ namespace GraphTheoryInWPF.Components {
 
         public Node GetNode() => this._node;
 
-        public Point GetClosestBorderPointNotWorking(Point point) {
+        public Point GetClosestBorderPoint(Point point) {
 
-            #region Schnittpunkte
-            double xs1, xs2, ys1, ys2;
-            #endregion;
+            // Schnittpunkte
+            Point s1 = new Point(double.NaN, double.NaN);
+            Point s2 = new Point(double.NaN, double.NaN);
 
-            #region Ellipsen-Parameter
+
             // Halbachse
-            double a = this.Measurements.Width / 2;
-            double b = this.Measurements.Height / 2;
+            Point halbAchse = new Point(this._measurements.Width * .5, this._measurements.Height * .5);
 
-            // Mittelpunkt
-            double m1 = this.Center.X;
-            double m2 = this.Center.Y;
-            #endregion
-
-            #region Geraden-Parameter
-            // Steigung
-            double m0;
-            // Y-Achsenabschnitt
-            double d;
-
-            // Zwei Punkte auf der Geraden
-            double x1 = point.X;
-            double y1 = point.Y;
-            double x2 = m1;
-            double y2 = m2;
+            // Zweiter Punkt auf der Geraden
+            Point otherPoint = new Point(this.Center.X, this.Center.Y);
 
             // Differenzen zur Berechnung der Geradensteigung
-            double dx = x2 - x1;
-            double dy = y2 - y1;
-            #endregion
+            double dx = otherPoint.X - point.X;
+            double dy = otherPoint.Y - point.Y;
 
-            //double dxa = Math.Abs(dx);
             double eps = 0.0000001;
             if (Math.Abs(dx) < eps) { // Senkrechte Gerade um Division durch 0 zu vermeiden
                 // Schnittpunkt 1
-                xs1 = x1;
-                ys1 = m2 - b;
+                s1.X = point.X;
+                s1.Y = this.Center.Y - halbAchse.Y;
                 // Schnittpunkt 2
-                xs2 = x2;
-                ys2 = m2 + b;
-            } else {
+                s2.X = otherPoint.X;
+                s2.Y = this.Center.Y + halbAchse.Y;
+            } 
+            else {
                 // Steigung
-                m0 = dy / dx;
+                double m = dy / dx;
                 // Y-Achsenabschnitt
-                d = y2 - m0 * x2;
+                double d = otherPoint.Y - m * otherPoint.X;
 
                 // Hilfswerte:
-                double g = d - m2;
-                double r = a * b;
-                double m0q = m0 * m0;
-                double m1q = m1 * m1;
-                double rq = r * r;
-                double aq = a * a;
-                double bq = b * b;
+                double mq = m * m;
+                double mxq = this.Center.X * this.Center.X;
+                double g = d - this.Center.Y;
                 double gq = g * g;
-                double f = aq * m0q + bq;
+                double r = halbAchse.X * halbAchse.Y;
+                double rq = r * r;
+                double aq = halbAchse.X * halbAchse.Y;
+                double bq = halbAchse.Y * halbAchse.Y;
+                double f = aq * mq + bq;
 
                 // Parameter für Quadratische pq-Formel
-                double p = 2 * (aq * m0 * g - bq * m1) / f;
-                double q = (aq * gq + gq * m1q - rq) / f;
+                double p = 2 * (aq * m * g - bq * this.Center.X) / f;
+                double q = (aq * gq + bq * mxq - rq) / f;
+
                 double mp2 = -(p / 2);
-                double w = Math.Sqrt(mp2 * mp2 - q);
+                double mp2q = mp2 * mp2;
+                double w = Math.Sqrt(mp2q - q);
                 
-                if (double.IsNaN(w)) {
-                    ;
-                }
-
                 // Schnittpunkt 1
-                xs1 = mp2 + w;
-                ys1 = m0 * xs1 + d;
+                s1.X = mp2 + w;
+                s1.Y = m * s1.X + d;
                 // Schnittpunkt 2
-                xs2 = mp2 - w;
-                ys2 = m0 * xs2 + d;
-            }
-
-            Point s1 = new Point(xs1, ys1);
-            Point s2 = new Point(xs2, ys2);
-
-            if (double.IsNaN(s1.X) || double.IsNaN(s2.X) || double.IsNaN(s1.Y) || double.IsNaN(s2.Y)) {
-                //return new Point(this.Center.X, this.Center.Y);
-                throw (new Exception());
-                //this.NodeEllipseCanvas.Background = Brushes.MediumVioletRed;
-                //return this.GetClosestBorderPoint(point);
+                s2.X = mp2 - w;
+                s2.Y = m * s2.X + d;
             }
 
             double d1 = new Vector(Math.Abs(point.X - s1.X), Math.Abs(point.Y - s1.Y)).Length;
             double d2 = new Vector(Math.Abs(point.X - s2.X), Math.Abs(point.Y - s2.Y)).Length;
 
-            this.NodeEllipseCanvas.Background = Brushes.Transparent;
             return (d1 < d2) ? s1 : s2;
         }
 
-        public Point GetClosestBorderPoint(Point p) {
+        public Point GetClosestBorderPoint2(Point p) {
+            // Not the closest BorderPoint, but actually the closest of 8 preset borderpoints
+
             int closestBorderPointIndex = 0;
             double smallestDistance = double.PositiveInfinity;
             List<Point> borderPoints = this.GetBorderPoints();
