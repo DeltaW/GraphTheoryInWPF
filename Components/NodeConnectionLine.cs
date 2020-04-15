@@ -30,16 +30,16 @@ namespace GraphTheoryInWPF.Components {
 
                 this._directionLines[0].Stroke = Brushes.Green;
                 this._directionLines[1].Stroke = Brushes.Green;
-                Canvas.SetZIndex(this._directionLines[0], 0);
-                Canvas.SetZIndex(this._directionLines[1], 0);
+                //Canvas.SetZIndex(this._directionLines[0], 0);
+                //Canvas.SetZIndex(this._directionLines[1], 0);
             } else {
                 this._line.Stroke = Brushes.White;
                 Canvas.SetZIndex(this._line, -1);
 
                 this._directionLines[0].Stroke = Brushes.White;
                 this._directionLines[1].Stroke = Brushes.White;
-                Canvas.SetZIndex(this._directionLines[0], -1);
-                Canvas.SetZIndex(this._directionLines[1], -1);
+                //Canvas.SetZIndex(this._directionLines[0], 0);
+                //Canvas.SetZIndex(this._directionLines[1], 0);
             }
         }
 
@@ -131,7 +131,7 @@ namespace GraphTheoryInWPF.Components {
 
             this._line = new Line() {
                 Stroke = System.Windows.Media.Brushes.White,
-                StrokeThickness = 5,
+                StrokeThickness = 3,
             };
 
             Canvas.SetZIndex(this._line, -1);
@@ -140,15 +140,15 @@ namespace GraphTheoryInWPF.Components {
             this._directionLines = new List<Line>() {
                 new Line() {
                     Stroke = System.Windows.Media.Brushes.White,
-                    StrokeThickness = 2,
+                    StrokeThickness = 3,
                 },
                 new Line() {
                     Stroke = System.Windows.Media.Brushes.White,
-                    StrokeThickness = 2,
+                    StrokeThickness = 3,
                 }
             };
-            Canvas.SetZIndex(this._directionLines[0], -1);
-            Canvas.SetZIndex(this._directionLines[1], -1);
+            Canvas.SetZIndex(this._directionLines[0], 2);
+            Canvas.SetZIndex(this._directionLines[1], 2);
             this._canvas.Children.Add(this._directionLines[0]);
             this._canvas.Children.Add(this._directionLines[1]);
 
