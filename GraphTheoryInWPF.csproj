@@ -81,6 +81,7 @@
     <Compile Include="Components\NodeEllipse.xaml.cs">
       <DependentUpon>NodeEllipse.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ViewModel\GraphEditorVM.cs" />
     <Compile Include="ViewModel\RoutePlannerVM.cs" />
     <Compile Include="View\GraphEditor.xaml.cs">
