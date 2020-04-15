@@ -170,7 +170,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="GraphTheory.Core\GraphTheory.Core.csproj">
-      <Project>{f42b5f25-f06c-45f2-9124-34e10474507d}</Project>
+      <Project>{0A8F8FF8-3F01-4118-B4F5-081B30E24F72}</Project>
       <Name>GraphTheory.Core</Name>
     </ProjectReference>
   </ItemGroup>

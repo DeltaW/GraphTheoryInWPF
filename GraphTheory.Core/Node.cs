@@ -8,7 +8,7 @@ using System.Drawing;
 
 namespace GraphTheory.Core {
     public class Node {
-        
+
         public List<Connection> Connections { get; private set; }
         public string Name;
         public Point Position;
@@ -28,7 +28,7 @@ namespace GraphTheory.Core {
             // Adds a connection to a node
             this.Connections.Add(new Connection(this, node));
         }
-        
+
         public bool IsDirectlyConnectedToNode(Node node) {
             // Loop through each connection
             foreach (Connection connection in this.Connections) {
@@ -97,7 +97,8 @@ namespace GraphTheory.Core {
                     // Connection to check is from node to connected node and vice versa
                     if (!currentRoute.DoesAlreadyUseThisConnection(this, connection.ToNode)) {
                         Route temp = new Route(currentRoute.Nodes);
-                        /*List<Route> temp2 = */connection.ToNode.GetRoutesToNode(destinationNode, temp, allRoutes);
+                        /*List<Route> temp2 = */
+                        connection.ToNode.GetRoutesToNode(destinationNode, temp, allRoutes);
                     }
                 }
             }
