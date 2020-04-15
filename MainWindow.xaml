@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GraphTheoryInWPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="GraphTheory" Height="450" Width="800">
     <Grid>
         <DockPanel>
             <Menu DockPanel.Dock="Top" Width="Auto" Height="25">
@@ -20,7 +20,7 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator/>
-                <MenuItem Header="_Edit" Click="MenuItem_Edit" Name="EditMenuItem" InputGestureText="Ctrl+E"
+                <MenuItem Header="_Graph" Click="MenuItem_Edit" Name="EditMenuItem" InputGestureText="Ctrl+G"
                           IsEnabled="False" ToolTip="Edit the graph">
                     <MenuItem.Icon>
                         <Image Source="Icons/ASX_Edit_blue_16x.png"/>

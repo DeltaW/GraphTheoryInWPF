@@ -49,6 +49,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>DependencyGraphAncestor_16x.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -174,7 +177,6 @@
       <Name>GraphTheory.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Resource Include="Icons\ASX_Edit_blue_16x.png" />
     <Resource Include="Icons\NewGraph_16x.png" />
@@ -182,6 +184,9 @@
     <Resource Include="Icons\OpenFile_16x.png" />
     <Resource Include="Icons\SaveAs_16x.png" />
     <Resource Include="Icons\Save_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="DependencyGraphAncestor_16x.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
