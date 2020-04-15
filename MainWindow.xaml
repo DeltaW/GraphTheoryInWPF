@@ -8,7 +8,7 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <DockPanel>
-            <Menu DockPanel.Dock="Top" Width="Auto" Height="25" VerticalContentAlignment="Center">
+            <Menu DockPanel.Dock="Top" Width="Auto" Height="25">
                 <MenuItem Header="_New" Click="MenuItem_Click_New" InputGestureText="Ctrl+N">
                     <MenuItem.Icon>
                         <Image Source="Icons/NewGraph_16x.png"/>
