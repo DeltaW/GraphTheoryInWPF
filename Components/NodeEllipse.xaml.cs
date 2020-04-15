@@ -98,8 +98,7 @@ namespace GraphTheoryInWPF.Components {
                 // Schnittpunkt 2
                 s2.X = otherPoint.X;
                 s2.Y = this.Center.Y + halbAchse.Y;
-            } 
-            else {
+            } else {
                 // Steigung
                 double m = dy / dx;
                 // Y-Achsenabschnitt
@@ -123,7 +122,7 @@ namespace GraphTheoryInWPF.Components {
                 double mp2 = -(p / 2);
                 double mp2q = mp2 * mp2;
                 double w = Math.Sqrt(mp2q - q);
-                
+
                 // Schnittpunkt 1
                 s1.X = mp2 + w;
                 s1.Y = m * s1.X + d;
@@ -214,12 +213,21 @@ namespace GraphTheoryInWPF.Components {
             }
         }
 
-        public static Point GetEllipseWidthAndHeightBasedOnText(string text, int minDistanceToText = 10) {
+        public static Point GetEllipseWidthAndHeightBasedOnText(string text, int minDistanceToText = 10, Node n = null) {
             /* Calculates the width and heigth of a Textblock and returns them as a Point
              * Where Point.X represents the width and Point.Y the height
              * "text" will be the text that is to be displayed and it is used to measure the size of the shapes
              * "minDistanceToText" is the minimum Distance between the TextBlock's Rect and the Ellipse's Rect
              */
+
+            if (n != null) {
+                if ((bool) Properties.Settings.Default["UseDynamicNodeEllipsePadding"]) {
+                    minDistanceToText += (n.Connections.Count * (int) Properties.Settings.Default["ExtraPaddingPerConnection"]);
+                    minDistanceToText = (int) Clamp(minDistanceToText,
+                                                    (int) Properties.Settings.Default["MinNodeEllipsePadding"],
+                                                    (int) Properties.Settings.Default["MaxNodeEllipsePadding"]);
+                }
+            }
 
             // Create a TextBlock
             TextBlock textBlock = new TextBlock() {
@@ -236,7 +244,7 @@ namespace GraphTheoryInWPF.Components {
         }
 
         private void InstantiateContent(Point p, Brush strokeBrush, Brush textBrush, int minDistanceToText = 10, int zIndex = 3) {
-            Point Size = NodeEllipse.GetEllipseWidthAndHeightBasedOnText(this._node.Name, minDistanceToText);
+            Point Size = NodeEllipse.GetEllipseWidthAndHeightBasedOnText(this._node.Name, minDistanceToText, this._node);
 
             this._measurements = new Rect() {
                 X = p.X,
@@ -310,7 +318,7 @@ namespace GraphTheoryInWPF.Components {
             this.MouseMove += new MouseEventHandler(this.Control_MouseMove);
         }
 
-        private double Clamp(double value, double min, double max) {
+        private static double Clamp(double value, double min, double max) {
             return (value < min) ? min : ((value > max) ? max : value);
         }
 
@@ -323,10 +331,10 @@ namespace GraphTheoryInWPF.Components {
         public void SetCoordinates(Point p) {
 
             // Constrain the X Position
-            p.X = this.Clamp((int) p.X, 0, this._canvas.ActualWidth - this._measurements.Width);
+            p.X = Clamp((int) p.X, 0, this._canvas.ActualWidth - this._measurements.Width);
 
             // Constrain the Y Position
-            p.Y = this.Clamp(p.Y, 0, this._canvas.ActualHeight - this._measurements.Height);
+            p.Y = Clamp(p.Y, 0, this._canvas.ActualHeight - this._measurements.Height);
 
             this._measurements.X = p.X;
             this._measurements.Y = p.Y;

@@ -46,7 +46,9 @@ namespace GraphTheoryInWPF.ViewModel {
             // Gett All Names and Sizes
             List<string> allNodeNames =  this._graph.GetAllNodeNames().ToList();
             List<Point> sizes = new List<Point>();
-            allNodeNames.ForEach(x => sizes.Add(NodeEllipse.GetEllipseWidthAndHeightBasedOnText(x)));
+            allNodeNames.ForEach(x => sizes.Add(NodeEllipse.GetEllipseWidthAndHeightBasedOnText(x,
+                (int) Properties.Settings.Default["MinNodeEllipsePadding"],
+                this._graph.GetNode(x))));
 
             // Actually Fill the Canvas
             for (int i = 0; i < allNodeNames.Count; i++) {
@@ -62,7 +64,8 @@ namespace GraphTheoryInWPF.ViewModel {
         }
 
         private void AddNodeEllipse(Node n, Point p) {
-            NodeEllipse nodeEllipse = new NodeEllipse(this._shortestRouteCanvas, this._graph, n, p, Brushes.Magenta, Brushes.White);
+            NodeEllipse nodeEllipse = new NodeEllipse(this._shortestRouteCanvas, this._graph, n, p, Brushes.Magenta, Brushes.White,
+                                                      (int) Properties.Settings.Default["MinNodeEllipsePadding"]);
             this._shortestRouteCanvas.Children.Add(nodeEllipse);
         }
 
