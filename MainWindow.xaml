@@ -8,17 +8,41 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <DockPanel>
-            <Menu DockPanel.Dock="Top" Width="Auto" Height="20">
-                <MenuItem Header="_New" Click="MenuItem_Click_New" InputGestureText="Ctrl+N"/>
-                <MenuItem Header="_Open" Click="MenuItem_Click_Open" InputGestureText="Ctrl+O"/>
+            <Menu DockPanel.Dock="Top" Width="Auto" Height="25" VerticalContentAlignment="Center">
+                <MenuItem Header="_New" Click="MenuItem_Click_New" InputGestureText="Ctrl+N">
+                    <MenuItem.Icon>
+                        <Image Source="Icons/NewGraph_16x.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Open" Click="MenuItem_Click_Open" InputGestureText="Ctrl+O">
+                    <MenuItem.Icon>
+                        <Image Source="Icons/OpenFile_16x.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Separator/>
                 <MenuItem Header="_Edit" Click="MenuItem_Edit" Name="EditMenuItem" InputGestureText="Ctrl+E"
-                          IsEnabled="False" ToolTip="Edit the graph"/>
+                          IsEnabled="False" ToolTip="Edit the graph">
+                    <MenuItem.Icon>
+                        <Image Source="Icons/ASX_Edit_blue_16x.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <MenuItem Header="_Routes" Click="MenuItem_Routes" Name="RoutesMenuItem" InputGestureText="Ctrl+R"
-                          IsEnabled="True" ToolTip="Select routes"/>
+                          IsEnabled="True" ToolTip="Select routes">
+                    <MenuItem.Icon>
+                        <Image Source="Icons/Next_16x.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Separator/>
-                <MenuItem Header="_Save" Click="MenuItem_Click_Save" InputGestureText="Ctrl+S"/>
-                <MenuItem Header="Save _As" Click="MenuItem_Click_SaveAs"/>
+                <MenuItem Header="_Save" Click="MenuItem_Click_Save" InputGestureText="Ctrl+S">
+                    <MenuItem.Icon>
+                        <Image Source="Icons/Save_16x.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Save _As" Click="MenuItem_Click_SaveAs">
+                    <MenuItem.Icon>
+                        <Image Source="Icons/SaveAs_16x.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
             </Menu>
         <ContentControl Content="{Binding ShownView}"/>
         </DockPanel>
