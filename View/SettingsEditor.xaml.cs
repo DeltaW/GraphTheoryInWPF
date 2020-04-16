@@ -26,21 +26,68 @@ namespace GraphTheoryInWPF.View {
         public int ExtraPaddingPerConnection { get; set; }
         public bool UseDynamicNodeEllipsePadding { get; set; }
 
+        public System.Drawing.Color EllipseFillColour;
+        public System.Drawing.Color EllipseStrokeColour;
+        public System.Drawing.Color EllipseTextColour;
+        public System.Drawing.Color ConnectionColour;
+        public System.Drawing.Color RouteColour;
+
         private readonly Graph _graph;
 
         public SettingsEditor(Graph graph) {
             this.InitializeComponent();
             this._graph = graph;
 
+            // Padding stuff
             this.MinNodeEllipsePadding = (int) Properties.Settings.Default["MinNodeEllipsePadding"];
             this.MaxNodeEllipsePadding = (int) Properties.Settings.Default["MaxNodeEllipsePadding"];
             this.ExtraPaddingPerConnection = (int) Properties.Settings.Default["ExtraPaddingPerConnection"];
             this.UseDynamicNodeEllipsePadding = (bool) Properties.Settings.Default["UseDynamicNodeEllipsePadding"];
 
+            // Colours
+            this.EllipseFillColour = (System.Drawing.Color) Properties.Settings.Default["NodeEllipseFillBrushColour"];
+            this.EllipseStrokeColour = (System.Drawing.Color) Properties.Settings.Default["NodeEllipseStrokeBrushColour"];
+            this.EllipseTextColour = (System.Drawing.Color) Properties.Settings.Default["NodeEllipseTextBrushColour"];
+            this.ConnectionColour = (System.Drawing.Color) Properties.Settings.Default["NodeConnectionNormalBrushColour"];
+            this.RouteColour = (System.Drawing.Color) Properties.Settings.Default["NodeConnectionPathBrushColour"];
+
+            // Padding Stuff
             this.TextBox_ExtraPaddingPerConnection.Text = ((int) Properties.Settings.Default["ExtraPaddingPerConnection"]).ToString();
             this.TextBox_MinNodeEllipsePadding.Text = ((int) Properties.Settings.Default["MinNodeEllipsePadding"]).ToString();
             this.TextBox_MaxNodeEllipsePadding.Text = ((int) Properties.Settings.Default["MaxNodeEllipsePadding"]).ToString();
             this.CheckBox_UseDynamicNodeEllipsePadding.IsChecked = (bool) Properties.Settings.Default["UseDynamicNodeEllipsePadding"];
+
+            // Colours
+            this.EllipseFillPreview.Background = new SolidColorBrush(new System.Windows.Media.Color() {
+                A = ((System.Drawing.Color) (Properties.Settings.Default["NodeEllipseFillBrushColour"])).A,
+                R = ((System.Drawing.Color) (Properties.Settings.Default["NodeEllipseFillBrushColour"])).R,
+                G = ((System.Drawing.Color) (Properties.Settings.Default["NodeEllipseFillBrushColour"])).G,
+                B = ((System.Drawing.Color) (Properties.Settings.Default["NodeEllipseFillBrushColour"])).B,
+            });
+            this.EllipseStrokePreview.Background = new SolidColorBrush(new System.Windows.Media.Color() {
+                A = ((System.Drawing.Color) (Properties.Settings.Default["NodeEllipseStrokeBrushColour"])).A,
+                R = ((System.Drawing.Color) (Properties.Settings.Default["NodeEllipseStrokeBrushColour"])).R,
+                G = ((System.Drawing.Color) (Properties.Settings.Default["NodeEllipseStrokeBrushColour"])).G,
+                B = ((System.Drawing.Color) (Properties.Settings.Default["NodeEllipseStrokeBrushColour"])).B,
+            });
+            this.EllipseTextPreview.Background = new SolidColorBrush(new System.Windows.Media.Color() {
+                A = ((System.Drawing.Color) (Properties.Settings.Default["NodeEllipseTextBrushColour"])).A,
+                R = ((System.Drawing.Color) (Properties.Settings.Default["NodeEllipseTextBrushColour"])).R,
+                G = ((System.Drawing.Color) (Properties.Settings.Default["NodeEllipseTextBrushColour"])).G,
+                B = ((System.Drawing.Color) (Properties.Settings.Default["NodeEllipseTextBrushColour"])).B,
+            });
+            this.ConnectionPreview.Background = new SolidColorBrush(new System.Windows.Media.Color() {
+                A = ((System.Drawing.Color) (Properties.Settings.Default["NodeConnectionNormalBrushColour"])).A,
+                R = ((System.Drawing.Color) (Properties.Settings.Default["NodeConnectionNormalBrushColour"])).R,
+                G = ((System.Drawing.Color) (Properties.Settings.Default["NodeConnectionNormalBrushColour"])).G,
+                B = ((System.Drawing.Color) (Properties.Settings.Default["NodeConnectionNormalBrushColour"])).B,
+            });
+            this.RoutePreview.Background = new SolidColorBrush(new System.Windows.Media.Color() {
+                A = ((System.Drawing.Color) (Properties.Settings.Default["NodeConnectionPathBrushColour"])).A,
+                R = ((System.Drawing.Color) (Properties.Settings.Default["NodeConnectionPathBrushColour"])).R,
+                G = ((System.Drawing.Color) (Properties.Settings.Default["NodeConnectionPathBrushColour"])).G,
+                B = ((System.Drawing.Color) (Properties.Settings.Default["NodeConnectionPathBrushColour"])).B,
+            });
 
             // Fill the Canvas
             this.OnSettingsChanged();
@@ -72,21 +119,42 @@ namespace GraphTheoryInWPF.View {
             bool b = this.MaxNodeEllipsePadding == (int) Properties.Settings.Default["MaxNodeEllipsePadding"];
             bool c = this.ExtraPaddingPerConnection == (int) Properties.Settings.Default["ExtraPaddingPerConnection"];
             bool d = this.UseDynamicNodeEllipsePadding == (bool) Properties.Settings.Default["UseDynamicNodeEllipsePadding"];
-            return !(a && b && c && d);
+            bool e = this.EllipseFillColour == (System.Drawing.Color) Properties.Settings.Default["NodeEllipseFillBrushColour"];
+            bool f = this.EllipseStrokeColour  == (System.Drawing.Color) Properties.Settings.Default["NodeEllipseStrokeBrushColour"];
+            bool g = this.EllipseTextColour == (System.Drawing.Color) Properties.Settings.Default["NodeEllipseTextBrushColour"];
+            bool h = this.ConnectionColour  == (System.Drawing.Color) Properties.Settings.Default["NodeConnectionNormalBrushColour"];
+            bool i = this.RouteColour  == (System.Drawing.Color) Properties.Settings.Default["NodeConnectionPathBrushColour"];
+            return !(a && b && c && d && e && f && g && h && i);
         }
 
         public void ResetSettings() {
+            // Padding stuff
             Properties.Settings.Default["MinNodeEllipsePadding"] = this.MinNodeEllipsePadding;
             Properties.Settings.Default["MaxNodeEllipsePadding"] = this.MaxNodeEllipsePadding;
             Properties.Settings.Default["ExtraPaddingPerConnection"] = this.ExtraPaddingPerConnection;
             Properties.Settings.Default["UseDynamicNodeEllipsePadding"] = this.UseDynamicNodeEllipsePadding;
+
+            // Colours
+            Properties.Settings.Default["NodeEllipseFillBrushColour"] = this.EllipseFillColour;
+            Properties.Settings.Default["NodeEllipseStrokeBrushColour"] = this.EllipseStrokeColour;
+            Properties.Settings.Default["NodeEllipseTextBrushColour"] = this.EllipseTextColour;
+            Properties.Settings.Default["NodeConnectionNormalBrushColour"] = this.ConnectionColour;
+            Properties.Settings.Default["NodeConnectionPathBrushColour"] = this.RouteColour;
         }
 
         private void Button_Click_SaveSettings(object sender, RoutedEventArgs e) {
+            // Padding stuff
             this.MinNodeEllipsePadding = (int) Properties.Settings.Default["MinNodeEllipsePadding"];
             this.MaxNodeEllipsePadding = (int) Properties.Settings.Default["MaxNodeEllipsePadding"];
             this.ExtraPaddingPerConnection = (int) Properties.Settings.Default["ExtraPaddingPerConnection"];
             this.UseDynamicNodeEllipsePadding = (bool) Properties.Settings.Default["UseDynamicNodeEllipsePadding"];
+
+            // Colours
+            this.EllipseFillColour = (System.Drawing.Color) Properties.Settings.Default["NodeEllipseFillBrushColour"];
+            this.EllipseStrokeColour = (System.Drawing.Color) Properties.Settings.Default["NodeEllipseStrokeBrushColour"];
+            this.EllipseTextColour = (System.Drawing.Color) Properties.Settings.Default["NodeEllipseTextBrushColour"];
+            this.ConnectionColour = (System.Drawing.Color) Properties.Settings.Default["NodeConnectionNormalBrushColour"];
+            this.RouteColour = (System.Drawing.Color) Properties.Settings.Default["NodeConnectionPathBrushColour"];
 
             Properties.Settings.Default.Save();
         }
@@ -113,5 +181,88 @@ namespace GraphTheoryInWPF.View {
             Properties.Settings.Default["UseDynamicNodeEllipsePadding"] = (bool) ((CheckBox) sender).IsChecked;
             this.OnSettingsChanged();
         }
+
+        #region Colours
+        private void ListBoxItem_MouseDoubleClick_EllipseFillColour(object sender, MouseButtonEventArgs e) {
+            // Ellipse Fill Colour
+            System.Windows.Forms.ColorDialog temp = new System.Windows.Forms.ColorDialog {
+                Color = (System.Drawing.Color) Properties.Settings.Default["NodeEllipseFillBrushColour"]
+            };
+            if (temp.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
+                Properties.Settings.Default["NodeEllipseFillBrushColour"] = temp.Color;
+                this.EllipseFillPreview.Background = new SolidColorBrush(new System.Windows.Media.Color() {
+                    A = temp.Color.A,
+                    R = temp.Color.R,
+                    G = temp.Color.G,
+                    B = temp.Color.B,
+                });
+                this.OnSettingsChanged();
+            }
+        }
+        private void ListBoxItem_MouseDoubleClick_EllipseStrokeColour(object sender, MouseButtonEventArgs e) {
+            // Ellipse Stroke Colour
+            System.Windows.Forms.ColorDialog temp = new System.Windows.Forms.ColorDialog {
+                Color = (System.Drawing.Color) Properties.Settings.Default["NodeEllipseStrokeBrushColour"]
+            };
+            if (temp.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
+                Properties.Settings.Default["NodeEllipseStrokeBrushColour"] = temp.Color;
+                this.EllipseStrokePreview.Background = new SolidColorBrush(new System.Windows.Media.Color() {
+                    A = temp.Color.A,
+                    R = temp.Color.R,
+                    G = temp.Color.G,
+                    B = temp.Color.B,
+                });
+                this.OnSettingsChanged();
+            }
+        }
+        private void ListBoxItem_MouseDoubleClick_TextColour(object sender, MouseButtonEventArgs e) {
+            // Text Colour
+            System.Windows.Forms.ColorDialog temp = new System.Windows.Forms.ColorDialog {
+                Color = (System.Drawing.Color) Properties.Settings.Default["NodeEllipseTextBrushColour"]
+            };
+            if (temp.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
+                Properties.Settings.Default["NodeEllipseTextBrushColour"] = temp.Color;
+                this.EllipseTextPreview.Background = new SolidColorBrush(new System.Windows.Media.Color() {
+                    A = temp.Color.A,
+                    R = temp.Color.R,
+                    G = temp.Color.G,
+                    B = temp.Color.B,
+                });
+                this.OnSettingsChanged();
+            }
+        }
+        private void ListBoxItem_MouseDoubleClick_ConnectionColour(object sender, MouseButtonEventArgs e) {
+            // Connection Colour
+            System.Windows.Forms.ColorDialog temp = new System.Windows.Forms.ColorDialog {
+                Color = (System.Drawing.Color) Properties.Settings.Default["NodeConnectionNormalBrushColour"]
+            };
+            if (temp.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
+                Properties.Settings.Default["NodeConnectionNormalBrushColour"] = temp.Color;
+                this.ConnectionPreview.Background = new SolidColorBrush(new System.Windows.Media.Color() {
+                    A = temp.Color.A,
+                    R = temp.Color.R,
+                    G = temp.Color.G,
+                    B = temp.Color.B,
+                });
+                this.OnSettingsChanged();
+            }
+        }
+        private void ListBoxItem_MouseDoubleClick_RouteColour(object sender, MouseButtonEventArgs e) {
+            // Route Colour
+            System.Windows.Forms.ColorDialog temp = new System.Windows.Forms.ColorDialog {
+                Color = (System.Drawing.Color) Properties.Settings.Default["NodeConnectionPathBrushColour"]
+            };
+            if (temp.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
+                Properties.Settings.Default["NodeConnectionPathBrushColour"] = temp.Color;
+                this.RoutePreview.Background = new SolidColorBrush(new System.Windows.Media.Color() {
+                    A = temp.Color.A,
+                    R = temp.Color.R,
+                    G = temp.Color.G,
+                    B = temp.Color.B,
+                });
+                this.OnSettingsChanged();
+            }
+        }
+        #endregion
     }
 }

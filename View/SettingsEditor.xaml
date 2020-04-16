@@ -72,6 +72,53 @@
                             <TextBox x:Name="TextBox_ExtraPaddingPerConnection" TextChanged="TextBox_TextChanged"/>
                         </StackPanel>
                     </ListBoxItem>
+                    <Separator Background="White"/>
+
+                    <!--COLOUR SELECTORS-->
+                    <ListBoxItem MouseDoubleClick="ListBoxItem_MouseDoubleClick_EllipseFillColour">
+                        <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
+                            <Label Foreground="White" Content="Node Ellipse Fill Colour"/>
+                            <Border BorderBrush="White" BorderThickness="1" Height="18">
+                                <Canvas Width="16" Height="16" Name="EllipseFillPreview"/>
+                            </Border>
+                        </StackPanel>
+                    </ListBoxItem>
+                    <Separator Background="White"/>
+                    <ListBoxItem MouseDoubleClick="ListBoxItem_MouseDoubleClick_EllipseStrokeColour">
+                        <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
+                            <Label Foreground="White" Content="Node Ellipse Stroke Colour"/>
+                            <Border BorderBrush="White" BorderThickness="1" Height="18">
+                                <Canvas Width="16" Height="16" Name="EllipseStrokePreview"/>
+                            </Border>
+                        </StackPanel>
+                    </ListBoxItem>
+                    <Separator Background="White"/>
+                    <ListBoxItem MouseDoubleClick="ListBoxItem_MouseDoubleClick_TextColour">
+                        <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
+                            <Label Foreground="White" Content="Node Ellipse Text Colour"/>
+                            <Border BorderBrush="White" BorderThickness="1" Height="18">
+                                <Canvas Width="16" Height="16" Name="EllipseTextPreview"/>
+                            </Border>
+                        </StackPanel>
+                    </ListBoxItem>
+                    <Separator Background="White"/>
+                    <ListBoxItem MouseDoubleClick="ListBoxItem_MouseDoubleClick_ConnectionColour">
+                        <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
+                            <Label Foreground="White" Content="Node Connection Colour"/>
+                            <Border BorderBrush="White" BorderThickness="1" Height="18">
+                                <Canvas Width="16" Height="16" Name="ConnectionPreview"/>
+                            </Border>
+                        </StackPanel>
+                    </ListBoxItem>
+                    <Separator Background="White"/>
+                    <ListBoxItem MouseDoubleClick="ListBoxItem_MouseDoubleClick_RouteColour">
+                        <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
+                            <Label Foreground="White" Content="Route Colour"/>
+                            <Border BorderBrush="White" BorderThickness="1" Height="18">
+                                <Canvas Width="16" Height="16" Name="RoutePreview"/>
+                            </Border>
+                        </StackPanel>
+                    </ListBoxItem>
                 </ListBox>
                 <Border Grid.Row="1" BorderThickness="5 2.5 5 5" BorderBrush="White"/>
 
