@@ -1,0 +1,114 @@
+﻿<UserControl x:Class="GraphTheoryInWPF.View.SettingsEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GraphTheoryInWPF.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <Grid Background="#19374B">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <!--left-->
+        <Grid Grid.Column="0" Background="#19374B" Margin="10 10 5 10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="10*"/>
+                </Grid.RowDefinitions>
+
+                <DockPanel Grid.Row="0">
+                    <Grid DockPanel.Dock="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <!--left-->
+                        <TextBlock Margin="10"  Grid.Row="0" Text="Settings" Foreground="White"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   FontSize="25" FontWeight="ExtraBold"/>
+
+                        <!--right-->
+                        <Button FontSize="16" FontWeight="Bold" Background="#19374B" Foreground="White" 
+                                Margin="5 10 10 10" Grid.Column="1" Content="Save Settings"
+                                HorizontalAlignment="Stretch" Click="Button_Click_SaveSettings"/>
+
+                        <Border Grid.ColumnSpan="2" BorderThickness="5 5 5 2.5" BorderBrush="White"/>
+                    </Grid>
+                </DockPanel>
+
+                <ListBox  Grid.Row="1" Background="#19374B" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                          Name="SettingsList"
+                          HorizontalContentAlignment="Stretch">
+                    <ListBoxItem>
+                        <StackPanel HorizontalAlignment="Stretch">
+                            <Label Foreground="White" Content="Min Node Ellipse Padding"/>
+                            <TextBox x:Name="TextBox_MinNodeEllipsePadding" TextChanged="TextBox_TextChanged"/>
+                        </StackPanel>
+                    </ListBoxItem>
+                    <Separator Background="White"/>
+                    <ListBoxItem>
+                        <StackPanel HorizontalAlignment="Stretch">
+                            <Label Foreground="White" Content="Max Node Ellipse Padding"/>
+                            <TextBox x:Name="TextBox_MaxNodeEllipsePadding" TextChanged="TextBox_TextChanged"/>
+                        </StackPanel>
+                    </ListBoxItem>
+                    <Separator Background="White"/>
+                    <ListBoxItem>
+                        <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal" VerticalAlignment="Center">
+                            <Label Foreground="White" Content="Use Dynamic Node Ellipse Padding"/>
+                            <CheckBox x:Name="CheckBox_UseDynamicNodeEllipsePadding" Checked="CheckBox_UseDynamicNodeEllipsePadding_Changed" Unchecked="CheckBox_UseDynamicNodeEllipsePadding_Changed"/>
+                        </StackPanel>
+                    </ListBoxItem>
+                    <Separator Background="White"/>
+                    <ListBoxItem>
+                        <StackPanel HorizontalAlignment="Stretch">
+                            <Label Foreground="White" Content="Extra Padding Per Connection"/>
+                            <TextBox x:Name="TextBox_ExtraPaddingPerConnection" TextChanged="TextBox_TextChanged"/>
+                        </StackPanel>
+                    </ListBoxItem>
+                </ListBox>
+                <Border Grid.Row="1" BorderThickness="5 2.5 5 5" BorderBrush="White"/>
+
+            </Grid>
+        </Grid>
+
+        <!--right-->
+        <!--<Grid Grid.Column="1" Background="#19374B" Margin="5 10 10 10">-->
+        <Grid Grid.Column="1" Background="#19374B" Margin="5 10 10 10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="8*"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" BorderThickness="5 5 5 2.5" BorderBrush="White"/>
+            <TextBlock Margin="10"  Grid.Row="0" Text="Preview" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" FontWeight="ExtraBold"/>
+            <!--<TabControl Margin="10" Grid.Row="1" Background="#19374B">
+                <TabItem Header="_Text" Name="TextTab">
+                    -->
+            <!--textblock with routes -->
+            <!--
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                        <TextBlock Margin="10" Foreground="White" Name="AllPossibleRoutesTextBlock" FontSize="16" Text=""/>
+                    </ScrollViewer>
+                </TabItem>
+                <TabItem Header="_Canvas" IsSelected="True" Name="CanvasTab">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                        -->
+            <!--canvas with shortest route-->
+            <!--
+                        <Canvas Background="#19374B" Name="ShortestRouteCanvas">
+                        </Canvas>
+                    </ScrollViewer>
+                </TabItem>
+            </TabControl>-->
+            <Border Grid.Row="1" BorderThickness="5 2.5 5 5" BorderBrush="White"/>
+        </Grid>
+        <!--</Grid>-->
+    </Grid>
+</UserControl>

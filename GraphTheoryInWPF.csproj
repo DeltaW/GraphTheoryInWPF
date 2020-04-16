@@ -96,6 +96,9 @@
     <Compile Include="View\RoutePlanner.xaml.cs">
       <DependentUpon>RoutePlanner.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\SettingsEditor.xaml.cs">
+      <DependentUpon>SettingsEditor.xaml</DependentUpon>
+    </Compile>
     <Page Include="Components\NodeConnectionEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -129,6 +132,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\RoutePlanner.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SettingsEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -187,6 +194,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="DependencyGraphAncestor_16x.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Settings_16x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

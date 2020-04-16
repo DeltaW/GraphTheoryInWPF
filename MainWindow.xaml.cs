@@ -139,12 +139,6 @@ namespace GraphTheoryInWPF {
                 base.OnClosing(e);
         }
 
-        //protected override void OnClosed(EventArgs e) {
-        //    if (this.AskToSaveChangesAndOrContinue()) {
-        //        base.OnClosed(e);
-        //    }
-        //}
-
         private bool SavePrompt(MessageBoxButton messageBoxButton) {
             MessageBoxResult result = MessageBox.Show("Would you like to save any changes made to the graph?",
                                                       "GraphTheory", messageBoxButton, MessageBoxImage.Question);
@@ -186,7 +180,6 @@ namespace GraphTheoryInWPF {
 
         private void MenuItem_Click_New(object sender, RoutedEventArgs e) {
             // New
-
             if (this.AskToSaveChangesAndOrContinue()) {
                 this._currentPath = null;
                 this._currentGraph = new Graph();
@@ -221,7 +214,6 @@ namespace GraphTheoryInWPF {
 
         private void MenuItem_Click_Open(object sender, RoutedEventArgs e) {
             // Open
-
             if (this.AskToSaveChangesAndOrContinue()) {
                 OpenFileDialog openFileDialog = new OpenFileDialog {
                     DefaultExt = ".txt",
@@ -242,14 +234,31 @@ namespace GraphTheoryInWPF {
 
         private void MenuItem_Edit(object sender, RoutedEventArgs e) {
             // Edit
+            if (this.ShownView is SettingsEditor settingsEditor)
+                settingsEditor.ResetSettings();
+
             this.ShownView = new GraphEditor(this._currentGraph);
             this.EditMenuItem.IsEnabled = false;
             this.RoutesMenuItem.IsEnabled = true;
+            this.SettingsMenuItem.IsEnabled = true;
         }
 
         private void MenuItem_Routes(object sender, RoutedEventArgs e) {
+            // Routes
+            if (this.ShownView is SettingsEditor settingsEditor)
+                settingsEditor.ResetSettings();
+
             this.ShownView = new RoutePlanner(this._currentGraph);
             this.RoutesMenuItem.IsEnabled = false;
+            this.EditMenuItem.IsEnabled = true;
+            this.SettingsMenuItem.IsEnabled = true;
+        }
+
+        private void MenuItem_Settings(object sender, RoutedEventArgs e) {
+            // Settings
+            this.ShownView = new SettingsEditor(this._currentGraph);
+            this.SettingsMenuItem.IsEnabled = false;
+            this.RoutesMenuItem.IsEnabled = true;
             this.EditMenuItem.IsEnabled = true;
         }
     }
