@@ -130,5 +130,17 @@ namespace GraphTheoryInWPF.Properties {
                 this["NodeConnectionPathBrushColour"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AllRoutesRadioButtonSelected {
+            get {
+                return ((bool)(this["AllRoutesRadioButtonSelected"]));
+            }
+            set {
+                this["AllRoutesRadioButtonSelected"] = value;
+            }
+        }
     }
 }

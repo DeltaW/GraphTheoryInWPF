@@ -36,14 +36,29 @@ namespace GraphTheoryInWPF.ViewModel {
             this._rbShortestRoute = rbShortestRoute;
             this._shortestRouteCanvas = shortestRouteCanvas;
 
+            if ((bool) Properties.Settings.Default["AllRoutesRadioButtonSelected"]) {
+                this._rbShortestRoute.IsChecked = false;
+                this._rbAllRoutes.IsChecked = true;
+            } else {
+                this._rbShortestRoute.IsChecked = true;
+                this._rbAllRoutes.IsChecked = false;
+            }
+
+
             NodeEllipse.FillCanvasWithAllNodes(this._shortestRouteCanvas, this._graph);
         }
 
         public void OnNodeSelectorChanged() {
+            // Save RadioButton State
+
             if (this._rbShortestRoute.IsChecked == true) {
+                Properties.Settings.Default["AllRoutesRadioButtonSelected"] = false;
+                Properties.Settings.Default.Save();
                 this._textblock.Text = this.GetShortestRouteAsString();
 
             } else if (this._rbAllRoutes.IsChecked == true) {
+                Properties.Settings.Default["AllRoutesRadioButtonSelected"] = true;
+                Properties.Settings.Default.Save();
                 this._textblock.Text = this.GetAllRoute();
             }
             for (int i = 0; i < this._shortestRouteCanvas.Children.Count; i++) {
