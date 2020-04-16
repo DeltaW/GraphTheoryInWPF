@@ -52,14 +52,28 @@ namespace GraphTheoryInWPF.View {
             NodeEllipse.FillCanvasWithAllNodes(this.GraphPreviewCanvas, this._graph);
         }
 
+        public void AskToSaveSettings() {
+            MessageBoxResult result = MessageBox.Show("Would you like to save any changes made to the settings?",
+                                                      "GraphTheory", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-        //public bool WereSettingsChanged() {
-        //    bool a = this.MinNodeEllipsePadding == (int) Properties.Settings.Default["MinNodeEllipsePadding"];
-        //    bool b = this.MaxNodeEllipsePadding == (int) Properties.Settings.Default["MaxNodeEllipsePadding"];
-        //    bool c = this.ExtraPaddingPerConnection == (int) Properties.Settings.Default["ExtraPaddingPerConnection"];
-        //    bool d = this.UseDynamicNodeEllipsePadding == (bool) Properties.Settings.Default["UseDynamicNodeEllipsePadding"];
-        //    return !(a && b && c && d);
-        //}
+            switch (result) {
+                case MessageBoxResult.Yes:
+                    this.Button_Click_SaveSettings(null, null);
+                    break;
+                case MessageBoxResult.No:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public bool WereSettingsChanged() {
+            bool a = this.MinNodeEllipsePadding == (int) Properties.Settings.Default["MinNodeEllipsePadding"];
+            bool b = this.MaxNodeEllipsePadding == (int) Properties.Settings.Default["MaxNodeEllipsePadding"];
+            bool c = this.ExtraPaddingPerConnection == (int) Properties.Settings.Default["ExtraPaddingPerConnection"];
+            bool d = this.UseDynamicNodeEllipsePadding == (bool) Properties.Settings.Default["UseDynamicNodeEllipsePadding"];
+            return !(a && b && c && d);
+        }
 
         public void ResetSettings() {
             Properties.Settings.Default["MinNodeEllipsePadding"] = this.MinNodeEllipsePadding;

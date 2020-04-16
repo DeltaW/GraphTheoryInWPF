@@ -226,6 +226,8 @@ namespace GraphTheoryInWPF {
                         this.ShownView = new RoutePlanner(this._currentGraph);
                     } else if (this.ShownView is GraphEditor) {
                         this.ShownView = new GraphEditor(this._currentGraph);
+                    } else if (this.ShownView is SettingsEditor) {
+                        this.ShownView = new SettingsEditor(this._currentGraph);
                     }
                     this._currentPath = openFileDialog.FileName;
                 }
@@ -234,8 +236,11 @@ namespace GraphTheoryInWPF {
 
         private void MenuItem_Edit(object sender, RoutedEventArgs e) {
             // Edit
-            if (this.ShownView is SettingsEditor settingsEditor)
+            if (this.ShownView is SettingsEditor settingsEditor) {
+                if (settingsEditor.WereSettingsChanged())
+                    settingsEditor.AskToSaveSettings();
                 settingsEditor.ResetSettings();
+            }
 
             this.ShownView = new GraphEditor(this._currentGraph);
             this.EditMenuItem.IsEnabled = false;
@@ -245,8 +250,12 @@ namespace GraphTheoryInWPF {
 
         private void MenuItem_Routes(object sender, RoutedEventArgs e) {
             // Routes
-            if (this.ShownView is SettingsEditor settingsEditor)
+            if (this.ShownView is SettingsEditor settingsEditor) {
+                if (settingsEditor.WereSettingsChanged())
+                    settingsEditor.AskToSaveSettings();
                 settingsEditor.ResetSettings();
+            }
+
 
             this.ShownView = new RoutePlanner(this._currentGraph);
             this.RoutesMenuItem.IsEnabled = false;
