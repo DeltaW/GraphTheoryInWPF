@@ -25,19 +25,55 @@ namespace GraphTheoryInWPF.Components {
 
         public void UpdateColour() {
             if (this.IsPartOfPath) {
-                this._line.Stroke = Brushes.Green;
+                this._line.Stroke = new SolidColorBrush(
+                    new System.Windows.Media.Color() {
+                        A = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionPathBrushColour"]).A,
+                        R = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionPathBrushColour"]).R,
+                        G = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionPathBrushColour"]).G,
+                        B = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionPathBrushColour"]).B,
+                    });
                 Canvas.SetZIndex(this._line, 0);
 
-                this._directionLines[0].Stroke = Brushes.Green;
-                this._directionLines[1].Stroke = Brushes.Green;
+                this._directionLines[0].Stroke = new SolidColorBrush(
+                    new System.Windows.Media.Color() {
+                        A = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionPathBrushColour"]).A,
+                        R = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionPathBrushColour"]).R,
+                        G = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionPathBrushColour"]).G,
+                        B = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionPathBrushColour"]).B,
+                    });
+                this._directionLines[1].Stroke = new SolidColorBrush(
+                    new System.Windows.Media.Color() {
+                        A = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionPathBrushColour"]).A,
+                        R = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionPathBrushColour"]).R,
+                        G = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionPathBrushColour"]).G,
+                        B = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionPathBrushColour"]).B,
+                    });
                 //Canvas.SetZIndex(this._directionLines[0], 0);
                 //Canvas.SetZIndex(this._directionLines[1], 0);
             } else {
-                this._line.Stroke = Brushes.White;
+                this._line.Stroke = new SolidColorBrush(
+                    new System.Windows.Media.Color() {
+                        A = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionNormalBrushColour"]).A,
+                        R = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionNormalBrushColour"]).R,
+                        G = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionNormalBrushColour"]).G,
+                        B = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionNormalBrushColour"]).B,
+                    });
                 Canvas.SetZIndex(this._line, -1);
 
-                this._directionLines[0].Stroke = Brushes.White;
-                this._directionLines[1].Stroke = Brushes.White;
+                this._directionLines[0].Stroke = new SolidColorBrush(
+                    new System.Windows.Media.Color() {
+                        A = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionNormalBrushColour"]).A,
+                        R = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionNormalBrushColour"]).R,
+                        G = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionNormalBrushColour"]).G,
+                        B = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionNormalBrushColour"]).B,
+                    });
+                this._directionLines[1].Stroke = new SolidColorBrush(
+                    new System.Windows.Media.Color() {
+                        A = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionNormalBrushColour"]).A,
+                        R = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionNormalBrushColour"]).R,
+                        G = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionNormalBrushColour"]).G,
+                        B = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionNormalBrushColour"]).B,
+                    });
                 //Canvas.SetZIndex(this._directionLines[0], 0);
                 //Canvas.SetZIndex(this._directionLines[1], 0);
             }

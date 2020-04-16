@@ -245,7 +245,7 @@ namespace GraphTheoryInWPF.Components {
                              textBlock.ActualHeight + 2 * minDistanceToText);
         }
 
-        private void InstantiateContent(Point p, Brush strokeBrush, Brush textBrush, int zIndex = 3) {
+        private void InstantiateContent(Point p, int zIndex = 3) {
 
             Point Size = NodeEllipse.GetEllipseWidthAndHeightBasedOnText(this._node.Name, out int minDistanceToText, this._node);
 
@@ -258,8 +258,20 @@ namespace GraphTheoryInWPF.Components {
 
             // Creating the Ellipse
             this._ellipse = new Ellipse() {
-                Fill = this._canvas.Background,
-                Stroke = strokeBrush,
+                Stroke = new SolidColorBrush(
+                    new System.Windows.Media.Color() {
+                        A = ((System.Drawing.Color) Properties.Settings.Default["NodeEllipseStrokeBrushColour"]).A,
+                        R = ((System.Drawing.Color) Properties.Settings.Default["NodeEllipseStrokeBrushColour"]).R,
+                        G = ((System.Drawing.Color) Properties.Settings.Default["NodeEllipseStrokeBrushColour"]).G,
+                        B = ((System.Drawing.Color) Properties.Settings.Default["NodeEllipseStrokeBrushColour"]).B,
+                    }),
+                Fill = new SolidColorBrush(
+                    new System.Windows.Media.Color() {
+                        A = ((System.Drawing.Color) Properties.Settings.Default["NodeEllipseFillBrushColour"]).A,
+                        R = ((System.Drawing.Color) Properties.Settings.Default["NodeEllipseFillBrushColour"]).R,
+                        G = ((System.Drawing.Color) Properties.Settings.Default["NodeEllipseFillBrushColour"]).G,
+                        B = ((System.Drawing.Color) Properties.Settings.Default["NodeEllipseFillBrushColour"]).B,
+                    }),
                 Width = this._measurements.Width,
                 Height = this._measurements.Height
             };
@@ -273,7 +285,13 @@ namespace GraphTheoryInWPF.Components {
             this._textBlock = new TextBlock() {
                 Text = this._node.Name,
                 TextAlignment = TextAlignment.Center,
-                Foreground = textBrush,
+                Foreground = new SolidColorBrush(
+                    new System.Windows.Media.Color() {
+                        A = ((System.Drawing.Color) Properties.Settings.Default["NodeEllipseTextBrushColour"]).A,
+                        R = ((System.Drawing.Color) Properties.Settings.Default["NodeEllipseTextBrushColour"]).R,
+                        G = ((System.Drawing.Color) Properties.Settings.Default["NodeEllipseTextBrushColour"]).G,
+                        B = ((System.Drawing.Color) Properties.Settings.Default["NodeEllipseTextBrushColour"]).B,
+                    }),
                 Width = Size.X - 2 * minDistanceToText,
                 Height = Size.Y - 2 * minDistanceToText
             };
@@ -316,13 +334,12 @@ namespace GraphTheoryInWPF.Components {
         }
 
         private static void AddNodeEllipse(Canvas c, Graph g, Node n, Point p) {
-            NodeEllipse nodeEllipse = new NodeEllipse(c, g, n, p, Brushes.Magenta, Brushes.White,
+            NodeEllipse nodeEllipse = new NodeEllipse(c, g, n, p,
                                                       (int) Properties.Settings.Default["MinNodeEllipsePadding"]);
             c.Children.Add(nodeEllipse);
         }
 
-
-        public NodeEllipse(Canvas c, Graph graph, Node n, Point p, Brush strokeBrush, Brush textBrush, int zIndex = 3) {
+        public NodeEllipse(Canvas c, Graph graph, Node n, Point p, int zIndex = 3) {
             this.InitializeComponent();
             this.DataContext = this;
 
@@ -343,7 +360,7 @@ namespace GraphTheoryInWPF.Components {
             }
 
             Canvas.SetZIndex(this, 1);
-            this.InstantiateContent(p, strokeBrush, textBrush, zIndex);
+            this.InstantiateContent(p, zIndex);
 
             this.MouseLeftButtonDown += new MouseButtonEventHandler(this.Control_MouseLeftButtonDown);
             this.MouseLeftButtonUp += new MouseButtonEventHandler(this.Control_MouseLeftButtonUp);

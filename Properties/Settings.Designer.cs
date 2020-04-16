@@ -73,13 +73,61 @@ namespace GraphTheoryInWPF.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Red")]
-        public global::System.Drawing.Color Setting {
+        [global::System.Configuration.DefaultSettingValueAttribute("25, 55, 75")]
+        public global::System.Drawing.Color NodeEllipseFillBrushColour {
             get {
-                return ((global::System.Drawing.Color)(this["Setting"]));
+                return ((global::System.Drawing.Color)(this["NodeEllipseFillBrushColour"]));
             }
             set {
-                this["Setting"] = value;
+                this["NodeEllipseFillBrushColour"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Magenta")]
+        public global::System.Drawing.Color NodeEllipseStrokeBrushColour {
+            get {
+                return ((global::System.Drawing.Color)(this["NodeEllipseStrokeBrushColour"]));
+            }
+            set {
+                this["NodeEllipseStrokeBrushColour"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("19, 151, 91")]
+        public global::System.Drawing.Color NodeEllipseTextBrushColour {
+            get {
+                return ((global::System.Drawing.Color)(this["NodeEllipseTextBrushColour"]));
+            }
+            set {
+                this["NodeEllipseTextBrushColour"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("White")]
+        public global::System.Drawing.Color NodeConnectionNormalBrushColour {
+            get {
+                return ((global::System.Drawing.Color)(this["NodeConnectionNormalBrushColour"]));
+            }
+            set {
+                this["NodeConnectionNormalBrushColour"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Lime")]
+        public global::System.Drawing.Color NodeConnectionPathBrushColour {
+            get {
+                return ((global::System.Drawing.Color)(this["NodeConnectionPathBrushColour"]));
+            }
+            set {
+                this["NodeConnectionPathBrushColour"] = value;
             }
         }
     }

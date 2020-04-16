@@ -14,8 +14,20 @@
     <Setting Name="ExtraPaddingPerConnection" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">5</Value>
     </Setting>
-    <Setting Name="Setting" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)">Red</Value>
+    <Setting Name="NodeEllipseFillBrushColour" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">25, 55, 75</Value>
+    </Setting>
+    <Setting Name="NodeEllipseStrokeBrushColour" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">Magenta</Value>
+    </Setting>
+    <Setting Name="NodeEllipseTextBrushColour" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">19, 151, 91</Value>
+    </Setting>
+    <Setting Name="NodeConnectionNormalBrushColour" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">White</Value>
+    </Setting>
+    <Setting Name="NodeConnectionPathBrushColour" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">Lime</Value>
     </Setting>
   </Settings>
 </SettingsFile>
