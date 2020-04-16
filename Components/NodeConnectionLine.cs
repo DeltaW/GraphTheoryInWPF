@@ -166,7 +166,12 @@ namespace GraphTheoryInWPF.Components {
             this._canvas = c;
 
             this._line = new Line() {
-                Stroke = System.Windows.Media.Brushes.White,
+                Stroke = new SolidColorBrush(new System.Windows.Media.Color {
+                    A = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionNormalBrushColour"]).A,
+                    R = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionNormalBrushColour"]).R,
+                    G = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionNormalBrushColour"]).G,
+                    B = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionNormalBrushColour"]).B,
+                }),
                 StrokeThickness = 3,
             };
 
@@ -175,11 +180,21 @@ namespace GraphTheoryInWPF.Components {
 
             this._directionLines = new List<Line>() {
                 new Line() {
-                    Stroke = System.Windows.Media.Brushes.White,
+                    Stroke = new SolidColorBrush(new System.Windows.Media.Color {
+                        A = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionNormalBrushColour"]).A,
+                        R = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionNormalBrushColour"]).R,
+                        G = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionNormalBrushColour"]).G,
+                        B = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionNormalBrushColour"]).B,
+                    }),
                     StrokeThickness = 3,
                 },
                 new Line() {
-                    Stroke = System.Windows.Media.Brushes.White,
+                    Stroke = new SolidColorBrush(new System.Windows.Media.Color {
+                        A = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionNormalBrushColour"]).A,
+                        R = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionNormalBrushColour"]).R,
+                        G = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionNormalBrushColour"]).G,
+                        B = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionNormalBrushColour"]).B,
+                    }),
                     StrokeThickness = 3,
                 }
             };

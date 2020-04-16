@@ -312,6 +312,12 @@ namespace GraphTheoryInWPF.Components {
         }
 
         public static void FillCanvasWithAllNodes(Canvas c, Graph g) {
+            c.Background = new SolidColorBrush(new System.Windows.Media.Color() {
+                A = ((System.Drawing.Color) (Properties.Settings.Default["CanvasBackgroundBrushColour"])).A,
+                R = ((System.Drawing.Color) (Properties.Settings.Default["CanvasBackgroundBrushColour"])).R,
+                G = ((System.Drawing.Color) (Properties.Settings.Default["CanvasBackgroundBrushColour"])).G,
+                B = ((System.Drawing.Color) (Properties.Settings.Default["CanvasBackgroundBrushColour"])).B,
+            });
             // Gett All Names and Sizes
             List<string> allNodeNames =  g.GetAllNodeNames().ToList();
             List<Point> sizes = new List<Point>();

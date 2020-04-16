@@ -32,5 +32,8 @@
     <Setting Name="AllRoutesRadioButtonSelected" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="CanvasBackgroundBrushColour" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">25, 55, 75</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
