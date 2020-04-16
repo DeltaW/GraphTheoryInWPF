@@ -107,6 +107,8 @@
                     </ScrollViewer>
                 </TabItem>
             </TabControl>-->
+
+            <Canvas Grid.Row="1" x:Name="GraphPreviewCanvas" Background="#19374B"/>
             <Border Grid.Row="1" BorderThickness="5 2.5 5 5" BorderBrush="White"/>
         </Grid>
         <!--</Grid>-->

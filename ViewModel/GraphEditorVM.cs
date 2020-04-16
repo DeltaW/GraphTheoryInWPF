@@ -56,38 +56,7 @@ namespace GraphTheoryInWPF.ViewModel {
 
         public void OnGraphChanged() {
             this._canvas.Children.Clear();
-            this.FillCanvasWithAllNodes();
+            NodeEllipse.FillCanvasWithAllNodes(this._canvas, this._graph);
         }
-
-
-        #region change this into static methods because they are the exact same as in routeplanner
-        private void FillCanvasWithAllNodes(/*int minDistance = 10*/) {
-            // Gett All Names and Sizes
-            List<string> allNodeNames =  this._graph.GetAllNodeNames().ToList();
-            List<Point> sizes = new List<Point>();
-            foreach (string name in allNodeNames) {
-                sizes.Add(NodeEllipse.GetEllipseWidthAndHeightBasedOnText(name,
-                    out _, this._graph.GetNode(name)));
-            }
-            //allNodeNames.ForEach(x => Sizes.Add(NodeEllipse.GetEllipseWidthAndHeightBasedOnText(x)));
-
-            // Actually Fill the Canvas
-            for (int i = 0; i < allNodeNames.Count; i++) {
-                Node n = this._graph.GetNode(allNodeNames[i]);
-                this.AddNodeEllipse(n, new Point(n.Position.X, n.Position.Y));
-            }
-            for (int j = 0; j < this._canvas.Children.Count; j++) {
-                if (this._canvas.Children[j] is NodeEllipse nodeEllipse) {
-                    nodeEllipse.InstantiateConnectionLines();
-                }
-            }
-        }
-
-        private void AddNodeEllipse(Node n, Point p) {
-            NodeEllipse nodeEllipse = new NodeEllipse(this._canvas, this._graph, n, p, Brushes.Magenta, Brushes.White,
-                                                      (int) Properties.Settings.Default["MinNodeEllipsePadding"]);
-            this._canvas.Children.Add(nodeEllipse);
-        }
-        #endregion
     }
 }

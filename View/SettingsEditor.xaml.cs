@@ -1,4 +1,5 @@
 ﻿using GraphTheory.Core;
+using GraphTheoryInWPF.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,6 @@ namespace GraphTheoryInWPF.View {
         public int ExtraPaddingPerConnection { get; set; }
         public bool UseDynamicNodeEllipsePadding { get; set; }
 
-
         private readonly Graph _graph;
 
         public SettingsEditor(Graph graph) {
@@ -41,15 +41,25 @@ namespace GraphTheoryInWPF.View {
             this.TextBox_MinNodeEllipsePadding.Text = ((int) Properties.Settings.Default["MinNodeEllipsePadding"]).ToString();
             this.TextBox_MaxNodeEllipsePadding.Text = ((int) Properties.Settings.Default["MaxNodeEllipsePadding"]).ToString();
             this.CheckBox_UseDynamicNodeEllipsePadding.IsChecked = (bool) Properties.Settings.Default["UseDynamicNodeEllipsePadding"];
+
+            // Fill the Canvas
+            this.OnSettingsChanged();
+
         }
 
-        public bool WereSettingsChanged() {
-            bool a = this.MinNodeEllipsePadding == (int) Properties.Settings.Default["MinNodeEllipsePadding"];
-            bool b = this.MaxNodeEllipsePadding == (int) Properties.Settings.Default["MaxNodeEllipsePadding"];
-            bool c = this.ExtraPaddingPerConnection == (int) Properties.Settings.Default["ExtraPaddingPerConnection"];
-            bool d = this.UseDynamicNodeEllipsePadding == (bool) Properties.Settings.Default["UseDynamicNodeEllipsePadding"];
-            return !(a && b && c && d);
+        private void OnSettingsChanged() {
+            this.GraphPreviewCanvas.Children.Clear();
+            NodeEllipse.FillCanvasWithAllNodes(this.GraphPreviewCanvas, this._graph);
         }
+
+
+        //public bool WereSettingsChanged() {
+        //    bool a = this.MinNodeEllipsePadding == (int) Properties.Settings.Default["MinNodeEllipsePadding"];
+        //    bool b = this.MaxNodeEllipsePadding == (int) Properties.Settings.Default["MaxNodeEllipsePadding"];
+        //    bool c = this.ExtraPaddingPerConnection == (int) Properties.Settings.Default["ExtraPaddingPerConnection"];
+        //    bool d = this.UseDynamicNodeEllipsePadding == (bool) Properties.Settings.Default["UseDynamicNodeEllipsePadding"];
+        //    return !(a && b && c && d);
+        //}
 
         public void ResetSettings() {
             Properties.Settings.Default["MinNodeEllipsePadding"] = this.MinNodeEllipsePadding;
@@ -68,19 +78,26 @@ namespace GraphTheoryInWPF.View {
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e) {
-            if (int.TryParse(this.TextBox_MinNodeEllipsePadding.Text, out int minPadding)) {
+            if ((TextBox) sender == this.TextBox_MinNodeEllipsePadding && int.TryParse(this.TextBox_MinNodeEllipsePadding.Text, out int minPadding)) {
                 Properties.Settings.Default["MinNodeEllipsePadding"] = minPadding;
+                this.OnSettingsChanged();
+                return;
             }
-            if (int.TryParse(this.TextBox_MaxNodeEllipsePadding.Text, out int maxPadding)) {
+            if ((TextBox) sender == this.TextBox_MaxNodeEllipsePadding && int.TryParse(this.TextBox_MaxNodeEllipsePadding.Text, out int maxPadding)) {
                 Properties.Settings.Default["MaxNodeEllipsePadding"] = maxPadding;
+                this.OnSettingsChanged();
+                return;
             }
-            if (int.TryParse(this.TextBox_ExtraPaddingPerConnection.Text, out int extraPadding)) {
+            if ((TextBox) sender == this.TextBox_ExtraPaddingPerConnection && int.TryParse(this.TextBox_ExtraPaddingPerConnection.Text, out int extraPadding)) {
                 Properties.Settings.Default["ExtraPaddingPerConnection"] = extraPadding;
+                this.OnSettingsChanged();
+                return;
             }
         }
 
         private void CheckBox_UseDynamicNodeEllipsePadding_Changed(object sender, RoutedEventArgs e) {
             Properties.Settings.Default["UseDynamicNodeEllipsePadding"] = (bool) ((CheckBox) sender).IsChecked;
+            this.OnSettingsChanged();
         }
     }
 }

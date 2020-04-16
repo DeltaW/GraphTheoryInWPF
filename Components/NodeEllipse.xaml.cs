@@ -220,7 +220,7 @@ namespace GraphTheoryInWPF.Components {
              * "minDistanceToText" is the minimum Distance between the TextBlock's Rect and the Ellipse's Rect
              */
 
-            minDistanceToText = 10;
+            minDistanceToText = (int) Properties.Settings.Default["MinNodeEllipsePadding"];
 
             if (n != null) {
                 if ((bool) Properties.Settings.Default["UseDynamicNodeEllipsePadding"]) {
@@ -292,6 +292,35 @@ namespace GraphTheoryInWPF.Components {
             this.NodeEllipseCanvas.Children.Add(this._ellipse);
             this.NodeEllipseCanvas.Children.Add(this._textBlock);
         }
+
+        public static void FillCanvasWithAllNodes(Canvas c, Graph g) {
+            // Gett All Names and Sizes
+            List<string> allNodeNames =  g.GetAllNodeNames().ToList();
+            List<Point> sizes = new List<Point>();
+            foreach (string name in allNodeNames) {
+                sizes.Add(NodeEllipse.GetEllipseWidthAndHeightBasedOnText(name,
+                    out _, g.GetNode(name)));
+            }
+            //allNodeNames.ForEach(x => Sizes.Add(NodeEllipse.GetEllipseWidthAndHeightBasedOnText(x)));
+
+            // Actually Fill the Canvas
+            for (int i = 0; i < allNodeNames.Count; i++) {
+                Node n = g.GetNode(allNodeNames[i]);
+                NodeEllipse.AddNodeEllipse(c, g, n, new Point(n.Position.X, n.Position.Y));
+            }
+            for (int j = 0; j < c.Children.Count; j++) {
+                if (c.Children[j] is NodeEllipse nodeEllipse) {
+                    nodeEllipse.InstantiateConnectionLines();
+                }
+            }
+        }
+
+        private static void AddNodeEllipse(Canvas c, Graph g, Node n, Point p) {
+            NodeEllipse nodeEllipse = new NodeEllipse(c, g, n, p, Brushes.Magenta, Brushes.White,
+                                                      (int) Properties.Settings.Default["MinNodeEllipsePadding"]);
+            c.Children.Add(nodeEllipse);
+        }
+
 
         public NodeEllipse(Canvas c, Graph graph, Node n, Point p, Brush strokeBrush, Brush textBrush, int zIndex = 3) {
             this.InitializeComponent();

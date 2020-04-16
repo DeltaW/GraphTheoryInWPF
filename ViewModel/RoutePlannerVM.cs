@@ -36,37 +36,7 @@ namespace GraphTheoryInWPF.ViewModel {
             this._rbShortestRoute = rbShortestRoute;
             this._shortestRouteCanvas = shortestRouteCanvas;
 
-            this.FillCanvasWithAllNodes();
-
-
-
-        }
-
-        private void FillCanvasWithAllNodes(/*int minDistance = 10*/) {
-            // Gett All Names and Sizes
-            List<string> allNodeNames =  this._graph.GetAllNodeNames().ToList();
-            List<Point> sizes = new List<Point>();
-            allNodeNames.ForEach(x => sizes.Add(NodeEllipse.GetEllipseWidthAndHeightBasedOnText(x,
-                                                out _,
-                                                this._graph.GetNode(x))));
-
-            // Actually Fill the Canvas
-            for (int i = 0; i < allNodeNames.Count; i++) {
-                Node n = this._graph.GetNode(allNodeNames[i]);
-                this.AddNodeEllipse(n, new Point(n.Position.X, n.Position.Y));
-            }
-
-            for (int j = 0; j < this._shortestRouteCanvas.Children.Count; j++) {
-                if (this._shortestRouteCanvas.Children[j] is NodeEllipse nodeEllipse) {
-                    nodeEllipse.InstantiateConnectionLines();
-                }
-            }
-        }
-
-        private void AddNodeEllipse(Node n, Point p) {
-            NodeEllipse nodeEllipse = new NodeEllipse(this._shortestRouteCanvas, this._graph, n, p, Brushes.Magenta, Brushes.White,
-                                                      (int) Properties.Settings.Default["MinNodeEllipsePadding"]);
-            this._shortestRouteCanvas.Children.Add(nodeEllipse);
+            NodeEllipse.FillCanvasWithAllNodes(this._shortestRouteCanvas, this._graph);
         }
 
         public void OnNodeSelectorChanged() {
