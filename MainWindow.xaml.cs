@@ -270,5 +270,44 @@ namespace GraphTheoryInWPF {
             this.RoutesMenuItem.IsEnabled = true;
             this.EditMenuItem.IsEnabled = true;
         }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e) {
+            Canvas c;
+            if (this.ShownView is GraphEditor graphEditor) {
+                c = graphEditor.GraphEditorCanvas;
+            } else if (this.ShownView is RoutePlanner routePlanner) {
+                c = routePlanner.ShortestRouteCanvas;
+            } else if (this.ShownView is SettingsEditor settingsEditor) {
+                c = settingsEditor.GraphPreviewCanvas;
+            } else {
+                throw (new Exception());
+            }
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog {
+                Filter = "Image (.png)|*.png",
+            };
+            if (saveFileDialog.ShowDialog() == true) {
+                // Reference https://stackoverflow.com/a/21413246/13222163
+
+                Rect bounds = VisualTreeHelper.GetDescendantBounds(c);
+                double dpi = 96;
+                RenderTargetBitmap renderTargetBitmap = new RenderTargetBitmap((int)bounds.Width, (int)bounds.Height,dpi, dpi,
+                                                                           System.Windows.Media.PixelFormats.Default);
+                DrawingVisual drawingVisual = new DrawingVisual();
+                using (DrawingContext drawingContext = drawingVisual.RenderOpen()) {
+                    VisualBrush visualBrush = new VisualBrush(c);
+                    drawingContext.DrawRectangle(visualBrush, null, new Rect(new Point(), bounds.Size));
+                }
+                renderTargetBitmap.Render(drawingVisual);
+
+
+                BitmapEncoder pngEncoder = new PngBitmapEncoder();
+                pngEncoder.Frames.Add(BitmapFrame.Create(renderTargetBitmap));
+
+                using (FileStream fileStream = File.Create(saveFileDialog.FileName)) {
+                    pngEncoder.Save(fileStream);
+                }
+            }
+        }
     }
 }

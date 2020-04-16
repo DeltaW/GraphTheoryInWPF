@@ -49,6 +49,12 @@
                         <Image Source="Icons/Settings_16x.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
+                <Separator/>
+                <MenuItem Header="Screenshot" Click="MenuItem_Click">
+                    <MenuItem.Icon>
+                        <Image Source="Icons/Screenshot_16x.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
             </Menu>
         <ContentControl Content="{Binding ShownView}"/>
         </DockPanel>
