@@ -47,8 +47,8 @@ namespace GraphTheoryInWPF.ViewModel {
             List<string> allNodeNames =  this._graph.GetAllNodeNames().ToList();
             List<Point> sizes = new List<Point>();
             allNodeNames.ForEach(x => sizes.Add(NodeEllipse.GetEllipseWidthAndHeightBasedOnText(x,
-                (int) Properties.Settings.Default["MinNodeEllipsePadding"],
-                this._graph.GetNode(x))));
+                                                out _,
+                                                this._graph.GetNode(x))));
 
             // Actually Fill the Canvas
             for (int i = 0; i < allNodeNames.Count; i++) {

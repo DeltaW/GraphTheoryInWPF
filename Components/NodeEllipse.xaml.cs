@@ -213,12 +213,14 @@ namespace GraphTheoryInWPF.Components {
             }
         }
 
-        public static Point GetEllipseWidthAndHeightBasedOnText(string text, int minDistanceToText = 10, Node n = null) {
+        public static Point GetEllipseWidthAndHeightBasedOnText(string text, out int minDistanceToText, Node n = null) {
             /* Calculates the width and heigth of a Textblock and returns them as a Point
              * Where Point.X represents the width and Point.Y the height
              * "text" will be the text that is to be displayed and it is used to measure the size of the shapes
              * "minDistanceToText" is the minimum Distance between the TextBlock's Rect and the Ellipse's Rect
              */
+
+            minDistanceToText = 10;
 
             if (n != null) {
                 if ((bool) Properties.Settings.Default["UseDynamicNodeEllipsePadding"]) {
@@ -243,8 +245,9 @@ namespace GraphTheoryInWPF.Components {
                              textBlock.ActualHeight + 2 * minDistanceToText);
         }
 
-        private void InstantiateContent(Point p, Brush strokeBrush, Brush textBrush, int minDistanceToText = 10, int zIndex = 3) {
-            Point Size = NodeEllipse.GetEllipseWidthAndHeightBasedOnText(this._node.Name, minDistanceToText, this._node);
+        private void InstantiateContent(Point p, Brush strokeBrush, Brush textBrush, int zIndex = 3) {
+
+            Point Size = NodeEllipse.GetEllipseWidthAndHeightBasedOnText(this._node.Name, out int minDistanceToText, this._node);
 
             this._measurements = new Rect() {
                 X = p.X,
@@ -281,8 +284,8 @@ namespace GraphTheoryInWPF.Components {
 
 
             // Setting the Textblock's coordinates
-            Canvas.SetLeft(this._textBlock, 0 + minDistanceToText);
-            Canvas.SetTop(this._textBlock, 0 + minDistanceToText);
+            Canvas.SetLeft(this._textBlock, minDistanceToText);
+            Canvas.SetTop(this._textBlock, minDistanceToText);
             Canvas.SetZIndex(this._textBlock, zIndex + 1);
 
             // Drawing
@@ -290,7 +293,7 @@ namespace GraphTheoryInWPF.Components {
             this.NodeEllipseCanvas.Children.Add(this._textBlock);
         }
 
-        public NodeEllipse(Canvas c, Graph graph, Node n, Point p, Brush strokeBrush, Brush textBrush, int minDistanceToText = 5, int zIndex = 3) {
+        public NodeEllipse(Canvas c, Graph graph, Node n, Point p, Brush strokeBrush, Brush textBrush, int zIndex = 3) {
             this.InitializeComponent();
             this.DataContext = this;
 
@@ -311,7 +314,7 @@ namespace GraphTheoryInWPF.Components {
             }
 
             Canvas.SetZIndex(this, 1);
-            this.InstantiateContent(p, strokeBrush, textBrush, minDistanceToText, zIndex);
+            this.InstantiateContent(p, strokeBrush, textBrush, zIndex);
 
             this.MouseLeftButtonDown += new MouseButtonEventHandler(this.Control_MouseLeftButtonDown);
             this.MouseLeftButtonUp += new MouseButtonEventHandler(this.Control_MouseLeftButtonUp);

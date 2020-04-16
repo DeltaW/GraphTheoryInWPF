@@ -67,7 +67,7 @@ namespace GraphTheoryInWPF.ViewModel {
             List<Point> sizes = new List<Point>();
             foreach (string name in allNodeNames) {
                 sizes.Add(NodeEllipse.GetEllipseWidthAndHeightBasedOnText(name,
-                    (int) Properties.Settings.Default["MinNodeEllipsePadding"], this._graph.GetNode(name)));
+                    out _, this._graph.GetNode(name)));
             }
             //allNodeNames.ForEach(x => Sizes.Add(NodeEllipse.GetEllipseWidthAndHeightBasedOnText(x)));
 
