@@ -142,5 +142,17 @@ namespace GraphTheoryInWPF.Properties {
                 this["AllRoutesRadioButtonSelected"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("25, 55, 75")]
+        public global::System.Drawing.Color CanvasBackgroundBrushColour {
+            get {
+                return ((global::System.Drawing.Color)(this["CanvasBackgroundBrushColour"]));
+            }
+            set {
+                this["CanvasBackgroundBrushColour"] = value;
+            }
+        }
     }
 }

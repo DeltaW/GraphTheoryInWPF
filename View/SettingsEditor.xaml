@@ -119,6 +119,15 @@
                             </Border>
                         </StackPanel>
                     </ListBoxItem>
+                    <Separator Background="White"/>
+                    <ListBoxItem MouseDoubleClick="ListBoxItem_MouseDoubleClick_CanvasBackgroundColour">
+                        <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
+                            <Label Foreground="White" Content="Canvas Background Colour"/>
+                            <Border BorderBrush="White" BorderThickness="1" Height="18">
+                                <Canvas Width="16" Height="16" Name="CanvasBackgroundPreview"/>
+                            </Border>
+                        </StackPanel>
+                    </ListBoxItem>
                 </ListBox>
                 <Border Grid.Row="1" BorderThickness="5 2.5 5 5" BorderBrush="White"/>
 
@@ -135,25 +144,6 @@
 
             <Border Grid.Row="0" BorderThickness="5 5 5 2.5" BorderBrush="White"/>
             <TextBlock Margin="10"  Grid.Row="0" Text="Preview" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" FontWeight="ExtraBold"/>
-            <!--<TabControl Margin="10" Grid.Row="1" Background="#19374B">
-                <TabItem Header="_Text" Name="TextTab">
-                    -->
-            <!--textblock with routes -->
-            <!--
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                        <TextBlock Margin="10" Foreground="White" Name="AllPossibleRoutesTextBlock" FontSize="16" Text=""/>
-                    </ScrollViewer>
-                </TabItem>
-                <TabItem Header="_Canvas" IsSelected="True" Name="CanvasTab">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                        -->
-            <!--canvas with shortest route-->
-            <!--
-                        <Canvas Background="#19374B" Name="ShortestRouteCanvas">
-                        </Canvas>
-                    </ScrollViewer>
-                </TabItem>
-            </TabControl>-->
 
             <Canvas Grid.Row="1" x:Name="GraphPreviewCanvas" Background="#19374B"/>
             <Border Grid.Row="1" BorderThickness="5 2.5 5 5" BorderBrush="White"/>

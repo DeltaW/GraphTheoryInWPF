@@ -31,6 +31,7 @@ namespace GraphTheoryInWPF.View {
         public System.Drawing.Color EllipseTextColour;
         public System.Drawing.Color ConnectionColour;
         public System.Drawing.Color RouteColour;
+        public System.Drawing.Color CanvasBackgroundColour;
 
         private readonly Graph _graph;
 
@@ -88,6 +89,12 @@ namespace GraphTheoryInWPF.View {
                 G = ((System.Drawing.Color) (Properties.Settings.Default["NodeConnectionPathBrushColour"])).G,
                 B = ((System.Drawing.Color) (Properties.Settings.Default["NodeConnectionPathBrushColour"])).B,
             });
+            this.CanvasBackgroundPreview.Background = new SolidColorBrush(new System.Windows.Media.Color() { 
+                A = ((System.Drawing.Color) (Properties.Settings.Default["CanvasBackgroundBrushColour"])).A,
+                R = ((System.Drawing.Color) (Properties.Settings.Default["CanvasBackgroundBrushColour"])).R,
+                G = ((System.Drawing.Color) (Properties.Settings.Default["CanvasBackgroundBrushColour"])).G,
+                B = ((System.Drawing.Color) (Properties.Settings.Default["CanvasBackgroundBrushColour"])).B,
+            });
 
             // Fill the Canvas
             this.OnSettingsChanged();
@@ -120,11 +127,12 @@ namespace GraphTheoryInWPF.View {
             bool c = this.ExtraPaddingPerConnection == (int) Properties.Settings.Default["ExtraPaddingPerConnection"];
             bool d = this.UseDynamicNodeEllipsePadding == (bool) Properties.Settings.Default["UseDynamicNodeEllipsePadding"];
             bool e = this.EllipseFillColour == (System.Drawing.Color) Properties.Settings.Default["NodeEllipseFillBrushColour"];
-            bool f = this.EllipseStrokeColour  == (System.Drawing.Color) Properties.Settings.Default["NodeEllipseStrokeBrushColour"];
+            bool f = this.EllipseStrokeColour == (System.Drawing.Color) Properties.Settings.Default["NodeEllipseStrokeBrushColour"];
             bool g = this.EllipseTextColour == (System.Drawing.Color) Properties.Settings.Default["NodeEllipseTextBrushColour"];
-            bool h = this.ConnectionColour  == (System.Drawing.Color) Properties.Settings.Default["NodeConnectionNormalBrushColour"];
-            bool i = this.RouteColour  == (System.Drawing.Color) Properties.Settings.Default["NodeConnectionPathBrushColour"];
-            return !(a && b && c && d && e && f && g && h && i);
+            bool h = this.ConnectionColour == (System.Drawing.Color) Properties.Settings.Default["NodeConnectionNormalBrushColour"];
+            bool i = this.RouteColour == (System.Drawing.Color) Properties.Settings.Default["NodeConnectionPathBrushColour"];
+            bool j = this.CanvasBackgroundColour == (System.Drawing.Color) Properties.Settings.Default["CanvasBackgroundBrushColour"];
+            return !(a && b && c && d && e && f && g && h && i && j);
         }
 
         public void ResetSettings() {
@@ -140,6 +148,7 @@ namespace GraphTheoryInWPF.View {
             Properties.Settings.Default["NodeEllipseTextBrushColour"] = this.EllipseTextColour;
             Properties.Settings.Default["NodeConnectionNormalBrushColour"] = this.ConnectionColour;
             Properties.Settings.Default["NodeConnectionPathBrushColour"] = this.RouteColour;
+            Properties.Settings.Default["CanvasBackgroundBrushColour"] = this.CanvasBackgroundColour;
         }
 
         private void Button_Click_SaveSettings(object sender, RoutedEventArgs e) {
@@ -155,6 +164,7 @@ namespace GraphTheoryInWPF.View {
             this.EllipseTextColour = (System.Drawing.Color) Properties.Settings.Default["NodeEllipseTextBrushColour"];
             this.ConnectionColour = (System.Drawing.Color) Properties.Settings.Default["NodeConnectionNormalBrushColour"];
             this.RouteColour = (System.Drawing.Color) Properties.Settings.Default["NodeConnectionPathBrushColour"];
+            this.CanvasBackgroundColour = (System.Drawing.Color) Properties.Settings.Default["CanvasBackgroundBrushColour"];
 
             Properties.Settings.Default.Save();
         }
@@ -255,6 +265,22 @@ namespace GraphTheoryInWPF.View {
             if (temp.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
                 Properties.Settings.Default["NodeConnectionPathBrushColour"] = temp.Color;
                 this.RoutePreview.Background = new SolidColorBrush(new System.Windows.Media.Color() {
+                    A = temp.Color.A,
+                    R = temp.Color.R,
+                    G = temp.Color.G,
+                    B = temp.Color.B,
+                });
+                this.OnSettingsChanged();
+            }
+        }
+        private void ListBoxItem_MouseDoubleClick_CanvasBackgroundColour(object sender, MouseButtonEventArgs e) {
+            // Canvas Background Colour
+            System.Windows.Forms.ColorDialog temp = new System.Windows.Forms.ColorDialog {
+                Color = (System.Drawing.Color) Properties.Settings.Default["CanvasBackgroundBrushColour"]
+            };
+            if (temp.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
+                Properties.Settings.Default["CanvasBackgroundBrushColour"] = temp.Color;
+                this.CanvasBackgroundPreview.Background = new SolidColorBrush(new System.Windows.Media.Color() {
                     A = temp.Color.A,
                     R = temp.Color.R,
                     G = temp.Color.G,
