@@ -128,6 +128,15 @@
                             </Border>
                         </StackPanel>
                     </ListBoxItem>
+                    <Separator Background="White"/>
+                    <ListBoxItem MouseDoubleClick="ListBoxItem_MouseDoubleClick_CanvasNodeConnectionPreviewColour">
+                        <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
+                            <Label Foreground="White" Content="Canvas Node Connection Preview Colour"/>
+                            <Border BorderBrush="White" BorderThickness="1" Height="18">
+                                <Canvas Width="16" Height="16" Name="CanvasNodeConnectionPreview"/>
+                            </Border>
+                        </StackPanel>
+                    </ListBoxItem>
                 </ListBox>
                 <Border Grid.Row="1" BorderThickness="5 2.5 5 5" BorderBrush="White"/>
 

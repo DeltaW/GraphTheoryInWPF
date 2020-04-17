@@ -154,33 +154,35 @@ namespace GraphTheoryInWPF.Components {
 
         private void Control_MouseLeftButtonUp(object sender, MouseEventArgs e) {
             // Connect the nodes if possible
-            try {
-                if (this._isTwoWayConnection)
-                    this._graph.AddTwoWayNodeConnetionToGraph(this._fromNodeEllipse.GetNode().Name,
-                                                              this._toNodeEllipse.GetNode().Name);
-                else
-                    this._graph.AddOneWayNodeConnetionToGraph(this._fromNodeEllipse.GetNode().Name,
-                                                              this._toNodeEllipse.GetNode().Name);
+            if (this._toNodeEllipse != null) {
+                try {
+                    if (this._isTwoWayConnection)
+                        this._graph.AddTwoWayNodeConnetionToGraph(this._fromNodeEllipse.GetNode().Name,
+                                                                  this._toNodeEllipse.GetNode().Name);
+                    else
+                        this._graph.AddOneWayNodeConnetionToGraph(this._fromNodeEllipse.GetNode().Name,
+                                                                  this._toNodeEllipse.GetNode().Name);
 
-                // Update the rest of the view in the parent
+                    // Update the rest of the view in the parent
 
-                if (this._parent is SettingsEditor settingsEditor) {
-                    this._canvas.Children.Clear();
-                    NodeEllipse.FillCanvasWithAllNodes(this._canvas, this._graph, this._parent);
-                } else if (this._parent is GraphEditor graphEditor) {
-                    this._canvas.Children.Clear();
-                    NodeEllipse.FillCanvasWithAllNodes(this._canvas, this._graph, this._parent);
-                    graphEditor.GEVM.Update();
-                } else if (this._parent is RoutePlanner routePlanner) {
-                    this._canvas.Children.Clear();
-                    NodeEllipse.FillCanvasWithAllNodes(this._canvas, this._graph, this._parent);
-                    routePlanner.RPVM.Update();
-                } else {
-                    throw new NotImplementedException();
+                    if (this._parent is SettingsEditor settingsEditor) {
+                        this._canvas.Children.Clear();
+                        NodeEllipse.FillCanvasWithAllNodes(this._canvas, this._graph, this._parent);
+                    } else if (this._parent is GraphEditor graphEditor) {
+                        this._canvas.Children.Clear();
+                        NodeEllipse.FillCanvasWithAllNodes(this._canvas, this._graph, this._parent);
+                        graphEditor.GEVM.Update();
+                    } else if (this._parent is RoutePlanner routePlanner) {
+                        this._canvas.Children.Clear();
+                        NodeEllipse.FillCanvasWithAllNodes(this._canvas, this._graph, this._parent);
+                        routePlanner.RPVM.Update();
+                    } else {
+                        throw new NotImplementedException();
+                    }
+
+                } catch (GraphException ge) {
+                    MessageBox.Show(ge.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-
-            } catch (GraphException ge) {
-                MessageBox.Show(ge.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             // "Destroy" Every connection of the canvas to this
             this.Control_MouseRightButtonDown(null, null);

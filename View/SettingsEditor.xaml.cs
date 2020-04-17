@@ -32,6 +32,7 @@ namespace GraphTheoryInWPF.View {
         public System.Drawing.Color ConnectionColour;
         public System.Drawing.Color RouteColour;
         public System.Drawing.Color CanvasBackgroundColour;
+        public System.Drawing.Color CanvasNodeConnectionPreviewColour;
 
         private readonly Graph _graph;
 
@@ -90,11 +91,17 @@ namespace GraphTheoryInWPF.View {
                 G = ((System.Drawing.Color) (Properties.Settings.Default["NodeConnectionPathBrushColour"])).G,
                 B = ((System.Drawing.Color) (Properties.Settings.Default["NodeConnectionPathBrushColour"])).B,
             });
-            this.CanvasBackgroundPreview.Background = new SolidColorBrush(new System.Windows.Media.Color() { 
+            this.CanvasBackgroundPreview.Background = new SolidColorBrush(new System.Windows.Media.Color() {
                 A = ((System.Drawing.Color) (Properties.Settings.Default["CanvasBackgroundBrushColour"])).A,
                 R = ((System.Drawing.Color) (Properties.Settings.Default["CanvasBackgroundBrushColour"])).R,
                 G = ((System.Drawing.Color) (Properties.Settings.Default["CanvasBackgroundBrushColour"])).G,
                 B = ((System.Drawing.Color) (Properties.Settings.Default["CanvasBackgroundBrushColour"])).B,
+            });
+            this.CanvasNodeConnectionPreview.Background = new SolidColorBrush(new System.Windows.Media.Color() {
+                A = ((System.Drawing.Color) (Properties.Settings.Default["CanvasNodeConnectionPreviewBrushColour"])).A,
+                R = ((System.Drawing.Color) (Properties.Settings.Default["CanvasNodeConnectionPreviewBrushColour"])).R,
+                G = ((System.Drawing.Color) (Properties.Settings.Default["CanvasNodeConnectionPreviewBrushColour"])).G,
+                B = ((System.Drawing.Color) (Properties.Settings.Default["CanvasNodeConnectionPreviewBrushColour"])).B,
             });
 
             // Fill the Canvas
@@ -133,7 +140,8 @@ namespace GraphTheoryInWPF.View {
             bool h = this.ConnectionColour == (System.Drawing.Color) Properties.Settings.Default["NodeConnectionNormalBrushColour"];
             bool i = this.RouteColour == (System.Drawing.Color) Properties.Settings.Default["NodeConnectionPathBrushColour"];
             bool j = this.CanvasBackgroundColour == (System.Drawing.Color) Properties.Settings.Default["CanvasBackgroundBrushColour"];
-            return !(a && b && c && d && e && f && g && h && i && j);
+            bool k = this.CanvasNodeConnectionPreviewColour == (System.Drawing.Color) Properties.Settings.Default["CanvasNodeConnectionPreviewBrushColour"];
+            return !(a && b && c && d && e && f && g && h && i && j && k);
         }
 
         public void ResetSettings() {
@@ -150,6 +158,7 @@ namespace GraphTheoryInWPF.View {
             Properties.Settings.Default["NodeConnectionNormalBrushColour"] = this.ConnectionColour;
             Properties.Settings.Default["NodeConnectionPathBrushColour"] = this.RouteColour;
             Properties.Settings.Default["CanvasBackgroundBrushColour"] = this.CanvasBackgroundColour;
+            Properties.Settings.Default["CanvasNodeConnectionPreviewBrushColour"] = this.CanvasNodeConnectionPreviewColour;
         }
 
         private void Button_Click_SaveSettings(object sender, RoutedEventArgs e) {
@@ -166,8 +175,13 @@ namespace GraphTheoryInWPF.View {
             this.ConnectionColour = (System.Drawing.Color) Properties.Settings.Default["NodeConnectionNormalBrushColour"];
             this.RouteColour = (System.Drawing.Color) Properties.Settings.Default["NodeConnectionPathBrushColour"];
             this.CanvasBackgroundColour = (System.Drawing.Color) Properties.Settings.Default["CanvasBackgroundBrushColour"];
+            this.CanvasNodeConnectionPreviewColour = (System.Drawing.Color) Properties.Settings.Default["CanvasNodeConnectionPreviewBrushColour"];
 
             Properties.Settings.Default.Save();
+
+            MessageBox.Show("Save successfull!",
+                            "GraphTheory", MessageBoxButton.OK, MessageBoxImage.Information);
+
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e) {
@@ -282,6 +296,22 @@ namespace GraphTheoryInWPF.View {
             if (temp.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
                 Properties.Settings.Default["CanvasBackgroundBrushColour"] = temp.Color;
                 this.CanvasBackgroundPreview.Background = new SolidColorBrush(new System.Windows.Media.Color() {
+                    A = temp.Color.A,
+                    R = temp.Color.R,
+                    G = temp.Color.G,
+                    B = temp.Color.B,
+                });
+                this.OnSettingsChanged();
+            }
+        }
+        private void ListBoxItem_MouseDoubleClick_CanvasNodeConnectionPreviewColour(object sender, MouseButtonEventArgs e) {
+            // Canvas Node Connection Preview Colour
+            System.Windows.Forms.ColorDialog temp = new System.Windows.Forms.ColorDialog {
+                Color = (System.Drawing.Color) Properties.Settings.Default["CanvasNodeConnectionPreviewBrushColour"]
+            };
+            if (temp.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
+                Properties.Settings.Default["CanvasNodeConnectionPreviewBrushColour"] = temp.Color;
+                this.CanvasNodeConnectionPreview.Background = new SolidColorBrush(new System.Windows.Media.Color() {
                     A = temp.Color.A,
                     R = temp.Color.R,
                     G = temp.Color.G,
