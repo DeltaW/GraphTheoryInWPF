@@ -80,6 +80,9 @@
       <DependentUpon>NodeConnectionEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\NodeConnectionLine.cs" />
+    <Compile Include="Components\NodeConnectionLine.xaml.cs">
+      <DependentUpon>NodeConnectionLine.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Components\NodeEditor.xaml.cs">
       <DependentUpon>NodeEditor.xaml</DependentUpon>
     </Compile>
@@ -102,6 +105,10 @@
       <DependentUpon>SettingsEditor.xaml</DependentUpon>
     </Compile>
     <Page Include="Components\NodeConnectionEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\NodeConnectionLine.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -209,6 +216,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\DeleteUser_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\DependencyWarning_16x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

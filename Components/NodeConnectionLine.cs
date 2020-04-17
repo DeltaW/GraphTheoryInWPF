@@ -11,11 +11,9 @@ using System.Windows.Controls;
 using Brushes = System.Windows.Media.Brushes;
 
 namespace GraphTheoryInWPF.Components {
-    public class NodeConnectionLine {
+    public class NodeConnectionLineOLD {
 
         public NodeEllipse ToNodeEllipse, FromNodeEllipse;
-        //private double _centerX;
-        //private double _centerY;
         private readonly Line _line;
         private readonly Canvas _canvas;
 
@@ -127,15 +125,6 @@ namespace GraphTheoryInWPF.Components {
             this._line.Y2 = toPoint.Y;
 
             this.UpdateArrowCoordinate();
-            //this._line.X1 = this.FromNodeEllipse.Center.X;
-            //this._line.Y1 = this.FromNodeEllipse.Center.Y;
-            //this._line.X2 = this.ToNodeEllipse.Center.X;
-            //this._line.Y2 = this.ToNodeEllipse.Center.Y;
-
-
-
-            //this._centerX = (this._line.X1 + this._line.X2) / 2;
-            //this._centerY = (this._line.Y1 + this._line.Y2) / 2;
         }
 
         internal void UpdateIsPath(Route r) {
@@ -160,7 +149,7 @@ namespace GraphTheoryInWPF.Components {
 
         }
 
-        public NodeConnectionLine(NodeEllipse fromNodeEllipse, NodeEllipse toNodeEllipse, Canvas c) {
+        public NodeConnectionLineOLD(NodeEllipse fromNodeEllipse, NodeEllipse toNodeEllipse, Canvas c) {
             this.FromNodeEllipse = fromNodeEllipse;
             this.ToNodeEllipse = toNodeEllipse;
             this._canvas = c;
