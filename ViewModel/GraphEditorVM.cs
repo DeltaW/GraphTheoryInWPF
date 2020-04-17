@@ -29,6 +29,12 @@ namespace GraphTheoryInWPF.ViewModel {
             this.OnGraphChanged();
         }
 
+        public void Update() {
+            foreach (var item in this.NodeEditors) {
+                item.UpdateAllConnectionEditors();
+            }
+        }
+
         private void InstantiateNodeEditors() {
             this.NodeEditors = new ObservableCollection<NodeEditor>();
             foreach (string name in this.NodeNames) {
@@ -38,9 +44,6 @@ namespace GraphTheoryInWPF.ViewModel {
 
         public void RemoveNodeEditor(NodeEditor nodeEditor) {
             this.NodeEditors.Remove(nodeEditor);
-            //foreach (var item in this.NodeEditors) {
-                //item.UpdateConnectionData(nodeEditor.NodeName);
-            //}
         }
 
         public void ButtonAddNode(string nodeName) {

@@ -467,11 +467,11 @@ namespace GraphTheoryInWPF.Components {
         }
 
         private void MenuItem_Click_AddOneWayConnection(object sender, RoutedEventArgs e) {
-            new CanvasAddConnectionLinePreview(false, this._parent, this, this._canvas);
+            new CanvasAddConnectionLinePreview(false, this._parent, this, this._canvas, this._graph);
         }
 
         private void MenuItem_Click_AddTwoWayConnection(object sender, RoutedEventArgs e) {
-            new CanvasAddConnectionLinePreview(true, this._parent, this, this._canvas);
+            new CanvasAddConnectionLinePreview(true, this._parent, this, this._canvas, this._graph);
         }
 
     }

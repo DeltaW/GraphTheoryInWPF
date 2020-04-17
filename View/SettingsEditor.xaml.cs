@@ -51,6 +51,7 @@ namespace GraphTheoryInWPF.View {
             this.EllipseTextColour = (System.Drawing.Color) Properties.Settings.Default["NodeEllipseTextBrushColour"];
             this.ConnectionColour = (System.Drawing.Color) Properties.Settings.Default["NodeConnectionNormalBrushColour"];
             this.RouteColour = (System.Drawing.Color) Properties.Settings.Default["NodeConnectionPathBrushColour"];
+            this.CanvasBackgroundColour = (System.Drawing.Color) Properties.Settings.Default["CanvasBackgroundBrushColour"];
 
             // Padding Stuff
             this.TextBox_ExtraPaddingPerConnection.Text = ((int) Properties.Settings.Default["ExtraPaddingPerConnection"]).ToString();

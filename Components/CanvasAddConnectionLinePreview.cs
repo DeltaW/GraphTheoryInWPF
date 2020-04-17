@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GraphTheory.Core;
+using GraphTheoryInWPF.View;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,21 +13,24 @@ using System.Windows.Shapes;
 
 namespace GraphTheoryInWPF.Components {
     public class CanvasAddConnectionLinePreview {
-
-        private NodeEllipse _fromNodeEllipse, _toNodeEllipse;
+        private readonly NodeEllipse _fromNodeEllipse;
+        private NodeEllipse _toNodeEllipse;
         private readonly Line _line;
         private readonly List<Line> _directionalLines;
-        private Canvas _canvas;
-        private bool _isTwoWayConnection;
+        private readonly Canvas _canvas;
+        private readonly bool _isTwoWayConnection;
+        private readonly MouseButtonEventHandler _rightButtonDown;
+        private readonly MouseButtonEventHandler _leftButtonUp;
+        private readonly MouseEventHandler _mouseMove;
+        private readonly UserControl _parent;
+        private readonly Graph _graph;
 
-        private MouseButtonEventHandler _rightButtonDown, _leftButtonUp;
-        private MouseEventHandler _mouseMove;
-
-
-        public CanvasAddConnectionLinePreview(bool isTwoWayConnection, UserControl userControl, NodeEllipse nodeEllipse, Canvas canvas) {
+        public CanvasAddConnectionLinePreview(bool isTwoWayConnection, UserControl userControl, NodeEllipse nodeEllipse, Canvas canvas, Graph graph) {
             this._fromNodeEllipse = nodeEllipse;
             this._canvas = canvas;
             this._isTwoWayConnection = isTwoWayConnection;
+            this._parent = userControl;
+            this._graph = graph;
 
             SolidColorBrush solidColorBrush = new SolidColorBrush(new System.Windows.Media.Color {
                 A = ((System.Drawing.Color) Properties.Settings.Default["CanvasNodeConnectionPreviewBrushColour"]).A,
@@ -67,42 +72,6 @@ namespace GraphTheoryInWPF.Components {
             this._canvas.MouseLeftButtonUp += this._leftButtonUp;
             this._canvas.MouseMove += this._mouseMove;
 
-        }
-
-        private void Control_MouseRightButtonDown(object sender, MouseEventArgs e) {
-            // remove every CanvasAddConnectionLinePreview from canvas and also remove all mouse eventhandlers
-            this._canvas.Children.Remove(this._line);
-            this._directionalLines.ForEach(x => this._canvas.Children.Remove(x));
-            this._canvas.MouseRightButtonDown -= this._rightButtonDown;
-            this._canvas.MouseLeftButtonUp -= this._leftButtonUp;
-            this._canvas.MouseMove -= this._mouseMove;
-            this._canvas.ReleaseMouseCapture();
-        }
-
-        private void Control_MouseLeftButtonUp(object sender, MouseEventArgs e) {
-            // TODO: Try to make the node connection if possible
-
-            // "Destroy" Every connection of the canvas to this
-            this.Control_MouseRightButtonDown(null, null);
-        }
-
-        private void SetCoordinates(Point p) {
-            Point fromNodeBorderPoint = this._fromNodeEllipse.GetClosestBorderPoint(p);
-            this._line.X1 = fromNodeBorderPoint.X;
-            this._line.Y1 = fromNodeBorderPoint.Y;
-
-
-            if (this._toNodeEllipse == null) {
-                this._line.X2 = p.X;
-                this._line.Y2 = p.Y;
-            } else {
-                Point toNodeBorderPoint = this._toNodeEllipse.GetClosestBorderPoint(this._fromNodeEllipse.Center);
-                this._line.X2 = toNodeBorderPoint.X;
-                this._line.Y2 = toNodeBorderPoint.Y;
-            }
-
-            // TODO: Add arrow direction stuff
-            this.UpdateArrowCoordinate();
         }
 
         #region Arrow stuff
@@ -173,6 +142,69 @@ namespace GraphTheoryInWPF.Components {
         }
         #endregion
 
+        private void Control_MouseRightButtonDown(object sender, MouseEventArgs e) {
+            // remove every CanvasAddConnectionLinePreview from canvas and also remove all mouse eventhandlers
+            this._canvas.Children.Remove(this._line);
+            this._directionalLines.ForEach(x => this._canvas.Children.Remove(x));
+            this._canvas.MouseRightButtonDown -= this._rightButtonDown;
+            this._canvas.MouseLeftButtonUp -= this._leftButtonUp;
+            this._canvas.MouseMove -= this._mouseMove;
+            this._canvas.ReleaseMouseCapture();
+        }
+
+        private void Control_MouseLeftButtonUp(object sender, MouseEventArgs e) {
+            // Connect the nodes if possible
+            try {
+                if (this._isTwoWayConnection)
+                    this._graph.AddTwoWayNodeConnetionToGraph(this._fromNodeEllipse.GetNode().Name,
+                                                              this._toNodeEllipse.GetNode().Name);
+                else
+                    this._graph.AddOneWayNodeConnetionToGraph(this._fromNodeEllipse.GetNode().Name,
+                                                              this._toNodeEllipse.GetNode().Name);
+
+                // Update the rest of the view in the parent
+
+                if (this._parent is SettingsEditor settingsEditor) {
+                    this._canvas.Children.Clear();
+                    NodeEllipse.FillCanvasWithAllNodes(this._canvas, this._graph, this._parent);
+                } else if (this._parent is GraphEditor graphEditor) {
+                    this._canvas.Children.Clear();
+                    NodeEllipse.FillCanvasWithAllNodes(this._canvas, this._graph, this._parent);
+                    graphEditor.GEVM.Update();
+                } else if (this._parent is RoutePlanner routePlanner) {
+                    this._canvas.Children.Clear();
+                    NodeEllipse.FillCanvasWithAllNodes(this._canvas, this._graph, this._parent);
+                    routePlanner.RPVM.Update();
+                } else {
+                    throw new NotImplementedException();
+                }
+
+            } catch (GraphException ge) {
+                MessageBox.Show(ge.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            // "Destroy" Every connection of the canvas to this
+            this.Control_MouseRightButtonDown(null, null);
+
+        }
+
+        private void SetCoordinates(Point p) {
+            Point fromNodeBorderPoint = this._fromNodeEllipse.GetClosestBorderPoint(p);
+            this._line.X1 = fromNodeBorderPoint.X;
+            this._line.Y1 = fromNodeBorderPoint.Y;
+
+            if (this._toNodeEllipse == null) {
+                this._line.X2 = p.X;
+                this._line.Y2 = p.Y;
+            } else {
+                Point toNodeBorderPoint = this._toNodeEllipse.GetClosestBorderPoint(this._fromNodeEllipse.Center);
+                this._line.X2 = toNodeBorderPoint.X;
+                this._line.Y2 = toNodeBorderPoint.Y;
+            }
+
+            this.UpdateArrowCoordinate();
+        }
+
+
         private static bool IsPointWithinRect(Point p, Rect r) {
             // too far left
             if (p.X < r.X)
@@ -194,7 +226,7 @@ namespace GraphTheoryInWPF.Components {
         private void Control_MouseMove(object sender, MouseEventArgs e) {
             Point mousePosition = e.GetPosition(this._canvas);
 
-            // set the tonodeellipse if can
+            // set the _toNodeEllipse if can
             bool foundNode = false;
             foreach (var item in this._canvas.Children) {
                 if (item is NodeEllipse nodeEllipse) {
