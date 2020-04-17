@@ -62,7 +62,8 @@
                     <ListBoxItem>
                         <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal" VerticalAlignment="Center">
                             <Label Foreground="White" Content="Use Dynamic Node Ellipse Padding"/>
-                            <CheckBox x:Name="CheckBox_UseDynamicNodeEllipsePadding" Checked="CheckBox_UseDynamicNodeEllipsePadding_Changed" Unchecked="CheckBox_UseDynamicNodeEllipsePadding_Changed"/>
+                            <CheckBox x:Name="CheckBox_UseDynamicNodeEllipsePadding" Width="18" Height="18"
+                                      Checked="CheckBox_UseDynamicNodeEllipsePadding_Changed" Unchecked="CheckBox_UseDynamicNodeEllipsePadding_Changed"/>
                         </StackPanel>
                     </ListBoxItem>
                     <Separator Background="White"/>
