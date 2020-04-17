@@ -35,5 +35,8 @@
     <Setting Name="CanvasBackgroundBrushColour" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">25, 55, 75</Value>
     </Setting>
+    <Setting Name="CanvasNodeConnectionPreviewBrushColour" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">LightGray</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -447,23 +447,6 @@ namespace GraphTheoryInWPF.Components {
             }
         }
 
-        //private void OnGraphChanged() {
-        //    this._canvas.Children.Clear();
-        //    NodeEllipse.FillCanvasWithAllNodes(this._canvas, this._graph, this._parent);
-
-        //    if (this._parent is SettingsEditor settingsEditor) {
-
-        //    } else if (this._parent is RoutePlanner routePlanner) {
-
-        //    } else if (this._parent is GraphEditor graphEditor) {
-
-        //    } else {
-        //        throw new NotImplementedException();
-        //    }
-
-
-        //}
-
         private void MenuItem_Click_DeleteNode(object sender, RoutedEventArgs e) {
             // Delete Node From Graph
             if (this._parent is SettingsEditor settingsEditor) {
@@ -483,12 +466,13 @@ namespace GraphTheoryInWPF.Components {
             }
         }
 
-        private void MenuItem_Click_1(object sender, RoutedEventArgs e) {
-
+        private void MenuItem_Click_AddOneWayConnection(object sender, RoutedEventArgs e) {
+            new CanvasAddConnectionLinePreview(false, this._parent, this, this._canvas);
         }
 
-        private void MenuItem_Click_2(object sender, RoutedEventArgs e) {
-
+        private void MenuItem_Click_AddTwoWayConnection(object sender, RoutedEventArgs e) {
+            new CanvasAddConnectionLinePreview(true, this._parent, this, this._canvas);
         }
+
     }
 }

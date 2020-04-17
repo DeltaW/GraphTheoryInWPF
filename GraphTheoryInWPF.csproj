@@ -75,6 +75,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Components\CanvasAddConnectionLinePreview.cs" />
     <Compile Include="Components\NodeConnectionEditor.xaml.cs">
       <DependentUpon>NodeConnectionEditor.xaml</DependentUpon>
     </Compile>

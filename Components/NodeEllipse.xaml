@@ -13,12 +13,12 @@
             Background="Transparent">
         <Canvas.ContextMenu>
             <ContextMenu>
-                <MenuItem Header="Add One Way Connection" Click="MenuItem_Click_2">
+                <MenuItem Header="Add One Way Connection" Click="MenuItem_Click_AddOneWayConnection">
                     <MenuItem.Icon>
                         <Image Source="/Icons/LineArrow_16x.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Add Two Way Connection" Click="MenuItem_Click_1">
+                <MenuItem Header="Add Two Way Connection" Click="MenuItem_Click_AddTwoWayConnection">
                     <MenuItem.Icon>
                         <Image Source="/Icons/SyncArrow_16x.png"/>
                     </MenuItem.Icon>

@@ -154,5 +154,17 @@ namespace GraphTheoryInWPF.Properties {
                 this["CanvasBackgroundBrushColour"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("LightGray")]
+        public global::System.Drawing.Color CanvasNodeConnectionPreviewBrushColour {
+            get {
+                return ((global::System.Drawing.Color)(this["CanvasNodeConnectionPreviewBrushColour"]));
+            }
+            set {
+                this["CanvasNodeConnectionPreviewBrushColour"] = value;
+            }
+        }
     }
 }
