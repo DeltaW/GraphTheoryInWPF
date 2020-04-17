@@ -30,7 +30,7 @@ namespace GraphTheoryInWPF.View {
 
         public string GetContent() {
             if (this.NodeSelectorComboBox.SelectedItem == null)
-                return "elchFehlerMeldung";
+                return null;
             else {
                 return this.NodeSelectorComboBox.SelectedItem.ToString();
             }
@@ -63,6 +63,14 @@ namespace GraphTheoryInWPF.View {
         public NodeSelector() {
             this.InitializeComponent();
         }
+
+        public void UpdateNodeCollection(List<string> nodes) {
+            string temp = this.GetContent();
+            this.NodeCollection.Clear();
+            nodes.ForEach(x => this.NodeCollection.Add(x));
+            this.NodeSelectorComboBox.SelectedIndex = (this.NodeCollection.IndexOf(temp));
+        }
+
         public NodeSelector(int ordernum, ObservableCollection<string> nodes, RoutePlannerVM rpvm) {
             this.InitializeComponent();
             this._rpvm = rpvm;

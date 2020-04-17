@@ -26,15 +26,17 @@ namespace GraphTheoryInWPF.ViewModel {
         private readonly RadioButton _rbAllRoutes;
         private readonly RadioButton _rbShortestRoute;
         private readonly Canvas _shortestRouteCanvas;
+        private readonly RoutePlanner _routePlanner;
 
-        public RoutePlannerVM(Graph graph, TextBlock textBlock, RadioButton rbAllRoutes, RadioButton rbShortestRoute, Canvas shortestRouteCanvas) {
+        public RoutePlannerVM(Graph graph, RoutePlanner routePlanner) {
             this._graph = graph;
-            this._textblock = textBlock;
+            this._textblock = routePlanner.AllPossibleRoutesTextBlock;
             this.ButtonPlus();
             this.ButtonPlus();
-            this._rbAllRoutes = rbAllRoutes;
-            this._rbShortestRoute = rbShortestRoute;
-            this._shortestRouteCanvas = shortestRouteCanvas;
+            this._rbAllRoutes = routePlanner.RadioButtonAllRoutes;
+            this._rbShortestRoute = routePlanner.RadioButtonShortestRoute;
+            this._shortestRouteCanvas = routePlanner.ShortestRouteCanvas;
+            this._routePlanner = routePlanner;
 
             if ((bool) Properties.Settings.Default["AllRoutesRadioButtonSelected"]) {
                 this._rbShortestRoute.IsChecked = false;
@@ -43,9 +45,31 @@ namespace GraphTheoryInWPF.ViewModel {
                 this._rbShortestRoute.IsChecked = true;
                 this._rbAllRoutes.IsChecked = false;
             }
+            NodeEllipse.FillCanvasWithAllNodes(this._shortestRouteCanvas, this._graph, this._routePlanner);
+        }
 
+        public void Update() {
+            for (int i = this.NodeSelectors.Count - 1; i >= 0; i--) {
+                if (this.NodeSelectors[i].GetContent() == null)
+                    continue;
 
-            NodeEllipse.FillCanvasWithAllNodes(this._shortestRouteCanvas, this._graph);
+                if (!this._graph.GetAllNodeNames().Contains(this.NodeSelectors[i].GetContent())) {
+                    // Remove NodeSelector
+                    this.NodeSelectors.RemoveAt(i);
+                }
+            }
+            for (int i = 0; i < this.NodeSelectors.Count; i++) {
+                // Update dropdownmenu
+                this.NodeSelectors[i].UpdateNodeCollection(this._graph.GetAllNodeNames().ToList());
+            }
+
+            // Make sure there are at least two Node Selectors present
+            while (this.NodeSelectors.Count < 2) {
+                this.ButtonPlus();
+            }
+
+            this.UpdateOrders();
+            this.OnNodeSelectorChanged();
         }
 
         public void OnNodeSelectorChanged() {
@@ -141,7 +165,7 @@ namespace GraphTheoryInWPF.ViewModel {
             }
         }
 
-        public void ButtonPlus() => NodeSelectors.Add(new NodeSelector(GoalCounter++, new ObservableCollection<string>(_graph.GetAllNodeNames()), this));
+        public void ButtonPlus() => this.NodeSelectors.Add(new NodeSelector(GoalCounter++, new ObservableCollection<string>(_graph.GetAllNodeNames()), this));
 
         public void UpdateOrders() {
             for (int i = 0; i < this.NodeSelectors.Count; i++) {

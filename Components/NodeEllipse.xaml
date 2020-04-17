@@ -11,6 +11,24 @@
             Width="{Binding Measurements.Width}" 
             Height="{Binding Measurements.Height}" 
             Background="Transparent">
-            
+        <Canvas.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="Add One Way Connection" Click="MenuItem_Click_2">
+                    <MenuItem.Icon>
+                        <Image Source="/Icons/LineArrow_16x.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Add Two Way Connection" Click="MenuItem_Click_1">
+                    <MenuItem.Icon>
+                        <Image Source="/Icons/SyncArrow_16x.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Delete Node" Click="MenuItem_Click_DeleteNode">
+                    <MenuItem.Icon>
+                        <Image Source="/Icons/DeleteUser_16x.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </ContextMenu>
+        </Canvas.ContextMenu>
     </Canvas>
 </UserControl>

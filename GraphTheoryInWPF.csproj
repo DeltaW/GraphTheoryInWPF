@@ -202,5 +202,12 @@
   <ItemGroup>
     <Resource Include="Icons\Screenshot_16x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\LineArrow_16x.png" />
+    <Resource Include="Icons\SyncArrow_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\DeleteUser_16x.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

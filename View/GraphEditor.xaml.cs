@@ -21,19 +21,19 @@ namespace GraphTheoryInWPF.View {
     /// Interaction logic for GraphEditor.xaml
     /// </summary>
     public partial class GraphEditor: UserControl {
-        private readonly GraphEditorVM _gevm;
+        public readonly GraphEditorVM GEVM;
 
         public GraphEditor(Graph graph) {
             this.InitializeComponent();
-            this._gevm = new GraphEditorVM(graph, this.GraphEditorCanvas);
-            this.DataContext = this._gevm;
+            this.GEVM = new GraphEditorVM(graph, this.GraphEditorCanvas, this);
+            this.DataContext = this.GEVM;
         }
 
         private void Button_Click_AddNode(object sender, RoutedEventArgs e) {
             try {
                 if (this.UserInputTextBlock.Text == "")
                     throw new GraphException("THE NODE NEEDS TO HAVE A VALID NAME!");
-                this._gevm.ButtonAddNode(this.UserInputTextBlock.Text);
+                this.GEVM.ButtonAddNode(this.UserInputTextBlock.Text);
                 this.UserInputTextBlock.Text = "";
             } catch (GraphException ge) {
                 // Error Message

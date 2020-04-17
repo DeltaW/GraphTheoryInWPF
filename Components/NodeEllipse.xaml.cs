@@ -1,4 +1,5 @@
 ﻿using GraphTheory.Core;
+using GraphTheoryInWPF.View;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -34,6 +35,7 @@ namespace GraphTheoryInWPF.Components {
         private readonly Node _node;
         private readonly Graph _graph;
         private readonly List<NodeConnectionLine> _lines = new List<NodeConnectionLine>();
+        private readonly UserControl _parent;
 
         public List<Point> GetBorderPoints() {
             return new List<Point>() { 
@@ -311,7 +313,9 @@ namespace GraphTheoryInWPF.Components {
             this.NodeEllipseCanvas.Children.Add(this._textBlock);
         }
 
-        public static void FillCanvasWithAllNodes(Canvas c, Graph g) {
+        public static void FillCanvasWithAllNodes(Canvas c, Graph g, UserControl u) {
+
+
             c.Background = new SolidColorBrush(new System.Windows.Media.Color() {
                 A = ((System.Drawing.Color) (Properties.Settings.Default["CanvasBackgroundBrushColour"])).A,
                 R = ((System.Drawing.Color) (Properties.Settings.Default["CanvasBackgroundBrushColour"])).R,
@@ -330,7 +334,7 @@ namespace GraphTheoryInWPF.Components {
             // Actually Fill the Canvas
             for (int i = 0; i < allNodeNames.Count; i++) {
                 Node n = g.GetNode(allNodeNames[i]);
-                NodeEllipse.AddNodeEllipse(c, g, n, new Point(n.Position.X, n.Position.Y));
+                NodeEllipse.AddNodeEllipse(c, g, n, new Point(n.Position.X, n.Position.Y), u);
             }
             for (int j = 0; j < c.Children.Count; j++) {
                 if (c.Children[j] is NodeEllipse nodeEllipse) {
@@ -339,19 +343,21 @@ namespace GraphTheoryInWPF.Components {
             }
         }
 
-        private static void AddNodeEllipse(Canvas c, Graph g, Node n, Point p) {
-            NodeEllipse nodeEllipse = new NodeEllipse(c, g, n, p,
-                                                      (int) Properties.Settings.Default["MinNodeEllipsePadding"]);
+        private static void AddNodeEllipse(Canvas c, Graph g, Node n, Point p, UserControl u) {
+            NodeEllipse nodeEllipse = new NodeEllipse(c, g, n, p, u
+                                                      //(int) Properties.Settings.Default["MinNodeEllipsePadding"],
+                                                      );
             c.Children.Add(nodeEllipse);
         }
 
-        public NodeEllipse(Canvas c, Graph graph, Node n, Point p, int zIndex = 3) {
+        public NodeEllipse(Canvas c, Graph graph, Node n, Point p, UserControl u, int zIndex = 3) {
             this.InitializeComponent();
             this.DataContext = this;
 
             this._canvas = c;
             this._graph = graph;
             this._node = n;
+            this._parent = u;
 
             //this.SetCoordinates(p);
 
@@ -439,6 +445,50 @@ namespace GraphTheoryInWPF.Components {
                 this.SetCoordinates(new Point(mouseWithinParent.X - this._mouseLocationWithinMe.X,
                                               mouseWithinParent.Y - this._mouseLocationWithinMe.Y));
             }
+        }
+
+        //private void OnGraphChanged() {
+        //    this._canvas.Children.Clear();
+        //    NodeEllipse.FillCanvasWithAllNodes(this._canvas, this._graph, this._parent);
+
+        //    if (this._parent is SettingsEditor settingsEditor) {
+
+        //    } else if (this._parent is RoutePlanner routePlanner) {
+
+        //    } else if (this._parent is GraphEditor graphEditor) {
+
+        //    } else {
+        //        throw new NotImplementedException();
+        //    }
+
+
+        //}
+
+        private void MenuItem_Click_DeleteNode(object sender, RoutedEventArgs e) {
+            // Delete Node From Graph
+            if (this._parent is SettingsEditor settingsEditor) {
+                this._graph.RemoveNodeFromGraph(this._node.Name);
+                this._canvas.Children.Clear();
+                NodeEllipse.FillCanvasWithAllNodes(this._canvas, this._graph, this._parent);
+            } else if (this._parent is RoutePlanner routePlanner) {
+                this._graph.RemoveNodeFromGraph(this._node.Name);
+                this._canvas.Children.Clear();
+                NodeEllipse.FillCanvasWithAllNodes(this._canvas, this._graph, this._parent);
+                routePlanner.RPVM.Update();
+            } else if (this._parent is GraphEditor graphEditor) {
+                // Working flawlessly
+                graphEditor.GEVM.NodeEditors.First(x => x.NodeName == this._node.Name).Button_Click_DeleteNode(null, null);
+            } else {
+                throw new NotImplementedException();
+            }
+        }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e) {
+
+        }
+
+        private void MenuItem_Click_2(object sender, RoutedEventArgs e) {
+
         }
     }
 }

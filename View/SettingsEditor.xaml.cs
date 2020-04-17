@@ -103,7 +103,7 @@ namespace GraphTheoryInWPF.View {
 
         private void OnSettingsChanged() {
             this.GraphPreviewCanvas.Children.Clear();
-            NodeEllipse.FillCanvasWithAllNodes(this.GraphPreviewCanvas, this._graph);
+            NodeEllipse.FillCanvasWithAllNodes(this.GraphPreviewCanvas, this._graph, this);
         }
 
         public void AskToSaveSettings() {

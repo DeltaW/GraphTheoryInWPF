@@ -1,5 +1,6 @@
 ﻿using GraphTheory.Core;
 using GraphTheoryInWPF.Components;
+using GraphTheoryInWPF.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,13 +15,15 @@ namespace GraphTheoryInWPF.ViewModel {
     public class GraphEditorVM {
         private readonly Graph _graph;
         private readonly Canvas _canvas;
+        private readonly GraphEditor _graphEditor;
 
         public ObservableCollection<string> NodeNames { get => new ObservableCollection<string>(_graph.GetAllNodeNames()); }
         public ObservableCollection<NodeEditor> NodeEditors { get; set; }
 
-        public GraphEditorVM(Graph graph, Canvas canvas) {
+        public GraphEditorVM(Graph graph, Canvas canvas, GraphEditor graphEditor) {
             this._graph = graph;
             this._canvas = canvas;
+            this._graphEditor = graphEditor;
 
             this.InstantiateNodeEditors();
             this.OnGraphChanged();
@@ -56,7 +59,7 @@ namespace GraphTheoryInWPF.ViewModel {
 
         public void OnGraphChanged() {
             this._canvas.Children.Clear();
-            NodeEllipse.FillCanvasWithAllNodes(this._canvas, this._graph);
+            NodeEllipse.FillCanvasWithAllNodes(this._canvas, this._graph, this._graphEditor);
         }
     }
 }

@@ -46,35 +46,26 @@ namespace GraphTheoryInWPF.View {
         //    }
         //}
 
-        private readonly RoutePlannerVM _rpvm;
-
-        //public string SavePath;
+        public readonly RoutePlannerVM RPVM;
 
         public RoutePlanner(Graph graph) {
             this.InitializeComponent();
-            this._rpvm = new RoutePlannerVM(graph, this.AllPossibleRoutesTextBlock, this.RadioButtonAllRoutes, this.RadioButtonShortestRoute, this.ShortestRouteCanvas);
-            this.DataContext = this._rpvm;
+            this.RPVM = new RoutePlannerVM(graph, this);
+            this.DataContext = this.RPVM;
         }
 
-        //public RoutePlanner(Graph graph, string savePath) {
-        //    this.InitializeComponent();
-        //    this._rpvm = new RoutePlannerVM(graph, this.AllPossibleRoutesTextBlock, this.RadioButtonAllRoutes, this.RadioButtonShortestRoute, this.ShortestRouteCanvas);
-        //    this.DataContext = this._rpvm;
-        //    this.SavePath = savePath;
-        //}
-
         private void RouteButtonClick(Object sender, RoutedEventArgs e) {
-            this._rpvm.OnNodeSelectorChanged();
+            this.RPVM.OnNodeSelectorChanged();
         }
 
         private void Button_Click_Plus(Object sender, RoutedEventArgs e) {
-            this._rpvm.ButtonPlus();
-            this._rpvm.OnNodeSelectorChanged();
+            this.RPVM.ButtonPlus();
+            this.RPVM.OnNodeSelectorChanged();
         }
 
         private void RadioButton_Checked(Object sender, RoutedEventArgs e) {
-            if (this._rpvm != null)
-                this._rpvm.OnNodeSelectorChanged();
+            if (this.RPVM != null)
+                this.RPVM.OnNodeSelectorChanged();
         }
     }
 }

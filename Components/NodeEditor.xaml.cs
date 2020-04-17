@@ -76,7 +76,7 @@ namespace GraphTheoryInWPF.Components {
             }
         }
 
-        private void Button_Click_DeleteNode(object sender, RoutedEventArgs e) {
+        public void Button_Click_DeleteNode(object sender, RoutedEventArgs e) {
             this._graph.RemoveNodeFromGraph(this.NodeName);
             this._gevm.RemoveNodeEditor(this);
             this._gevm.OnGraphChanged();
