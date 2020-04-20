@@ -57,7 +57,17 @@
         <!--right-->
         <Border Grid.Column="1" BorderThickness="5 5 5 5" BorderBrush="White" Margin="5 10 10 10">
             <Grid Background="#19374B">
-                <Canvas x:Name="GraphEditorCanvas"/>
+                <Canvas x:Name="GraphEditorCanvas" ContextMenuOpening="GraphEditorCanvas_ContextMenuOpening">
+                    <Canvas.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="_New Node" Click="MenuItem_Click">
+                                <MenuItem.Icon>
+                                    <Image Source="/Icons/NewGraph_16x.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Canvas.ContextMenu>
+                </Canvas>
             </Grid>
         </Border>
 

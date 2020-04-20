@@ -51,6 +51,8 @@ namespace GraphTheoryInWPF.Components {
             foreach (var item in output) {
                 this.ConnectionChoices.Add(item);
             }
+
+            //this.SetSelectedItem(); // This creates a StackOverFlowException 4 lines above?????????????????????????????????????????????
         }
 
         public NodeConnectionEditor() {
@@ -78,12 +80,17 @@ namespace GraphTheoryInWPF.Components {
 
             this.ConnectedNode = connectedNode;
 
-            this.SetConnectionChoices();
+            //this.SetConnectionChoices();
 
             this.InitializeComponent();
             this.DataContext = this;
 
-            this.ConnectionSelectorComboBox.SelectedIndex = ConnectionChoices.IndexOf(connectedNode.Name);
+            //this.ConnectionSelectorComboBox.SelectedIndex = this.ConnectionChoices.IndexOf(this.ConnectedNode.Name);
+        }
+
+        private void SetSelectedItem() {
+            int a = this.ConnectionChoices.IndexOf(this.ConnectedNode.Name);
+            this.ConnectionSelectorComboBox.SelectedIndex = a;
         }
 
         private void ConnectionSelectorComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {

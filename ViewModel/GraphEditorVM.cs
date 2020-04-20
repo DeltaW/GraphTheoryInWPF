@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace GraphTheoryInWPF.ViewModel {
@@ -48,7 +49,7 @@ namespace GraphTheoryInWPF.ViewModel {
 
         public void ButtonAddNode(string nodeName) {
             this._graph.AddNewNodeToGraph(nodeName);
-            this.NodeEditors.Add(new NodeEditor(this._graph.GetNode(nodeName),this, this._graph));
+            this.NodeEditors.Add(new NodeEditor(this._graph.GetNode(nodeName), this, this._graph));
 
             // Update all connection comboboxes
             foreach (var item in this.NodeEditors) {
@@ -59,6 +60,16 @@ namespace GraphTheoryInWPF.ViewModel {
             this.OnGraphChanged();
         }
 
+        internal void MenuItemAddNode(int x, int y) {
+            string nodeName = Microsoft.VisualBasic.Interaction.InputBox("Please type in a uniqe Node name", "GraphTheory", "");
+            this._graph.AddNewNodeToGraph(nodeName, new System.Drawing.Point(x, y));
+            this.NodeEditors.Add(new NodeEditor(this._graph.GetNode(nodeName), this, this._graph));
+            // Update all connection comboboxes
+            foreach (var item in this.NodeEditors) {
+                item.UpdateAllConnectionEditors();
+            }
+            this.OnGraphChanged();
+        }
 
         public void OnGraphChanged() {
             this._canvas.Children.Clear();

@@ -322,5 +322,19 @@ namespace GraphTheoryInWPF.View {
             }
         }
         #endregion
+
+        private void GraphPreviewCanvas_ContextMenuOpening(object sender, ContextMenuEventArgs e) {
+            this.p = Mouse.GetPosition(this.GraphPreviewCanvas);
+        }
+
+        private Point p; // temporary point to get the position used when creating a new node via the canvas - ugly but it works
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e) {
+            string nodeName = Microsoft.VisualBasic.Interaction.InputBox("Please type in a uniqe Node name", "GraphTheory", "");
+            this._graph.AddNewNodeToGraph(nodeName, new System.Drawing.Point((int) this.p.X, (int) this.p.Y));
+
+            this.GraphPreviewCanvas.Children.Clear();
+            NodeEllipse.FillCanvasWithAllNodes(this.GraphPreviewCanvas, this._graph, this);
+        }
     }
 }

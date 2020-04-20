@@ -156,7 +156,18 @@
             <Border Grid.Row="0" BorderThickness="5 5 5 2.5" BorderBrush="White"/>
             <TextBlock Margin="10"  Grid.Row="0" Text="Preview" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" FontWeight="ExtraBold"/>
 
-            <Canvas Grid.Row="1" x:Name="GraphPreviewCanvas" Background="#19374B"/>
+            <Canvas Grid.Row="1" x:Name="GraphPreviewCanvas" Background="#19374B" 
+                                ContextMenuOpening="GraphPreviewCanvas_ContextMenuOpening">
+                <Canvas.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="_New Node" Click="MenuItem_Click">
+                            <MenuItem.Icon>
+                                <Image Source="/Icons/NewGraph_16x.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </ContextMenu>
+                </Canvas.ContextMenu>
+            </Canvas>
             <Border Grid.Row="1" BorderThickness="5 2.5 5 5" BorderBrush="White"/>
         </Grid>
         <!--</Grid>-->

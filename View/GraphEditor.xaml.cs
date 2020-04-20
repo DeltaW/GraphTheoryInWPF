@@ -1,4 +1,5 @@
 ﻿using GraphTheory.Core;
+using GraphTheoryInWPF.Components;
 using GraphTheoryInWPF.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -37,7 +38,8 @@ namespace GraphTheoryInWPF.View {
                 this.UserInputTextBlock.Text = "";
             } catch (GraphException ge) {
                 // Error Message
-                /*MessageBoxResult messageBox =*/ MessageBox.Show(ge.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                /*MessageBoxResult messageBox =*/
+                MessageBox.Show(ge.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -45,6 +47,16 @@ namespace GraphTheoryInWPF.View {
             if (e.Key == Key.Enter) {
                 this.Button_Click_AddNode(null, null);
             }
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e) {
+            this.GEVM.MenuItemAddNode((int) p.X, (int) p.Y);
+        }
+
+        private Point p; // temporary point to get the position used when creating a new node via the canvas - ugly but it works
+
+        private void GraphEditorCanvas_ContextMenuOpening(object sender, ContextMenuEventArgs e) {
+            this.p = Mouse.GetPosition(this.GraphEditorCanvas);
         }
     }
 }

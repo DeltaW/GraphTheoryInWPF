@@ -67,5 +67,16 @@ namespace GraphTheoryInWPF.View {
             if (this.RPVM != null)
                 this.RPVM.OnNodeSelectorChanged();
         }
+
+        private void ShortestRouteCanvas_ContextMenuOpening(object sender, ContextMenuEventArgs e) {
+            this.p = Mouse.GetPosition(this.ShortestRouteCanvas);
+
+        }
+        private Point p; // temporary point to get the position used when creating a new node via the canvas - ugly but it works
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e) {
+            this.RPVM.MenuItemAddNode((int) p.X, (int) p.Y);
+
+        }
     }
 }

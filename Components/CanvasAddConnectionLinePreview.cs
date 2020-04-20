@@ -191,7 +191,6 @@ namespace GraphTheoryInWPF.Components {
 
             // if "Ctrl" is held down allow more connections
             if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)) {
-                // Bug / Issue : Displaying the preview does not work in GraphEditor after executing "graphEditor.GEVM.Update()"
                 foreach (var item in this._canvas.Children) {
                     if (item is NodeEllipse nodeEllipse) {
                         if (nodeEllipse.GetNode().Name == this._fromNodeEllipse.GetNode().Name) {
@@ -203,7 +202,6 @@ namespace GraphTheoryInWPF.Components {
                         }
                     }
                 }
-                //new CanvasAddConnectionLinePreview(this._isTwoWayConnection, this._parent, this._fromNodeEllipse, this._canvas, this._graph);
             }
         }
 

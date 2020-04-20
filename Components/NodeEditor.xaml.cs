@@ -50,7 +50,7 @@ namespace GraphTheoryInWPF.Components {
         private void InstantiateConnections() {
             this.NodeConnectionEditors = new ObservableCollection<NodeConnectionEditor>();
 
-            // this is uesed when an already existing graph got passed on
+            // this is used when an already existing graph got passed on
             // the node might already have connections so it needs to be filled
             foreach (Connection connection in this._node.Connections) {
                 this.NodeConnectionEditors.Add(new NodeConnectionEditor(this._gevm, this, this._node, this._graph, connection.ToNode));

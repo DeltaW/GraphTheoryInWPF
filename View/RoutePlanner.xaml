@@ -78,7 +78,17 @@
                 <TabItem Header="_Canvas" IsSelected="True" Name="CanvasTab">
                     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                         <!--canvas with shortest route-->
-                        <Canvas Background="#19374B" Name="ShortestRouteCanvas">
+                        <Canvas Background="#19374B" Name="ShortestRouteCanvas" 
+                                ContextMenuOpening="ShortestRouteCanvas_ContextMenuOpening">
+                            <Canvas.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="_New Node" Click="MenuItem_Click">
+                                        <MenuItem.Icon>
+                                            <Image Source="/Icons/NewGraph_16x.png"/>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </ContextMenu>
+                            </Canvas.ContextMenu>
                         </Canvas>
                     </ScrollViewer>
                 </TabItem>
