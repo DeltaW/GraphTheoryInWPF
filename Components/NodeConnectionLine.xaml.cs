@@ -197,7 +197,6 @@ namespace GraphTheoryInWPF.Components {
 
         private void UpdateShownView() {
             // Update ShownView
-            // Delete Node From Graph
             if (this._parent is SettingsEditor settingsEditor) {
                 // Only need to redraw the canvas
                 this._canvas.Children.Clear();

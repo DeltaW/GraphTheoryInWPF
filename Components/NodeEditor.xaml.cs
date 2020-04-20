@@ -68,18 +68,20 @@ namespace GraphTheoryInWPF.Components {
                 if (nodeConnectionEditor.ConnectedNode == null || !allNodeNames.Contains(nodeConnectionEditor.ConnectedNode.Name)) {
                     this.NodeConnectionEditors.Remove(nodeConnectionEditor);
                 }
-                
+
                 // Remove the NodeConnectionEditor if the the connection no longer exists
                 if (!this._node.IsDirectlyConnectedToNode(nodeConnectionEditor.ConnectedNode)) {
                     this.NodeConnectionEditors.Remove(nodeConnectionEditor);
                 }
-            
+
             }
 
             // Add a NodeConnectionEditor if the connnection is missing
             foreach (Connection connection in this._node.Connections) {
                 if (this.NodeConnectionEditors.FirstOrDefault(x => x.ConnectedNode == connection.ToNode) == null) {
+                    #region Issue is here
                     this.NodeConnectionEditors.Add(new NodeConnectionEditor(this._gevm, this, this._node, this._graph, connection.ToNode));
+                    #endregion
                 }
             }
 

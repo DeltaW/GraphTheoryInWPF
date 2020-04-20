@@ -309,8 +309,8 @@ namespace GraphTheoryInWPF.Components {
             Canvas.SetZIndex(this._textBlock, zIndex + 1);
 
             // Drawing
-            this.NodeEllipseCanvas.Children.Add(this._ellipse);
-            this.NodeEllipseCanvas.Children.Add(this._textBlock);
+            this.NodeEllipseContainer.Children.Add(this._ellipse);
+            this.NodeEllipseContainer.Children.Add(this._textBlock);
         }
 
         public static void FillCanvasWithAllNodes(Canvas c, Graph g, UserControl u) {
@@ -536,15 +536,15 @@ namespace GraphTheoryInWPF.Components {
             }
         }
 
-        private void MenuItem_Click_AddOneWayConnection(object sender, RoutedEventArgs e) {
+        public void MenuItem_Click_AddOneWayConnection(object sender, RoutedEventArgs e) {
             new CanvasAddConnectionLinePreview(false, this._parent, this, this._canvas, this._graph);
         }
 
-        private void MenuItem_Click_AddTwoWayConnection(object sender, RoutedEventArgs e) {
+        public void MenuItem_Click_AddTwoWayConnection(object sender, RoutedEventArgs e) {
             new CanvasAddConnectionLinePreview(true, this._parent, this, this._canvas, this._graph);
         }
 
-        private void NodeEllipseCanvas_ContextMenuOpening(object sender, ContextMenuEventArgs e) {
+        private void NodeEllipseContainer_ContextMenuOpening(object sender, ContextMenuEventArgs e) {
             // enable or disable the last two menu items
             bool showTwoWayOption = true;
 

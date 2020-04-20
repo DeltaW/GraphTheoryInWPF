@@ -7,12 +7,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     
-    <Canvas Name="NodeEllipseCanvas" 
+    <Grid Name="NodeEllipseContainer" 
             Width="{Binding Measurements.Width}" 
             Height="{Binding Measurements.Height}" 
-            Background="Transparent"
-            ContextMenuOpening="NodeEllipseCanvas_ContextMenuOpening">
-        <Canvas.ContextMenu>
+            ContextMenuOpening="NodeEllipseContainer_ContextMenuOpening">
+        <Grid.ContextMenu>
             <ContextMenu Name="NodeEllipseContextMenu">
                 <MenuItem Header="Add One Way Connection" Click="MenuItem_Click_AddOneWayConnection">
                     <MenuItem.Icon>
@@ -30,6 +29,6 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </ContextMenu>
-        </Canvas.ContextMenu>
-    </Canvas>
+        </Grid.ContextMenu>
+    </Grid>
 </UserControl>

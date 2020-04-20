@@ -13,7 +13,7 @@ using System.Windows.Shapes;
 
 namespace GraphTheoryInWPF.Components {
     public class CanvasAddConnectionLinePreview {
-        private readonly NodeEllipse _fromNodeEllipse;
+        private NodeEllipse _fromNodeEllipse;
         private NodeEllipse _toNodeEllipse;
         private readonly Line _line;
         private readonly List<Line> _directionalLines;
@@ -40,23 +40,23 @@ namespace GraphTheoryInWPF.Components {
             });
 
             this._line = new Line {
-                X1 = nodeEllipse.Center.X,
-                Y1 = nodeEllipse.Center.Y,
+                //X1 = nodeEllipse.Center.X,
+                //Y1 = nodeEllipse.Center.Y,
                 Stroke = solidColorBrush,
                 StrokeThickness = 3,
-                X2 = nodeEllipse.Center.X,
-                Y2 = nodeEllipse.Center.Y,
+                //X2 = nodeEllipse.Center.X,
+                //Y2 = nodeEllipse.Center.Y,
             };
 
             this._directionalLines = new List<Line>();
             for (int i = 0; i < ((this._isTwoWayConnection) ? 4 : 2); i++) {
                 this._directionalLines.Add(new Line {
-                    X1 = nodeEllipse.Center.X,
-                    Y1 = nodeEllipse.Center.Y,
+                    //X1 = nodeEllipse.Center.X,
+                    //Y1 = nodeEllipse.Center.Y,
                     Stroke = solidColorBrush,
                     StrokeThickness = 3,
-                    X2 = nodeEllipse.Center.X,
-                    Y2 = nodeEllipse.Center.Y,
+                    //X2 = nodeEllipse.Center.X,
+                    //Y2 = nodeEllipse.Center.Y,
                 });
                 this._canvas.Children.Add(this._directionalLines[i]);
             }
@@ -71,7 +71,6 @@ namespace GraphTheoryInWPF.Components {
             this._canvas.MouseRightButtonDown += this._rightButtonDown;
             this._canvas.MouseLeftButtonUp += this._leftButtonUp;
             this._canvas.MouseMove += this._mouseMove;
-
         }
 
         #region Arrow stuff
@@ -172,6 +171,7 @@ namespace GraphTheoryInWPF.Components {
                         this._canvas.Children.Clear();
                         NodeEllipse.FillCanvasWithAllNodes(this._canvas, this._graph, this._parent);
                         graphEditor.GEVM.Update();
+                        // Preview does not display properly if this is the case
                     } else if (this._parent is RoutePlanner routePlanner) {
                         this._canvas.Children.Clear();
                         NodeEllipse.FillCanvasWithAllNodes(this._canvas, this._graph, this._parent);
@@ -184,9 +184,27 @@ namespace GraphTheoryInWPF.Components {
                     MessageBox.Show(ge.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+
+
             // "Destroy" Every connection of the canvas to this
             this.Control_MouseRightButtonDown(null, null);
 
+            // if "Ctrl" is held down allow more connections
+            if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)) {
+                // Bug / Issue : Displaying the preview does not work in GraphEditor after executing "graphEditor.GEVM.Update()"
+                foreach (var item in this._canvas.Children) {
+                    if (item is NodeEllipse nodeEllipse) {
+                        if (nodeEllipse.GetNode().Name == this._fromNodeEllipse.GetNode().Name) {
+                            if (this._isTwoWayConnection)
+                                nodeEllipse.MenuItem_Click_AddTwoWayConnection(null, null);
+                            else
+                                nodeEllipse.MenuItem_Click_AddOneWayConnection(null, null);
+                            break;
+                        }
+                    }
+                }
+                //new CanvasAddConnectionLinePreview(this._isTwoWayConnection, this._parent, this._fromNodeEllipse, this._canvas, this._graph);
+            }
         }
 
         private void SetCoordinates(Point p) {
@@ -207,7 +225,15 @@ namespace GraphTheoryInWPF.Components {
         }
 
 
-        private static bool IsPointWithinRect(Point p, Rect r) {
+        private static bool IsPointWithinEllipse(Point p, Rect r) {
+            // Reference: "https://stackoverflow.com/a/13285453"
+
+            System.Drawing.Drawing2D.GraphicsPath graphicsPath = new System.Drawing.Drawing2D.GraphicsPath();
+            graphicsPath.AddEllipse(new System.Drawing.RectangleF((float) r.X, (float) r.Y, (float) r.Width, (float) r.Height));
+            return graphicsPath.IsVisible((float) p.X, (float) p.Y);
+
+            #region Old point within rect calculation
+            /*
             // too far left
             if (p.X < r.X)
                 return false;
@@ -223,16 +249,17 @@ namespace GraphTheoryInWPF.Components {
 
             // inside
             return true;
+            */
+            #endregion
         }
 
         private void Control_MouseMove(object sender, MouseEventArgs e) {
             Point mousePosition = e.GetPosition(this._canvas);
-
             // set the _toNodeEllipse if can
             bool foundNode = false;
             foreach (var item in this._canvas.Children) {
                 if (item is NodeEllipse nodeEllipse) {
-                    if (CanvasAddConnectionLinePreview.IsPointWithinRect(mousePosition, nodeEllipse.Measurements)) {
+                    if (CanvasAddConnectionLinePreview.IsPointWithinEllipse(mousePosition, nodeEllipse.Measurements)) {
                         if (nodeEllipse == this._fromNodeEllipse)
                             continue;
                         foundNode = true;
