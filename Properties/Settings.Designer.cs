@@ -166,5 +166,53 @@ namespace GraphTheoryInWPF.Properties {
                 this["CanvasNodeConnectionPreviewBrushColour"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("20")]
+        public int FontSize {
+            get {
+                return ((int)(this["FontSize"]));
+            }
+            set {
+                this["FontSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int NodeEllipseStrokeThickness {
+            get {
+                return ((int)(this["NodeEllipseStrokeThickness"]));
+            }
+            set {
+                this["NodeEllipseStrokeThickness"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int ConnectionStrokeThickness {
+            get {
+                return ((int)(this["ConnectionStrokeThickness"]));
+            }
+            set {
+                this["ConnectionStrokeThickness"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public int ConnectionArrowHeadLength {
+            get {
+                return ((int)(this["ConnectionArrowHeadLength"]));
+            }
+            set {
+                this["ConnectionArrowHeadLength"] = value;
+            }
+        }
     }
 }

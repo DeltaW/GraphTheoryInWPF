@@ -43,7 +43,7 @@ namespace GraphTheoryInWPF.Components {
                 //X1 = nodeEllipse.Center.X,
                 //Y1 = nodeEllipse.Center.Y,
                 Stroke = solidColorBrush,
-                StrokeThickness = 3,
+                StrokeThickness = (int) Properties.Settings.Default["ConnectionStrokeThickness"],
                 //X2 = nodeEllipse.Center.X,
                 //Y2 = nodeEllipse.Center.Y,
             };
@@ -54,7 +54,7 @@ namespace GraphTheoryInWPF.Components {
                     //X1 = nodeEllipse.Center.X,
                     //Y1 = nodeEllipse.Center.Y,
                     Stroke = solidColorBrush,
-                    StrokeThickness = 3,
+                    StrokeThickness = (int) Properties.Settings.Default["ConnectionStrokeThickness"],
                     //X2 = nodeEllipse.Center.X,
                     //Y2 = nodeEllipse.Center.Y,
                 });
@@ -113,7 +113,7 @@ namespace GraphTheoryInWPF.Components {
                                                                      this._line.Y2 - this._line.Y1);
             System.Windows.Vector desiredVector = vector;
             desiredVector.Normalize();
-            double desiredLength = 10;
+            double desiredLength = (int) Properties.Settings.Default["ConnectionArrowHeadLength"];
             vector -= (desiredVector * desiredLength);
 
             return new Point((int) (this._line.X1 + vector.X),

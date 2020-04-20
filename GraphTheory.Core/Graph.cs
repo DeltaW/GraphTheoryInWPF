@@ -105,6 +105,9 @@ namespace GraphTheory.Core {
         }
 
         public void AddNewNodeToGraph(string uniqueName) {
+            if (string.IsNullOrWhiteSpace(uniqueName))
+                throw new GraphException($"\"{uniqueName}\" is not a valid name!");
+
             // It needs to be a unique name
             if (this._nodes.Keys.Contains(uniqueName))
                 throw new GraphException($"\"{uniqueName}\" is not a unique name!");
@@ -114,6 +117,9 @@ namespace GraphTheory.Core {
         }
 
         public void AddNewNodeToGraph(string uniqueName, Point position) {
+            if (string.IsNullOrWhiteSpace(uniqueName))
+                throw new GraphException($"\"{uniqueName}\" is not a valid name!");
+
             // It needs to be a unique name
             if (this._nodes.Keys.Contains(uniqueName))
                 throw new GraphException($"\"{uniqueName}\" is not a unique name!");

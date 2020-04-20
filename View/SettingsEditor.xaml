@@ -74,6 +74,34 @@
                             <TextBox x:Name="TextBox_ExtraPaddingPerConnection" TextChanged="TextBox_TextChanged"/>
                         </StackPanel>
                     </ListBoxItem>
+                    <Separator Background="White"/>                    
+                    <ListBoxItem>
+                        <StackPanel HorizontalAlignment="Stretch">
+                            <Label Foreground="White" Content="Node Ellipse Stroke Thickness"/>
+                            <TextBox x:Name="TextBox_NodeEllipseStrokeThickness" TextChanged="TextBox_TextChanged"/>
+                        </StackPanel>
+                    </ListBoxItem>
+                    <Separator Background="White"/>                    
+                    <ListBoxItem>
+                        <StackPanel HorizontalAlignment="Stretch">
+                            <Label Foreground="White" Content="Connection Stroke Thickness"/>
+                            <TextBox x:Name="TextBox_ConnectionStrokeThickness" TextChanged="TextBox_TextChanged"/>
+                        </StackPanel>
+                    </ListBoxItem>
+                    <Separator Background="White"/>               
+                    <ListBoxItem>
+                        <StackPanel HorizontalAlignment="Stretch">
+                            <Label Foreground="White" Content="Node Ellipse Font Size"/>
+                            <TextBox x:Name="TextBox_NodeEllipseFontSize" TextChanged="TextBox_TextChanged"/>
+                        </StackPanel>
+                    </ListBoxItem>
+                    <Separator Background="White"/>       
+                    <ListBoxItem>
+                        <StackPanel HorizontalAlignment="Stretch">
+                            <Label Foreground="White" Content="Connection Arrow Head Length"/>
+                            <TextBox x:Name="TextBox_ArrowHeadLength" TextChanged="TextBox_TextChanged"/>
+                        </StackPanel>
+                    </ListBoxItem>
                     <Separator Background="White"/>
 
                     <!--COLOUR SELECTORS-->

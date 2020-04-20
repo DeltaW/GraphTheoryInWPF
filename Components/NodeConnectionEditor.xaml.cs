@@ -96,7 +96,7 @@ namespace GraphTheoryInWPF.Components {
         private void ConnectionSelectorComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             string selectedItem = this.ConnectionSelectorComboBox.SelectedItem?.ToString();
 
-            if (!string.IsNullOrEmpty(selectedItem)) {
+            if (!string.IsNullOrWhiteSpace(selectedItem)) {
 
 
                 // Remove the connection that was here before and add the new one if a valid node has been selected

@@ -235,7 +235,8 @@ namespace GraphTheoryInWPF.Components {
 
             // Create a TextBlock
             TextBlock textBlock = new TextBlock() {
-                Text = text
+                Text = text,
+                FontSize = (int) Properties.Settings.Default["FontSize"],
             };
 
             // Apply the TextBlocks Size based on it's text
@@ -274,6 +275,7 @@ namespace GraphTheoryInWPF.Components {
                         G = ((System.Drawing.Color) Properties.Settings.Default["NodeEllipseFillBrushColour"]).G,
                         B = ((System.Drawing.Color) Properties.Settings.Default["NodeEllipseFillBrushColour"]).B,
                     }),
+                StrokeThickness = (int) Properties.Settings.Default["NodeEllipseStrokeThickness"],
                 Width = this._measurements.Width,
                 Height = this._measurements.Height
             };
@@ -294,6 +296,7 @@ namespace GraphTheoryInWPF.Components {
                         G = ((System.Drawing.Color) Properties.Settings.Default["NodeEllipseTextBrushColour"]).G,
                         B = ((System.Drawing.Color) Properties.Settings.Default["NodeEllipseTextBrushColour"]).B,
                     }),
+                FontSize = (int) Properties.Settings.Default["FontSize"],
                 Width = Size.X - 2 * minDistanceToText,
                 Height = Size.Y - 2 * minDistanceToText
             };

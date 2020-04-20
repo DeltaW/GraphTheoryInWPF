@@ -24,6 +24,10 @@ namespace GraphTheoryInWPF.View {
         public int MinNodeEllipsePadding { get; set; }
         public int MaxNodeEllipsePadding { get; set; }
         public int ExtraPaddingPerConnection { get; set; }
+        public int NodeEllipseStrokeThickness { get; set; }
+        public int ConnectionStrokeThickness { get; set; }
+        public int NodeEllipseFontSize { get; set; }
+        public int ArrowHeadLength { get; set; }
         public bool UseDynamicNodeEllipsePadding { get; set; }
 
         public System.Drawing.Color EllipseFillColour;
@@ -45,6 +49,10 @@ namespace GraphTheoryInWPF.View {
             this.MaxNodeEllipsePadding = (int) Properties.Settings.Default["MaxNodeEllipsePadding"];
             this.ExtraPaddingPerConnection = (int) Properties.Settings.Default["ExtraPaddingPerConnection"];
             this.UseDynamicNodeEllipsePadding = (bool) Properties.Settings.Default["UseDynamicNodeEllipsePadding"];
+            this.NodeEllipseFontSize = (int) Properties.Settings.Default["FontSize"];
+            this.NodeEllipseStrokeThickness = (int) Properties.Settings.Default["NodeEllipseStrokeThickness"];
+            this.ConnectionStrokeThickness = (int) Properties.Settings.Default["ConnectionStrokeThickness"];
+            this.ArrowHeadLength = (int) Properties.Settings.Default["ConnectionArrowHeadLength"];
 
             // Colours
             this.EllipseFillColour = (System.Drawing.Color) Properties.Settings.Default["NodeEllipseFillBrushColour"];
@@ -60,6 +68,10 @@ namespace GraphTheoryInWPF.View {
             this.TextBox_MinNodeEllipsePadding.Text = ((int) Properties.Settings.Default["MinNodeEllipsePadding"]).ToString();
             this.TextBox_MaxNodeEllipsePadding.Text = ((int) Properties.Settings.Default["MaxNodeEllipsePadding"]).ToString();
             this.CheckBox_UseDynamicNodeEllipsePadding.IsChecked = (bool) Properties.Settings.Default["UseDynamicNodeEllipsePadding"];
+            this.TextBox_NodeEllipseFontSize.Text = ((int) Properties.Settings.Default["FontSize"]).ToString();
+            this.TextBox_NodeEllipseStrokeThickness.Text = ((int) Properties.Settings.Default["NodeEllipseStrokeThickness"]).ToString();
+            this.TextBox_ConnectionStrokeThickness.Text = ((int) Properties.Settings.Default["ConnectionStrokeThickness"]).ToString();
+            this.TextBox_ArrowHeadLength.Text = ((int) Properties.Settings.Default["ConnectionArrowHeadLength"]).ToString();
 
             // Colours
             this.EllipseFillPreview.Background = new SolidColorBrush(new System.Windows.Media.Color() {
@@ -142,7 +154,11 @@ namespace GraphTheoryInWPF.View {
             bool i = this.RouteColour == (System.Drawing.Color) Properties.Settings.Default["NodeConnectionPathBrushColour"];
             bool j = this.CanvasBackgroundColour == (System.Drawing.Color) Properties.Settings.Default["CanvasBackgroundBrushColour"];
             bool k = this.CanvasNodeConnectionPreviewColour == (System.Drawing.Color) Properties.Settings.Default["CanvasNodeConnectionPreviewBrushColour"];
-            return !(a && b && c && d && e && f && g && h && i && j && k);
+            bool l = this.NodeEllipseFontSize == (int) Properties.Settings.Default["FontSize"];
+            bool m = this.NodeEllipseStrokeThickness == (int) Properties.Settings.Default["NodeEllipseStrokeThickness"];
+            bool n = this.ConnectionStrokeThickness == (int) Properties.Settings.Default["ConnectionStrokeThickness"];
+            bool o = this.ArrowHeadLength == (int) Properties.Settings.Default["ConnectionArrowHeadLength"];
+            return !(a && b && c && d && e && f && g && h && i && j && k && l && m && n && o);
         }
 
         public void ResetSettings() {
@@ -151,6 +167,11 @@ namespace GraphTheoryInWPF.View {
             Properties.Settings.Default["MaxNodeEllipsePadding"] = this.MaxNodeEllipsePadding;
             Properties.Settings.Default["ExtraPaddingPerConnection"] = this.ExtraPaddingPerConnection;
             Properties.Settings.Default["UseDynamicNodeEllipsePadding"] = this.UseDynamicNodeEllipsePadding;
+
+            Properties.Settings.Default["FontSize"] = this.NodeEllipseFontSize;
+            Properties.Settings.Default["NodeEllipseStrokeThickness"] = this.NodeEllipseStrokeThickness;
+            Properties.Settings.Default["ConnectionStrokeThickness"] = this.ConnectionStrokeThickness;
+            Properties.Settings.Default["ConnectionArrowHeadLength"] = this.ArrowHeadLength;
 
             // Colours
             Properties.Settings.Default["NodeEllipseFillBrushColour"] = this.EllipseFillColour;
@@ -168,6 +189,11 @@ namespace GraphTheoryInWPF.View {
             this.MaxNodeEllipsePadding = (int) Properties.Settings.Default["MaxNodeEllipsePadding"];
             this.ExtraPaddingPerConnection = (int) Properties.Settings.Default["ExtraPaddingPerConnection"];
             this.UseDynamicNodeEllipsePadding = (bool) Properties.Settings.Default["UseDynamicNodeEllipsePadding"];
+
+            this.NodeEllipseFontSize = (int) Properties.Settings.Default["FontSize"];
+            this.NodeEllipseStrokeThickness = (int) Properties.Settings.Default["NodeEllipseStrokeThickness"];
+            this.ConnectionStrokeThickness = (int) Properties.Settings.Default["ConnectionStrokeThickness"];
+            this.ArrowHeadLength = (int) Properties.Settings.Default["ConnectionArrowHeadLength"];
 
             // Colours
             this.EllipseFillColour = (System.Drawing.Color) Properties.Settings.Default["NodeEllipseFillBrushColour"];
@@ -198,6 +224,26 @@ namespace GraphTheoryInWPF.View {
             }
             if ((TextBox) sender == this.TextBox_ExtraPaddingPerConnection && int.TryParse(this.TextBox_ExtraPaddingPerConnection.Text, out int extraPadding)) {
                 Properties.Settings.Default["ExtraPaddingPerConnection"] = extraPadding;
+                this.OnSettingsChanged();
+                return;
+            }
+            if ((TextBox) sender == this.TextBox_ConnectionStrokeThickness && int.TryParse(this.TextBox_ConnectionStrokeThickness.Text, out int connectionStrokeThickness)) {
+                Properties.Settings.Default["ConnectionStrokeThickness"] = connectionStrokeThickness;
+                this.OnSettingsChanged();
+                return;
+            }
+            if ((TextBox) sender == this.TextBox_NodeEllipseStrokeThickness && int.TryParse(this.TextBox_NodeEllipseStrokeThickness.Text, out int ellipseStrokeThickness)) {
+                Properties.Settings.Default["NodeEllipseStrokeThickness"] = ellipseStrokeThickness;
+                this.OnSettingsChanged();
+                return;
+            }
+            if ((TextBox) sender == this.TextBox_NodeEllipseFontSize && int.TryParse(this.TextBox_NodeEllipseFontSize.Text, out int fontSize)) {
+                Properties.Settings.Default["FontSize"] = fontSize;
+                this.OnSettingsChanged();
+                return;
+            }
+            if ((TextBox) sender == this.TextBox_ArrowHeadLength && int.TryParse(this.TextBox_ArrowHeadLength.Text, out int arrowLength)) {
+                Properties.Settings.Default["ConnectionArrowHeadLength"] = arrowLength;
                 this.OnSettingsChanged();
                 return;
             }
@@ -331,10 +377,13 @@ namespace GraphTheoryInWPF.View {
 
         private void MenuItem_Click(object sender, RoutedEventArgs e) {
             string nodeName = Microsoft.VisualBasic.Interaction.InputBox("Please type in a uniqe Node name", "GraphTheory", "");
-            this._graph.AddNewNodeToGraph(nodeName, new System.Drawing.Point((int) this.p.X, (int) this.p.Y));
-
-            this.GraphPreviewCanvas.Children.Clear();
-            NodeEllipse.FillCanvasWithAllNodes(this.GraphPreviewCanvas, this._graph, this);
+            try {
+                this._graph.AddNewNodeToGraph(nodeName, new System.Drawing.Point((int) this.p.X, (int) this.p.Y));
+                this.GraphPreviewCanvas.Children.Clear();
+                NodeEllipse.FillCanvasWithAllNodes(this.GraphPreviewCanvas, this._graph, this);
+            } catch (GraphException ge) {
+                MessageBox.Show(ge.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

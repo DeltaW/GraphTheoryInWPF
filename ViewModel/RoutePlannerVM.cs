@@ -74,13 +74,17 @@ namespace GraphTheoryInWPF.ViewModel {
 
         internal void MenuItemAddNode(int x, int y) {
             string nodeName = Microsoft.VisualBasic.Interaction.InputBox("Please type in a uniqe Node name", "GraphTheory", "");
-            this._graph.AddNewNodeToGraph(nodeName, new System.Drawing.Point(x, y));
-            for (int i = 0; i < this.NodeSelectors.Count; i++) {
-                // Update dropdownmenu
-                this.NodeSelectors[i].UpdateNodeCollection(this._graph.GetAllNodeNames().ToList());
+            try {
+                this._graph.AddNewNodeToGraph(nodeName, new System.Drawing.Point(x, y));
+                for (int i = 0; i < this.NodeSelectors.Count; i++) {
+                    // Update dropdownmenu
+                    this.NodeSelectors[i].UpdateNodeCollection(this._graph.GetAllNodeNames().ToList());
+                }
+                this._shortestRouteCanvas.Children.Clear();
+                NodeEllipse.FillCanvasWithAllNodes(this._shortestRouteCanvas, this._graph, this._routePlanner);
+            } catch (GraphException ge) {
+                MessageBox.Show(ge.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            this._shortestRouteCanvas.Children.Clear();
-            NodeEllipse.FillCanvasWithAllNodes(this._shortestRouteCanvas, this._graph, this._routePlanner);
         }
 
         public void OnNodeSelectorChanged() {

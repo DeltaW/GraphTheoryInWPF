@@ -45,13 +45,13 @@ namespace GraphTheoryInWPF.Components {
             });
 
             this.MainLine.Stroke = solidColorBrush;
-            this.MainLine.StrokeThickness = 3;
+            this.MainLine.StrokeThickness = (int) Properties.Settings.Default["ConnectionStrokeThickness"];
 
             this.DirectionalLine1.Stroke = solidColorBrush;
-            this.DirectionalLine1.StrokeThickness = 3;
+            this.DirectionalLine1.StrokeThickness = (int) Properties.Settings.Default["ConnectionStrokeThickness"];
 
             this.DirectionalLine2.Stroke = solidColorBrush;
-            this.DirectionalLine2.StrokeThickness = 3;
+            this.DirectionalLine2.StrokeThickness = (int) Properties.Settings.Default["ConnectionStrokeThickness"];
 
             Canvas.SetZIndex(this.MainLine, -1);
             Canvas.SetZIndex(this.DirectionalLine1, 2);
@@ -96,7 +96,7 @@ namespace GraphTheoryInWPF.Components {
                                                                      this.MainLine.Y2 - this.MainLine.Y1);
             System.Windows.Vector desiredVector = vector;
             desiredVector.Normalize();
-            double desiredLength = 10;
+            double desiredLength = (int) Properties.Settings.Default["ConnectionArrowHeadLength"];
             vector -= (desiredVector * desiredLength);
 
             return new Point((int) (this.MainLine.X1 + vector.X),
