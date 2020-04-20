@@ -10,9 +10,10 @@
     <Canvas Name="NodeEllipseCanvas" 
             Width="{Binding Measurements.Width}" 
             Height="{Binding Measurements.Height}" 
-            Background="Transparent">
+            Background="Transparent"
+            ContextMenuOpening="NodeEllipseCanvas_ContextMenuOpening">
         <Canvas.ContextMenu>
-            <ContextMenu>
+            <ContextMenu Name="NodeEllipseContextMenu">
                 <MenuItem Header="Add One Way Connection" Click="MenuItem_Click_AddOneWayConnection">
                     <MenuItem.Icon>
                         <Image Source="/Icons/LineArrow_16x.png"/>

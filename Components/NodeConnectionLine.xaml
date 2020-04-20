@@ -7,9 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <Grid>
+    <Grid ContextMenuOpening="Grid_ContextMenuOpening">
         <Grid.ContextMenu>
-            <ContextMenu>
+            <ContextMenu Name="ConnectionContextMenu">
                 <MenuItem Header="Delete Connection(s)" Click="MenuItem_Click">
                     <MenuItem.Icon>
                         <Image Source="/Icons/DependencyWarning_16x.png"/>

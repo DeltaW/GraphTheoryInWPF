@@ -208,6 +208,28 @@ namespace GraphTheory.Core {
             }
         }
 
+        public bool IsConnectedToAnyNode(string uniqueName) {
+            // It needs to be a key to an already existing node
+            if (!this._nodes.Keys.Contains(uniqueName))
+                throw new GraphException($"\"{uniqueName}\" is not a valid key!");
+
+            return this._nodes[uniqueName].Connections.Count != 0;
+
+        }
+
+        public bool IsAnyNodeConnectedToNode(string uniqueName) {
+            // It needs to be a key to an already existing node
+            if (!this._nodes.Keys.Contains(uniqueName))
+                throw new GraphException($"\"{uniqueName}\" is not a valid key!");
+
+            foreach (KeyValuePair<string, Node> pair in this._nodes) {
+                if (pair.Value.IsDirectlyConnectedToNode(this._nodes[uniqueName]))
+                    return true;
+            }
+
+            return false;
+        }
+
         public void RemoveAllConnectionsToNode(string uniqueName) {
             // It needs to be a key to an already existing node
             if (!this._nodes.Keys.Contains(uniqueName))

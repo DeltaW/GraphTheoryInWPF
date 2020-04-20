@@ -1,4 +1,5 @@
 ﻿using GraphTheory.Core;
+using GraphTheoryInWPF.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,15 +23,19 @@ namespace GraphTheoryInWPF.Components {
 
         public NodeEllipse ToNodeEllipse, FromNodeEllipse;
         private readonly Canvas _canvas;
+        private readonly Graph _graph;
+        private readonly UserControl _parent;
 
         public bool IsPartOfPath = false;
 
 
-        public NodeConnectionLine(NodeEllipse fromNodeEllipse, NodeEllipse toNodeEllipse, Canvas c) {
+        public NodeConnectionLine(NodeEllipse fromNodeEllipse, NodeEllipse toNodeEllipse, Graph graph, Canvas c, UserControl userControl) {
             this.InitializeComponent();
             this.FromNodeEllipse = fromNodeEllipse;
             this.ToNodeEllipse = toNodeEllipse;
             this._canvas = c;
+            this._graph = graph;
+            this._parent = userControl;
 
             SolidColorBrush solidColorBrush = new SolidColorBrush(new System.Windows.Media.Color {
                 A = ((System.Drawing.Color) Properties.Settings.Default["NodeConnectionNormalBrushColour"]).A,
@@ -129,8 +134,108 @@ namespace GraphTheoryInWPF.Components {
 
         }
 
+
+
         private void MenuItem_Click(object sender, RoutedEventArgs e) {
             //TODO
+        }
+
+        private void Grid_ContextMenuOpening(object sender, ContextMenuEventArgs e) {
+            // Set content of the context menu
+            bool isTwoWay = this.ToNodeEllipse.GetNode().IsDirectlyConnectedToNode(this.FromNodeEllipse.GetNode());
+
+            this.ConnectionContextMenu.Items.Clear();
+
+            #region Create Context MenuItems
+            // Delete OneWayConnection from FromNode to ToNode
+            MenuItem menuItem1 = new MenuItem {
+                Icon = new Image {
+                    Source = new BitmapImage(new Uri("/Icons/DependencyWarning_16x.png", UriKind.Relative))
+                },
+                Header = $"Delete One Way Connection from \"{this.FromNodeEllipse.GetNode().Name}\" to \"{this.ToNodeEllipse.GetNode().Name}\"",
+            };
+            menuItem1.Click += MenuItem1_Click;
+            this.ConnectionContextMenu.Items.Add(menuItem1);
+
+            if (isTwoWay) {
+                // Delete OneWayConnection from ToNode to FromNode
+                MenuItem menuItem2 = new MenuItem {
+                    Icon = new Image {
+                        Source = new BitmapImage(new Uri("/Icons/DependencyWarning_16x.png", UriKind.Relative))
+                    },
+                    Header = $"Delete One Way Connection from \"{this.ToNodeEllipse.GetNode().Name}\" to \"{this.FromNodeEllipse.GetNode().Name}\"",
+                };
+                menuItem2.Click += MenuItem2_Click;
+                this.ConnectionContextMenu.Items.Add(menuItem2);
+                // Delete TwoWayConnection
+                MenuItem menuItem3 = new MenuItem {
+                    Icon = new Image {
+                        Source = new BitmapImage(new Uri("/Icons/DependencyWarning_16x.png", UriKind.Relative))
+                    },
+                    Header = $"Delete Two Way Connection",
+                };
+                menuItem3.Click += MenuItem3_Click;
+                this.ConnectionContextMenu.Items.Add(menuItem3);
+            } else {
+                // Turn into TwoWayConnection
+                MenuItem menuItem4 = new MenuItem {
+                    Icon = new Image {
+                        Source = new BitmapImage(new Uri("/Icons/SyncArrow_16x.png", UriKind.Relative))
+                    },
+                    Header = $"Turn into Two Way Connection",
+                };
+                menuItem4.Click += MenuItem4_Click;
+                this.ConnectionContextMenu.Items.Add(menuItem4);
+            }
+            #endregion
+        }
+
+        private void MenuItem4_Click(object sender, RoutedEventArgs e) {
+            this.ToNodeEllipse.GetNode().AddConnectionToNode(this.FromNodeEllipse.GetNode());
+            this.UpdateShownView();
+        }
+
+        private void UpdateShownView() {
+            // Update ShownView
+            // Delete Node From Graph
+            if (this._parent is SettingsEditor settingsEditor) {
+                // Only need to redraw the canvas
+                this._canvas.Children.Clear();
+                NodeEllipse.FillCanvasWithAllNodes(this._canvas, this._graph, this._parent);
+            } else if (this._parent is RoutePlanner routePlanner) {
+                this._canvas.Children.Clear();
+                NodeEllipse.FillCanvasWithAllNodes(this._canvas, this._graph, this._parent);
+                routePlanner.RPVM.Update();
+            } else if (this._parent is GraphEditor graphEditor) {
+                this._canvas.Children.Clear();
+                NodeEllipse.FillCanvasWithAllNodes(this._canvas, this._graph, this._parent);
+                graphEditor.GEVM.Update();
+            } else {
+                throw new NotImplementedException();
+            }
+        }
+
+        private void MenuItem1_Click(object sender, RoutedEventArgs e) {
+            // Delete OneWayConnection from FromNode to ToNode
+            this.FromNodeEllipse.GetNode().RemoveAllConnectionsToNode(this.ToNodeEllipse.GetNode());
+            this.UpdateShownView();
+        }
+
+
+
+        private void MenuItem2_Click(object sender, RoutedEventArgs e) {
+            // Delete OneWayConnection from  ToNode toFromNode
+            this.ToNodeEllipse.GetNode().RemoveAllConnectionsToNode(this.FromNodeEllipse.GetNode());
+            this.UpdateShownView();
+
+        }
+
+        private void MenuItem3_Click(object sender, RoutedEventArgs e) {
+            this.FromNodeEllipse.GetNode().RemoveAllConnectionsToNode(this.ToNodeEllipse.GetNode());
+            this.ToNodeEllipse.GetNode().RemoveAllConnectionsToNode(this.FromNodeEllipse.GetNode());
+            // Delete TwoWayConnection
+            this.UpdateShownView();
+
         }
 
         public void UpdateColour() {

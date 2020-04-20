@@ -205,7 +205,7 @@ namespace GraphTheoryInWPF.Components {
 
         private void AddConnectionLine(Node toNode) {
             NodeConnectionLine connectionLine = new NodeConnectionLine(this,
-                NodeEllipse.GetNodeEllipseByName(this._canvas, toNode.Name), this._canvas);
+                NodeEllipse.GetNodeEllipseByName(this._canvas, toNode.Name), this._graph, this._canvas, this._parent);
             this._lines.Add(connectionLine);
         }
 
@@ -350,6 +350,74 @@ namespace GraphTheoryInWPF.Components {
             c.Children.Add(nodeEllipse);
         }
 
+
+        private MenuItem _menuItemRemoveAllOneWayConnectionsFrom;
+        private MenuItem _menuItemRemoveAllOneWayConnectionsTo;
+        private MenuItem _menuItemRemoveAllTwoWayConnections;
+
+
+
+        private void InitiateMenuItems() {
+            this._menuItemRemoveAllOneWayConnectionsFrom = new MenuItem {
+                Icon = new Image {
+                    Source = new BitmapImage(new Uri("/Icons/DependencyWarning_16x.png", UriKind.Relative))
+                },
+                Header = $"Remove all One Way Connections from \"{this._node.Name}\""
+            };
+            this._menuItemRemoveAllOneWayConnectionsFrom.Click += _menuItemRemoveAllOneWayConnectionsFrom_Click;
+
+            this._menuItemRemoveAllOneWayConnectionsTo = new MenuItem {
+                Icon = new Image {
+                    Source = new BitmapImage(new Uri("/Icons/DependencyWarning_16x.png", UriKind.Relative))
+                },
+                Header = $"Remove all One Way Connections to \"{this._node.Name}\""
+            };
+            this._menuItemRemoveAllOneWayConnectionsTo.Click += _menuItemRemoveAllOneWayConnectionsTo_Click;
+
+            this._menuItemRemoveAllTwoWayConnections = new MenuItem {
+                Icon = new Image {
+                    Source = new BitmapImage(new Uri("/Icons/DependencyWarning_16x.png", UriKind.Relative))
+                },
+                Header = $"Remove all Two Way Connections with \"{this._node.Name}\""
+            };
+            this._menuItemRemoveAllTwoWayConnections.Click += _menuItemRemoveAllTwoWayConnections_Click;
+        }
+
+        private void _menuItemRemoveAllTwoWayConnections_Click(object sender, RoutedEventArgs e) {
+            this._graph.RemoveAllConnectionsFromNode(this._node.Name);
+            this._graph.RemoveAllConnectionsToNode(this._node.Name);
+            this.UpdateShownView();
+        }
+
+        private void _menuItemRemoveAllOneWayConnectionsTo_Click(object sender, RoutedEventArgs e) {
+            this._graph.RemoveAllConnectionsToNode(this._node.Name);
+            this.UpdateShownView();
+        }
+
+        private void _menuItemRemoveAllOneWayConnectionsFrom_Click(object sender, RoutedEventArgs e) {
+            this._graph.RemoveAllConnectionsFromNode(this._node.Name);
+            this.UpdateShownView();
+        }
+
+        private void UpdateShownView() {
+            // Update ShownView
+            if (this._parent is SettingsEditor settingsEditor) {
+                // Only need to redraw the canvas
+                this._canvas.Children.Clear();
+                NodeEllipse.FillCanvasWithAllNodes(this._canvas, this._graph, this._parent);
+            } else if (this._parent is RoutePlanner routePlanner) {
+                this._canvas.Children.Clear();
+                NodeEllipse.FillCanvasWithAllNodes(this._canvas, this._graph, this._parent);
+                routePlanner.RPVM.Update();
+            } else if (this._parent is GraphEditor graphEditor) {
+                this._canvas.Children.Clear();
+                NodeEllipse.FillCanvasWithAllNodes(this._canvas, this._graph, this._parent);
+                graphEditor.GEVM.Update();
+            } else {
+                throw new NotImplementedException();
+            }
+        }
+
         public NodeEllipse(Canvas c, Graph graph, Node n, Point p, UserControl u, int zIndex = 3) {
             this.InitializeComponent();
             this.DataContext = this;
@@ -377,6 +445,8 @@ namespace GraphTheoryInWPF.Components {
             this.MouseLeftButtonDown += new MouseButtonEventHandler(this.Control_MouseLeftButtonDown);
             this.MouseLeftButtonUp += new MouseButtonEventHandler(this.Control_MouseLeftButtonUp);
             this.MouseMove += new MouseEventHandler(this.Control_MouseMove);
+
+            this.InitiateMenuItems();
         }
 
         private static double Clamp(double value, double min, double max) {
@@ -474,5 +544,41 @@ namespace GraphTheoryInWPF.Components {
             new CanvasAddConnectionLinePreview(true, this._parent, this, this._canvas, this._graph);
         }
 
+        private void NodeEllipseCanvas_ContextMenuOpening(object sender, ContextMenuEventArgs e) {
+            // enable or disable the last two menu items
+            bool showTwoWayOption = true;
+
+            if (this._graph.IsConnectedToAnyNode(this._node.Name)) {
+                if (!this.NodeEllipseContextMenu.Items.Contains(this._menuItemRemoveAllOneWayConnectionsFrom)) {
+                    this.NodeEllipseContextMenu.Items.Add(_menuItemRemoveAllOneWayConnectionsFrom);
+                }
+            } else {
+                if (this.NodeEllipseContextMenu.Items.Contains(this._menuItemRemoveAllOneWayConnectionsFrom)) {
+                    this.NodeEllipseContextMenu.Items.Remove(this._menuItemRemoveAllOneWayConnectionsFrom);
+                }
+                showTwoWayOption &= false;
+            }
+
+            if (this._graph.IsAnyNodeConnectedToNode(this._node.Name)) {
+                if (!this.NodeEllipseContextMenu.Items.Contains(this._menuItemRemoveAllOneWayConnectionsTo)) {
+                    this.NodeEllipseContextMenu.Items.Add(_menuItemRemoveAllOneWayConnectionsTo);
+                }
+            } else {
+                if (this.NodeEllipseContextMenu.Items.Contains(this._menuItemRemoveAllOneWayConnectionsTo)) {
+                    this.NodeEllipseContextMenu.Items.Remove(this._menuItemRemoveAllOneWayConnectionsTo);
+                }
+                showTwoWayOption &= false;
+            }
+
+            if (showTwoWayOption) {
+                if (!this.NodeEllipseContextMenu.Items.Contains(this._menuItemRemoveAllTwoWayConnections)) {
+                    this.NodeEllipseContextMenu.Items.Add(_menuItemRemoveAllTwoWayConnections);
+                }
+            } else {
+                if (this.NodeEllipseContextMenu.Items.Contains(this._menuItemRemoveAllTwoWayConnections)) {
+                    this.NodeEllipseContextMenu.Items.Remove(this._menuItemRemoveAllTwoWayConnections);
+                }
+            }
+        }
     }
 }
