@@ -32,8 +32,6 @@ namespace GraphTheoryInWPF.View {
 
         private void Button_Click_AddNode(object sender, RoutedEventArgs e) {
             try {
-                //if (this.UserInputTextBlock.Text == "")
-                    //throw new GraphException("THE NODE NEEDS TO HAVE A VALID NAME!");
                 this.GEVM.ButtonAddNode(this.UserInputTextBlock.Text);
                 this.UserInputTextBlock.Text = "";
             } catch (GraphException ge) {
