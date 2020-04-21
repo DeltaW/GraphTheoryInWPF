@@ -13,7 +13,7 @@ using System.Windows.Shapes;
 
 namespace GraphTheoryInWPF.Components {
     public class CanvasAddConnectionLinePreview {
-        private NodeEllipse _fromNodeEllipse;
+        private readonly NodeEllipse _fromNodeEllipse;
         private NodeEllipse _toNodeEllipse;
         private readonly Line _line;
         private readonly List<Line> _directionalLines;
