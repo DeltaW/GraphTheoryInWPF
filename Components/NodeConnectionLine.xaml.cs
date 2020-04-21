@@ -134,10 +134,6 @@ namespace GraphTheoryInWPF.Components {
 
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e) {
-            //TODO
-        }
-
         private void Grid_ContextMenuOpening(object sender, ContextMenuEventArgs e) {
             // Set content of the context menu
             bool isTwoWay = this.ToNodeEllipse.GetNode().IsDirectlyConnectedToNode(this.FromNodeEllipse.GetNode());

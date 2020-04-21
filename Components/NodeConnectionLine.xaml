@@ -10,11 +10,7 @@
     <Grid ContextMenuOpening="Grid_ContextMenuOpening">
         <Grid.ContextMenu>
             <ContextMenu Name="ConnectionContextMenu">
-                <MenuItem Header="Delete Connection(s)" Click="MenuItem_Click">
-                    <MenuItem.Icon>
-                        <Image Source="/Icons/DependencyWarning_16x.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
+
             </ContextMenu>
         </Grid.ContextMenu>
         <!--Main Line-->
