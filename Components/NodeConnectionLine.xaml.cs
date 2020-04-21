@@ -76,7 +76,7 @@ namespace GraphTheoryInWPF.Components {
 
         private void UpdateArrowCoordinate(double degrees = 45) {
             Point p = this.GetDirectionArrowPoint();
-            Point toPoint = new Point((int) this.MainLine.X2, (int) this.MainLine.Y2);
+            Point toPoint = new Point((int) Math.Round(this.MainLine.X2), (int) Math.Round(this.MainLine.Y2));
             Point rotatedPoint1 = this.RotatePointAroundAnotherPointByDegrees(p,toPoint,  degrees);
             Point rotatedPoint2 = this.RotatePointAroundAnotherPointByDegrees(p,toPoint, -degrees);
 
@@ -99,13 +99,13 @@ namespace GraphTheoryInWPF.Components {
             double desiredLength = (int) Properties.Settings.Default["ConnectionArrowHeadLength"];
             vector -= (desiredVector * desiredLength);
 
-            return new Point((int) (this.MainLine.X1 + vector.X),
-                             (int) (this.MainLine.Y1 + vector.Y));
+            return new Point((int) Math.Round(this.MainLine.X1 + vector.X),
+                             (int) Math.Round(this.MainLine.Y1 + vector.Y));
         }
 
         private Point RotatePointAroundAnotherPointByRadians(Point p, Point o, double radians) {
-            return new Point((int) (Math.Cos(radians) * (p.X - o.X) - Math.Sin(radians) * (p.Y - o.Y) + o.X),
-                             (int) (Math.Sin(radians) * (p.X - o.X) + Math.Cos(radians) * (p.Y - o.Y) + o.Y));
+            return new Point((int) Math.Round(Math.Cos(radians) * (p.X - o.X) - Math.Sin(radians) * (p.Y - o.Y) + o.X),
+                             (int) Math.Round(Math.Sin(radians) * (p.X - o.X) + Math.Cos(radians) * (p.Y - o.Y) + o.Y));
         }
 
         private Point RotatePointAroundAnotherPointByDegrees(Point p, Point o, double degrees) {
@@ -133,8 +133,6 @@ namespace GraphTheoryInWPF.Components {
             }
 
         }
-
-
 
         private void MenuItem_Click(object sender, RoutedEventArgs e) {
             //TODO

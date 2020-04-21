@@ -76,7 +76,7 @@ namespace GraphTheoryInWPF.Components {
         #region Arrow stuff
         private void UpdateArrowCoordinate(double degrees = 45) {
             Point p = this.GetOneWayDirectionArrowPoint();
-            Point toPoint = new Point((int) this._line.X2, (int) this._line.Y2);
+            Point toPoint = new Point((int) Math.Round(this._line.X2), (int) Math.Round(this._line.Y2));
             Point rotatedPoint1 = this.RotatePointAroundAnotherPointByDegrees(p,toPoint,  degrees);
             Point rotatedPoint2 = this.RotatePointAroundAnotherPointByDegrees(p,toPoint, -degrees);
 
@@ -92,7 +92,7 @@ namespace GraphTheoryInWPF.Components {
 
             if (this._isTwoWayConnection) {
                 p = this.GetTwoWayDirectionArrowPoint();
-                toPoint = new Point((int) this._line.X1, (int) this._line.Y1);
+                toPoint = new Point((int) Math.Round(this._line.X1), (int) Math.Round(this._line.Y1));
                 rotatedPoint1 = this.RotatePointAroundAnotherPointByDegrees(p, toPoint, degrees);
                 rotatedPoint2 = this.RotatePointAroundAnotherPointByDegrees(p, toPoint, -degrees);
 
@@ -116,24 +116,24 @@ namespace GraphTheoryInWPF.Components {
             double desiredLength = (int) Properties.Settings.Default["ConnectionArrowHeadLength"];
             vector -= (desiredVector * desiredLength);
 
-            return new Point((int) (this._line.X1 + vector.X),
-                             (int) (this._line.Y1 + vector.Y));
+            return new Point((int) Math.Round(this._line.X1 + vector.X),
+                             (int) Math.Round(this._line.Y1 + vector.Y));
         }
         private Point GetTwoWayDirectionArrowPoint() {
             System.Windows.Vector vector = new System.Windows.Vector(this._line.X1 - this._line.X2,
                                                                      this._line.Y1 - this._line.Y2);
             System.Windows.Vector desiredVector = vector;
             desiredVector.Normalize();
-            double desiredLength = 10;
+            double desiredLength = (int) Properties.Settings.Default["ConnectionArrowHeadLength"];
             vector -= (desiredVector * desiredLength);
 
-            return new Point((int) (this._line.X2 + vector.X),
-                             (int) (this._line.Y2 + vector.Y));
+            return new Point((int) Math.Round(this._line.X2 + vector.X),
+                             (int) Math.Round(this._line.Y2 + vector.Y));
         }
 
         private Point RotatePointAroundAnotherPointByRadians(Point p, Point o, double radians) {
-            return new Point((int) (Math.Cos(radians) * (p.X - o.X) - Math.Sin(radians) * (p.Y - o.Y) + o.X),
-                             (int) (Math.Sin(radians) * (p.X - o.X) + Math.Cos(radians) * (p.Y - o.Y) + o.Y));
+            return new Point((int) Math.Round(Math.Cos(radians) * (p.X - o.X) - Math.Sin(radians) * (p.Y - o.Y) + o.X),
+                             (int) Math.Round(Math.Sin(radians) * (p.X - o.X) + Math.Cos(radians) * (p.Y - o.Y) + o.Y));
         }
 
         private Point RotatePointAroundAnotherPointByDegrees(Point p, Point o, double degrees) {
