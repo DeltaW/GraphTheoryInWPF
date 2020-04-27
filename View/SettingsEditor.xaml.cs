@@ -206,9 +206,29 @@ namespace GraphTheoryInWPF.View {
 
             Properties.Settings.Default.Save();
 
-            MessageBox.Show("Save successfull!",
-                            "GraphTheory", MessageBoxButton.OK, MessageBoxImage.Information);
+            //MessageBox.Show("Save successfull!",
+                            //"GraphTheory", MessageBoxButton.OK, MessageBoxImage.Information);
 
+            this.ShowSaveSuccessfull();
+        }
+
+        private Task ShowSaveSuccessfull() {
+            return Task.Run(() => Application.Current.Dispatcher.Invoke(async () => {
+                int delay = 5000;
+
+                // Show message
+                this.SettingsSavedSuccessFullMessageContainer.Visibility = Visibility.Visible;
+
+                // Update UI
+                Application.Current.Dispatcher.Invoke(delegate { }, System.Windows.Threading.DispatcherPriority.Render);
+
+                await Task.Delay(delay);
+
+                // Hide message
+                this.SettingsSavedSuccessFullMessageContainer.Visibility = Visibility.Collapsed;
+                
+                Application.Current.Dispatcher.Invoke(delegate { }, System.Windows.Threading.DispatcherPriority.Render);
+            }));
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e) {

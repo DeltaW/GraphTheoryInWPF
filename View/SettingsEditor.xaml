@@ -7,11 +7,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
+
     <Grid Background="#19374B">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
+
+
 
         <!--left-->
         <Grid Grid.Column="0" Background="#19374B" Margin="10 10 5 10">
@@ -42,9 +45,19 @@
                     </Grid>
                 </DockPanel>
 
+
                 <ListBox  Grid.Row="1" Background="#19374B" ScrollViewer.VerticalScrollBarVisibility="Auto"
                           Name="SettingsList"
                           HorizontalContentAlignment="Stretch">
+                    <ListBoxItem x:Name="SettingsSavedSuccessFullMessageContainer" Visibility="Collapsed" >
+                        <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
+                            <Border BorderThickness="5" BorderBrush="LimeGreen">
+                                <Label Content="Settings Saved Successfully!" HorizontalAlignment="Center" Foreground="LimeGreen"/>
+                            </Border>
+                            <Separator Background="White"/>
+                        </StackPanel>
+                    </ListBoxItem>
+
                     <ListBoxItem>
                         <StackPanel HorizontalAlignment="Stretch">
                             <Label Foreground="White" Content="Min Node Ellipse Padding"/>
@@ -74,28 +87,28 @@
                             <TextBox x:Name="TextBox_ExtraPaddingPerConnection" TextChanged="TextBox_TextChanged"/>
                         </StackPanel>
                     </ListBoxItem>
-                    <Separator Background="White"/>                    
+                    <Separator Background="White"/>
                     <ListBoxItem>
                         <StackPanel HorizontalAlignment="Stretch">
                             <Label Foreground="White" Content="Node Ellipse Stroke Thickness"/>
                             <TextBox x:Name="TextBox_NodeEllipseStrokeThickness" TextChanged="TextBox_TextChanged"/>
                         </StackPanel>
                     </ListBoxItem>
-                    <Separator Background="White"/>                    
+                    <Separator Background="White"/>
                     <ListBoxItem>
                         <StackPanel HorizontalAlignment="Stretch">
                             <Label Foreground="White" Content="Connection Stroke Thickness"/>
                             <TextBox x:Name="TextBox_ConnectionStrokeThickness" TextChanged="TextBox_TextChanged"/>
                         </StackPanel>
                     </ListBoxItem>
-                    <Separator Background="White"/>               
+                    <Separator Background="White"/>
                     <ListBoxItem>
                         <StackPanel HorizontalAlignment="Stretch">
                             <Label Foreground="White" Content="Node Ellipse Font Size"/>
                             <TextBox x:Name="TextBox_NodeEllipseFontSize" TextChanged="TextBox_TextChanged"/>
                         </StackPanel>
                     </ListBoxItem>
-                    <Separator Background="White"/>       
+                    <Separator Background="White"/>
                     <ListBoxItem>
                         <StackPanel HorizontalAlignment="Stretch">
                             <Label Foreground="White" Content="Connection Arrow Head Length"/>
