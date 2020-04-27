@@ -130,8 +130,28 @@ namespace GraphTheoryInWPF {
             this.DataContext = this;
 
             this._currentGraph = new Graph();
-            this._shownView = new GraphEditor(this._currentGraph);
+            this._shownView = new GraphEditor(this._currentGraph, this);
 
+        }
+
+        public Task ShowMessage(string message, SolidColorBrush colorBrush, int duration = 5000) {
+            return Task.Run(() => Application.Current.Dispatcher.Invoke(async () => {
+                // Show message
+                this.InfoMessageContainer.Visibility = Visibility.Visible;
+                this.MessageBorder.BorderBrush = colorBrush;
+                this.MessageContainer.Content = message;
+                this.MessageContainer.Foreground = colorBrush;
+
+                // Update UI
+                Application.Current.Dispatcher.Invoke(delegate { }, System.Windows.Threading.DispatcherPriority.Render);
+
+                await Task.Delay(duration);
+
+                // Hide message
+                this.InfoMessageContainer.Visibility = Visibility.Collapsed;
+
+                Application.Current.Dispatcher.Invoke(delegate { }, System.Windows.Threading.DispatcherPriority.Render);
+            }));
         }
 
         protected override void OnClosing(CancelEventArgs e) {
@@ -183,7 +203,7 @@ namespace GraphTheoryInWPF {
             if (this.AskToSaveChangesAndOrContinue()) {
                 this._currentPath = null;
                 this._currentGraph = new Graph();
-                this.ShownView = new GraphEditor(this._currentGraph);
+                this.ShownView = new GraphEditor(this._currentGraph, this);
                 this.EditMenuItem.IsEnabled = false;
                 this.RoutesMenuItem.IsEnabled = true;
             }
@@ -196,6 +216,7 @@ namespace GraphTheoryInWPF {
             } else {
                 if (this._currentGraph != null) {
                     Graph.SaveGraphAsFile(this._currentGraph, this._currentPath);
+                    this.ShowMessage("Settings saved successfully!", Brushes.LimeGreen);
                 }
             }
         }
@@ -223,11 +244,11 @@ namespace GraphTheoryInWPF {
                     string path = openFileDialog.FileName;
                     this._currentGraph = Graph.LoadGraphFromFile(path);
                     if (this.ShownView is RoutePlanner) {
-                        this.ShownView = new RoutePlanner(this._currentGraph);
+                        this.ShownView = new RoutePlanner(this._currentGraph, this);
                     } else if (this.ShownView is GraphEditor) {
-                        this.ShownView = new GraphEditor(this._currentGraph);
+                        this.ShownView = new GraphEditor(this._currentGraph, this);
                     } else if (this.ShownView is SettingsEditor) {
-                        this.ShownView = new SettingsEditor(this._currentGraph);
+                        this.ShownView = new SettingsEditor(this._currentGraph, this);
                     }
                     this._currentPath = openFileDialog.FileName;
                 }
@@ -242,7 +263,7 @@ namespace GraphTheoryInWPF {
                 settingsEditor.ResetSettings();
             }
 
-            this.ShownView = new GraphEditor(this._currentGraph);
+            this.ShownView = new GraphEditor(this._currentGraph, this);
             this.EditMenuItem.IsEnabled = false;
             this.RoutesMenuItem.IsEnabled = true;
             this.SettingsMenuItem.IsEnabled = true;
@@ -257,7 +278,7 @@ namespace GraphTheoryInWPF {
             }
 
 
-            this.ShownView = new RoutePlanner(this._currentGraph);
+            this.ShownView = new RoutePlanner(this._currentGraph, this);
             this.RoutesMenuItem.IsEnabled = false;
             this.EditMenuItem.IsEnabled = true;
             this.SettingsMenuItem.IsEnabled = true;
@@ -265,7 +286,7 @@ namespace GraphTheoryInWPF {
 
         private void MenuItem_Settings(object sender, RoutedEventArgs e) {
             // Settings
-            this.ShownView = new SettingsEditor(this._currentGraph);
+            this.ShownView = new SettingsEditor(this._currentGraph, this);
             this.SettingsMenuItem.IsEnabled = false;
             this.RoutesMenuItem.IsEnabled = true;
             this.EditMenuItem.IsEnabled = true;

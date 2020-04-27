@@ -181,7 +181,16 @@ namespace GraphTheoryInWPF.Components {
                     }
 
                 } catch (GraphException ge) {
-                    MessageBox.Show(ge.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    if (this._parent is GraphEditor graphEditor) {
+                        graphEditor._mainWindow.ShowMessage(ge.Message, Brushes.Red);
+                    } else if (this._parent is RoutePlanner routePlanner) {
+                        routePlanner._mainWindow.ShowMessage(ge.Message, Brushes.Red);
+                    } else if (this._parent is SettingsEditor settingsEditor) {
+                        settingsEditor._mainWindow.ShowMessage(ge.Message, Brushes.Red);
+                    } else {
+                        throw new NotImplementedException();
+                    }
+                    //MessageBox.Show(ge.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
 

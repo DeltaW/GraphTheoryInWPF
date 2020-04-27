@@ -23,9 +23,11 @@ namespace GraphTheoryInWPF.View {
     /// </summary>
     public partial class GraphEditor: UserControl {
         public readonly GraphEditorVM GEVM;
+        public readonly MainWindow _mainWindow;
 
-        public GraphEditor(Graph graph) {
+        public GraphEditor(Graph graph, MainWindow mainWindow) {
             this.InitializeComponent();
+            this._mainWindow = mainWindow;
             this.GEVM = new GraphEditorVM(graph, this.GraphEditorCanvas, this);
             this.DataContext = this.GEVM;
         }
@@ -37,7 +39,8 @@ namespace GraphTheoryInWPF.View {
             } catch (GraphException ge) {
                 // Error Message
                 /*MessageBoxResult messageBox =*/
-                MessageBox.Show(ge.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //MessageBox.Show(ge.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                this._mainWindow.ShowMessage(ge.Message, Brushes.Red);
                 this.UserInputTextBlock.Text = "";
             }
         }

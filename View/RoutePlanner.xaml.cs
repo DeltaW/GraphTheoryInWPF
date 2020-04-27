@@ -28,28 +28,12 @@ namespace GraphTheoryInWPF.View {
         protected virtual void RaisePropertyChanged([CallerMemberName] string property = "")
                => PropertyChanged(this, new PropertyChangedEventArgs(property));
 
-        //private double _canvasWidth;
-        //private double _canvasHeight;
-
-        //public double CanvasWidth {
-        //    get { return this._canvasWidth; }
-        //    set {
-        //        this._canvasWidth = value;
-        //        this.RaisePropertyChanged();
-        //    }
-        //}
-        //public double CanvasHeight {
-        //    get { return this._canvasHeight; }
-        //    set {
-        //        this._canvasHeight = value;
-        //        this.RaisePropertyChanged();
-        //    }
-        //}
-
         public readonly RoutePlannerVM RPVM;
+        public readonly MainWindow _mainWindow;
 
-        public RoutePlanner(Graph graph) {
+        public RoutePlanner(Graph graph, MainWindow mainWindow) {
             this.InitializeComponent();
+            this._mainWindow = mainWindow;
             this.RPVM = new RoutePlannerVM(graph, this);
             this.DataContext = this.RPVM;
         }

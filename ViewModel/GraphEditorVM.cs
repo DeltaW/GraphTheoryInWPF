@@ -71,7 +71,8 @@ namespace GraphTheoryInWPF.ViewModel {
                 }
                 this.OnGraphChanged();
             } catch (GraphException ge) {
-                MessageBox.Show(ge.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //MessageBox.Show(ge.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                this._graphEditor._mainWindow.ShowMessage(ge.Message, Brushes.Red);
             }
         }
 

@@ -56,7 +56,15 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </Menu>
-        <ContentControl Content="{Binding ShownView}"/>
+
+            <StackPanel DockPanel.Dock="Bottom" x:Name="InfoMessageContainer" HorizontalAlignment="Stretch" Orientation="Vertical" Visibility="Collapsed"
+                    Margin="10 0 10 10" Background="#19374B">
+                <Border x:Name="MessageBorder" BorderThickness="5" BorderBrush="LimeGreen">
+                    <Label x:Name="MessageContainer" Content="THIS TEXT SHOULD NEVER BE VISIBLE" HorizontalAlignment="Center" Foreground="LimeGreen"/>
+                </Border>
+            </StackPanel>
+            
+            <ContentControl Content="{Binding ShownView}"/>
         </DockPanel>
     </Grid>
 </Window>

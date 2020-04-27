@@ -7,7 +7,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-
     <Grid Background="#19374B">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -49,14 +48,14 @@
                 <ListBox  Grid.Row="1" Background="#19374B" ScrollViewer.VerticalScrollBarVisibility="Auto"
                           Name="SettingsList"
                           HorizontalContentAlignment="Stretch">
-                    <ListBoxItem x:Name="SettingsSavedSuccessFullMessageContainer" Visibility="Collapsed" >
+                    <!--<ListBoxItem x:Name="InfoMessageContainer" Visibility="Collapsed" >
                         <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
-                            <Border BorderThickness="5" BorderBrush="LimeGreen">
-                                <Label Content="Settings Saved Successfully!" HorizontalAlignment="Center" Foreground="LimeGreen"/>
+                            <Border x:Name="MessageBorder" BorderThickness="5" BorderBrush="LimeGreen">
+                                <Label x:Name="MessageContainer" Content="THIS TEXT SHOULD NEVER BE VISIBLE" HorizontalAlignment="Center" Foreground="LimeGreen"/>
                             </Border>
                             <Separator Background="White"/>
                         </StackPanel>
-                    </ListBoxItem>
+                    </ListBoxItem>-->
 
                     <ListBoxItem>
                         <StackPanel HorizontalAlignment="Stretch">

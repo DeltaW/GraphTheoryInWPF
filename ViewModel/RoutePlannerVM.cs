@@ -83,7 +83,8 @@ namespace GraphTheoryInWPF.ViewModel {
                 this._shortestRouteCanvas.Children.Clear();
                 NodeEllipse.FillCanvasWithAllNodes(this._shortestRouteCanvas, this._graph, this._routePlanner);
             } catch (GraphException ge) {
-                MessageBox.Show(ge.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //MessageBox.Show(ge.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                this._routePlanner._mainWindow.ShowMessage(ge.Message, Brushes.Red);
             }
         }
 

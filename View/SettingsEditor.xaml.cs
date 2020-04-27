@@ -39,10 +39,12 @@ namespace GraphTheoryInWPF.View {
         public System.Drawing.Color CanvasNodeConnectionPreviewColour;
 
         private readonly Graph _graph;
+        public readonly MainWindow _mainWindow;
 
-        public SettingsEditor(Graph graph) {
+        public SettingsEditor(Graph graph, MainWindow mainWindow) {
             this.InitializeComponent();
             this._graph = graph;
+            this._mainWindow = mainWindow;
 
             // Padding stuff
             this.MinNodeEllipsePadding = (int) Properties.Settings.Default["MinNodeEllipsePadding"];
@@ -209,26 +211,7 @@ namespace GraphTheoryInWPF.View {
             //MessageBox.Show("Save successfull!",
                             //"GraphTheory", MessageBoxButton.OK, MessageBoxImage.Information);
 
-            this.ShowSaveSuccessfull();
-        }
-
-        private Task ShowSaveSuccessfull() {
-            return Task.Run(() => Application.Current.Dispatcher.Invoke(async () => {
-                int delay = 5000;
-
-                // Show message
-                this.SettingsSavedSuccessFullMessageContainer.Visibility = Visibility.Visible;
-
-                // Update UI
-                Application.Current.Dispatcher.Invoke(delegate { }, System.Windows.Threading.DispatcherPriority.Render);
-
-                await Task.Delay(delay);
-
-                // Hide message
-                this.SettingsSavedSuccessFullMessageContainer.Visibility = Visibility.Collapsed;
-                
-                Application.Current.Dispatcher.Invoke(delegate { }, System.Windows.Threading.DispatcherPriority.Render);
-            }));
+            this._mainWindow.ShowMessage("Settings Saved Successfully!", Brushes.LimeGreen);
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e) {
@@ -402,7 +385,8 @@ namespace GraphTheoryInWPF.View {
                 this.GraphPreviewCanvas.Children.Clear();
                 NodeEllipse.FillCanvasWithAllNodes(this.GraphPreviewCanvas, this._graph, this);
             } catch (GraphException ge) {
-                MessageBox.Show(ge.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                this._mainWindow.ShowMessage(ge.Message, Brushes.Red);
+                //MessageBox.Show(ge.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }
