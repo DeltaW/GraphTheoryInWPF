@@ -216,7 +216,7 @@ namespace GraphTheoryInWPF {
             } else {
                 if (this._currentGraph != null) {
                     Graph.SaveGraphAsFile(this._currentGraph, this._currentPath);
-                    this.ShowMessage("Settings saved successfully!", Brushes.LimeGreen);
+                    this.ShowMessage("Graph saved successfully!", Brushes.LimeGreen);
                 }
             }
         }
@@ -231,6 +231,7 @@ namespace GraphTheoryInWPF {
                 Graph.SaveGraphAsFile(this._currentGraph, saveFileDialog.FileName);
                 this._currentPath = saveFileDialog.FileName;
             }
+            this.ShowMessage("Graph saved successfully!", Brushes.LimeGreen);
         }
 
         private void MenuItem_Click_Open(object sender, RoutedEventArgs e) {
